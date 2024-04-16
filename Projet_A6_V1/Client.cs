@@ -18,7 +18,7 @@ namespace Projet_A6_V1
 
         public Client Ajoute()
         {
-            Console.WriteLine($"Saisir les informations pour le client {i + 1}:");
+            Console.WriteLine($"Saisir les informations pour le client:");
             Console.Write("Numéro SS : ");
             int num_ss = Convert.ToInt32(Console.ReadLine());
 
