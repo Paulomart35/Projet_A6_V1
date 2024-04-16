@@ -34,12 +34,17 @@ namespace Projet_A6_V1
 
             //testpaulgit
 
-
+            nul();
 
 
 
             Console.ReadKey();
 
+        }
+
+        static void nul()
+        {
+            Console.WriteLine("nul");
         }
     }
 }
