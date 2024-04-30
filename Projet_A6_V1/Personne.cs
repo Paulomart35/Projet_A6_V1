@@ -19,7 +19,7 @@ namespace Projet_A6_V1
 
 
 
-        protected Personne(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone)
+        public Personne(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone)
         {
             this.num_ss=num_ss;
             this.nom=nom;
@@ -30,10 +30,24 @@ namespace Projet_A6_V1
             this.telephone=telephone;
         }
 
+        public int Num_ss
+        {
+            get { return num_ss; }
+        }
         public string Nom
         {
             get { return nom; }
             set { nom = value; }
+        }
+
+        public string Prenom
+        {
+            get { return prenom; }
+        }
+
+        public DateTime Date_naissance
+        {
+            get { return date_naissance; }
         }
 
         public string Adresse

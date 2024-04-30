@@ -31,8 +31,10 @@ namespace Projet_A6_V1
             //Salarie directriceRH = new Salarie(4, "Joyeuse", "Anne", new DateTime(1975, 4, 4), "4 rue de l'Egalité, Paris", "anne.joyeuse@entreprise.com", "01 14 15 16 17", new DateTime(2015, 4, 4), "Directrice des RH", 70000);
             //Salarie directeurFinancier = new Salarie(5, "GripSous", "Robert", new DateTime(1980, 5, 5), "5 rue de la Fraternité, Paris", "robert.gripsous@entreprise.com", "01 18 19 20 21", new DateTime(2020, 5, 5), "Directeur Financier", 85000);
 
-            Client client = new Client(0, "", "", DateTime.Now, "", "", "", 0);
-            Client nouveauClient = client.Ajoute();
+            //Client client = new Client(0, "", "", DateTime.Now, "", "", "", 0);
+            //Client nouveauClient = client.Ajoute();
+
+            Client.Afficher();
 
 
             Console.ReadKey();

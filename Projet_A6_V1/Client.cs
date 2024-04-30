@@ -10,7 +10,8 @@ namespace Projet_A6_V1
 {
     internal class Client : Personne
     {
-        //peut-être mettre ça en List car un client plusieurs module
+        //peut-être mettre ça en List car un client plusieurs module(mais j'ai eu la flemme pour l'instant)
+
         public int num_commande;
 
         public Client(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone, int num_commande) 
@@ -70,6 +71,46 @@ namespace Projet_A6_V1
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
 
+        }
+
+        public static void Afficher()
+        {
+            string path = "Client_Transconnect.csv";
+            List<Client> lecture_clients = new List<Client>();
+            try
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] values = line.Split(',');
+
+                        int num_ss = int.Parse(values[0]);
+                        string nom = values[1];
+                        string prenom = values[2];
+                        DateTime date_naissance = DateTime.Parse(values[3]);
+                        string adresse = values[4];
+                        string mail = values[5];
+                        string telephone = values[6];
+                        int num_commande = int.Parse(values[7]);
+
+                        Client client = new Client(num_ss, nom, prenom, date_naissance, adresse, mail, telephone, num_commande);
+                        lecture_clients.Add(client);
+                    }
+                }
+
+                lecture_clients = lecture_clients.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ToList();
+
+                foreach (Client client in lecture_clients)
+                {
+                    Console.WriteLine($"Numéro SS : {client.Num_ss}, Nom : {client.nom}, Prénom : {client.Prenom}, Date de naissance : {client.Date_naissance}, Adresse : {client.adresse}, Email : {client.mail}, Téléphone : {client.telephone}, Numéro de commande : {client.num_commande}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
         }
     }
 }
