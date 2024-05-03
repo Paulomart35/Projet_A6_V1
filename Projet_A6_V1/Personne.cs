@@ -13,13 +13,13 @@ namespace Projet_A6_V1
         protected string nom;
         protected string prenom;
         protected DateTime date_naissance;
-        protected string adresse;
+        protected Adresse adresse;
         protected string mail;
         protected string telephone;
 
 
 
-        public Personne(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone)
+        public Personne(int num_ss, string nom, string prenom, DateTime date_naissance, Adresse adresse, string mail, string telephone)
         {
             this.num_ss=num_ss;
             this.nom=nom;
@@ -50,7 +50,7 @@ namespace Projet_A6_V1
             get { return date_naissance; }
         }
 
-        public string Adresse
+        public Adresse Adresse
         {
             get { return adresse; }
             set { adresse = value; }

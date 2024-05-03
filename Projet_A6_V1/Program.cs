@@ -34,10 +34,17 @@ namespace Projet_A6_V1
             //Client client = new Client();
             //Client client = new Client(123456789, "Dupont", "Jean", new DateTime(1990, 5, 15), "1 rue de la Liberté", "jean.dupont@example.com", "01 23 45 67 89", 01);
             Client nouveauClient = Client.Ajoute();
+            Client nouveauClient = Client.Ajoute();
+            nouveauClient.Ecrire_client_excel();
 
             nouveauClient.Ecrire_client_excel();
             
             //Client.Afficher();
+            //Client.Afficher();
+
+            //A supp
+            //Client nouveauClient2 = client.Ajoute();
+            //
 
 
             Console.ReadKey();
