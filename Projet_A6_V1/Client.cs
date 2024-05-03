@@ -47,24 +47,28 @@ namespace Projet_A6_V1
             Console.Write("Numéro de commande : ");
             int num_commande = Convert.ToInt32(Console.ReadLine());
 
-            Ecrire_client_excel(num_ss, nom, prenom, date_naissance, adresse, mail, telephone, num_commande);
+            Client nvclient = new Client(num_ss, nom, prenom, date_naissance, adresse, mail, telephone, num_commande);
 
-            return new Client(num_ss, nom, prenom, date_naissance, adresse, mail, telephone, num_commande);
+            nvclient.Ecrire_client_excel();
+            
+            
+            
+            return nvclient;
 
         }
 
         //Historique pour le module client
-        public static void Ecrire_client_excel(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone, int num_commande)
+        public void Ecrire_client_excel()
         {
             string path = "Client_Transconnect.csv";
             try
             {
-                string text = (num_ss + "," + nom + "," + prenom + "," + date_naissance + "," + adresse + "," + mail + "," + telephone + "," + num_commande);
+                string text = (this.num_ss + "," + this.nom + "," + this.prenom + "," + this.date_naissance + "," + this.adresse + "," + this.mail + "," + this.telephone + "," + this.num_commande);
                 using (StreamWriter writer = new StreamWriter(path, true))
                 {
                     writer.WriteLine(text);
                 }
-                Console.WriteLine("ok");
+                Console.WriteLine("Client" + this.num_ss +" ajouté à la base de donné");
             }
             catch(Exception ex) 
             {
