@@ -79,7 +79,7 @@ namespace Projet_A6_V1
 
         }
 
-        public static List<Client> Afficher()
+        public static List<Client> Lire_excel()
         {
             string path = "Client_Transconnect.csv";
             List<Client> lecture_clients = new List<Client>();
@@ -121,16 +121,25 @@ namespace Projet_A6_V1
                     //    break;
                 }
 
-                foreach (Client client in lecture_clients)
-                {
-                    Console.WriteLine($"Numéro SS : {client.Num_ss}, Nom : {client.nom}, Prénom : {client.Prenom}, Date de naissance : {client.Date_naissance}, Adresse : {client.adresse}, Email : {client.mail}, Téléphone : {client.telephone}, Numéro de commande : {client.num_commande}");
-                }
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
             return lecture_clients;
+        }
+
+        public static void Affiche_List(List<Client> lecture_clients)
+        {
+            foreach (Client client in lecture_clients)
+            {
+                Affcihe_Client(client);
+            }
+        }
+
+        public static void Affcihe_Client(Client client)
+        {
+            Console.WriteLine($"Numéro SS : {client.Num_ss}, Nom : {client.nom}, Prénom : {client.Prenom}, Date de naissance : {client.Date_naissance}, Adresse : {client.adresse}, Email : {client.mail}, Téléphone : {client.telephone}, Numéro de commande : {client.num_commande}");
         }
     }
 }
