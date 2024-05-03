@@ -28,7 +28,10 @@ namespace Projet_A6_V1
             string answer = Console.ReadLine();
             if(answer == "y")
             {
-                List<Client> ListdesClients = Client.Afficher();
+                List<Client> ListdesClients = Client.Lire_excel();
+                Client.Afficher(ListedesClients);
+
+
 
             }
             else if (answer == "n")
@@ -43,10 +46,7 @@ namespace Projet_A6_V1
 
         }
 
-        static List<Client> GetClientFromExcel()
-        {
 
-        }
 
     }
 }
