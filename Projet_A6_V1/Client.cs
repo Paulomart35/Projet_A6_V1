@@ -12,15 +12,15 @@ namespace Projet_A6_V1
     {
         //peut-être mettre ça en List car un client plusieurs module(mais j'ai eu la flemme pour l'instant)
 
-        public List<int> num_commande;
+        public int num_commande;
 
-        public Client(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone, int num_commande) 
+        public Client(int num_ss, string nom, string prenom, DateTime date_naissance, Adresse adresse, string mail, string telephone, int num_commande) 
             : base(num_ss, nom, prenom, date_naissance, adresse, mail, telephone)
         {
             this.num_commande = num_commande;
         }
 
-        public Client Ajoute()
+        public static Client Ajoute()
         {
             Console.WriteLine($"Saisir les informations pour le client:");
             Console.Write("Numéro SS : ");
@@ -35,8 +35,8 @@ namespace Projet_A6_V1
             Console.Write("Date de naissance (AAAA-MM-JJ) : ");
             DateTime date_naissance = DateTime.Parse(Console.ReadLine());
 
-            Console.Write("Adresse : ");
-            string adresse = Console.ReadLine();
+            Adresse adresse = new Adresse(0, "", "");
+            adresse = adresse.Demander_adresse();
 
             Console.Write("Email : ");
             string mail = Console.ReadLine();
@@ -77,7 +77,7 @@ namespace Projet_A6_V1
 
         }
 
-        public static void Afficher()
+        public static List<Client> Afficher()
         {
             string path = "Client_Transconnect.csv";
             List<Client> lecture_clients = new List<Client>();
@@ -94,17 +94,30 @@ namespace Projet_A6_V1
                         string nom = values[1];
                         string prenom = values[2];
                         DateTime date_naissance = DateTime.Parse(values[3]);
-                        string adresse = values[4];
-                        string mail = values[5];
-                        string telephone = values[6];
-                        int num_commande = int.Parse(values[7]);
+                        Adresse adresse = new Adresse(int.Parse(values[4]), values[5], values[6]); 
+                        string mail = values[7];
+                        string telephone = values[8];
+                        int num_commande = int.Parse(values[9]);
 
                         Client client = new Client(num_ss, nom, prenom, date_naissance, adresse, mail, telephone, num_commande);
                         lecture_clients.Add(client);
                     }
                 }
-                // 1 delegate
-                lecture_clients = lecture_clients.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ToList();
+
+                Console.WriteLine("Trier par ordre alphabétique (1)\nTrier par ville (2)\nTrier par montant des achats cumulé(3)");
+                int choix = Convert.ToInt32(Console.ReadLine());
+                switch (choix)
+                {
+                    case 1:
+                        lecture_clients = lecture_clients.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ToList();
+                        break;
+                    case 2:
+                        lecture_clients = lecture_clients.OrderBy(c => c.Adresse).ToList();
+                        break;
+                    //case 3:
+                    //    lecture_clients = lecture_clients.OrderBy(c => c.Num_commande).ToList();
+                    //    break;
+                }
 
                 foreach (Client client in lecture_clients)
                 {
@@ -115,6 +128,7 @@ namespace Projet_A6_V1
             {
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
+            return lecture_clients;
         }
     }
 }
