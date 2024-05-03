@@ -12,7 +12,7 @@ namespace Projet_A6_V1
         public string poste;
         public int salaire;
 
-        public Salarie(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone, DateTime entree_societe, string poste, int salaire) 
+        public Salarie(int num_ss, string nom, string prenom, DateTime date_naissance, Adresse adresse, string mail, string telephone, DateTime entree_societe, string poste, int salaire) 
             : base(num_ss, nom, prenom, date_naissance, adresse, mail, telephone)
         {
             this.entree_societe = entree_societe;

@@ -22,10 +22,10 @@ namespace Projet_A6_V1
         {
             this.Idcommande = derniernumcom;
             derniernumcom++;
-            this.idclient=idclient;
+            this.Idclient=idclient;
             this.livraison=livraison;
             this.prix=prix;
-            this.chauffeur=chauffeur;
+            this.chauffeurs=chauffeur;
             this.date=date;
         }
     }

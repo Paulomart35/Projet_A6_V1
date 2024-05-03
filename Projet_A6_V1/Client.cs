@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Data;
 
 namespace Projet_A6_V1
 {
@@ -63,7 +64,7 @@ namespace Projet_A6_V1
             string path = "Client_Transconnect.csv";
             try
             {
-                string text = (this.num_ss + "," + this.nom + "," + this.prenom + "," + this.date_naissance + "," + this.adresse + "," + this.mail + "," + this.telephone + "," + this.num_commande);
+                string text = (this.num_ss + "," + this.nom + "," + this.prenom + "," + this.date_naissance + "," + this.adresse.Numero + "," + this.adresse.Rue + ',' + this.adresse.Ville + "," + this.mail + "," + this.telephone + "," + this.num_commande);
                 using (StreamWriter writer = new StreamWriter(path, true))
                 {
                     writer.WriteLine(text);
