@@ -29,6 +29,10 @@ namespace Projet_A6_V1
             //Client.Afficher();
 
 
+
+            //dfghjklmlkjhgfd
+
+
             Console.ReadKey();
 
         }
