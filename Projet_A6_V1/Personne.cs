@@ -9,10 +9,10 @@ namespace Projet_A6_V1
 {
     abstract class Personne
     {
-        private int num_ss;
+        protected int num_ss;
         protected string nom;
-        private string prenom;
-        private DateTime date_naissance;
+        protected string prenom;
+        protected DateTime date_naissance;
         protected string adresse;
         protected string mail;
         protected string telephone;
