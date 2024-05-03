@@ -12,7 +12,6 @@ namespace Projet_A6_V1
     internal class Client : Personne
     {
        
-
         public List<int> num_commande;
 
         public Client(int num_ss, string nom, string prenom, DateTime date_naissance, Adresse adresse, string mail, string telephone, List<int> num_commande) 
