@@ -31,10 +31,11 @@ namespace Projet_A6_V1
             //Salarie directriceRH = new Salarie(4, "Joyeuse", "Anne", new DateTime(1975, 4, 4), "4 rue de l'Egalité, Paris", "anne.joyeuse@entreprise.com", "01 14 15 16 17", new DateTime(2015, 4, 4), "Directrice des RH", 70000);
             //Salarie directeurFinancier = new Salarie(5, "GripSous", "Robert", new DateTime(1980, 5, 5), "5 rue de la Fraternité, Paris", "robert.gripsous@entreprise.com", "01 18 19 20 21", new DateTime(2020, 5, 5), "Directeur Financier", 85000);
 
-            Client client = new Client(123456789, "Dupont", "Jean", new DateTime(1990, 5, 15), "1 rue de la Liberté", "jean.dupont@example.com", "01 23 45 67 89", 01);
-            Client nouveauClient = client.Ajoute();
+            //Client client = new Client();
+            //Client client = new Client(123456789, "Dupont", "Jean", new DateTime(1990, 5, 15), "1 rue de la Liberté", "jean.dupont@example.com", "01 23 45 67 89", 01);
+            Client nouveauClient = Client.Ajoute();
 
-            client.Ecrire_client_excel();
+            nouveauClient.Ecrire_client_excel();
             
             //Client.Afficher();
 
@@ -43,9 +44,31 @@ namespace Projet_A6_V1
 
         }
 
-        static void nul()
+        static void ModuleClient()
         {
-            Console.WriteLine("nul");
+            Console.Write("Voulez-vous Ajouter une nouveau client ? Si non, cela affichera la liste pour effectuer une modification ou une suppresion. y/n ?");
+            string answer = Console.ReadLine();
+            if(answer == "y")
+            {
+                List<Client> ListdesClients = Client.Ajoute();
+
+            }
+            if else(answer == "n")
+            {
+
+            }
+            else
+            {
+                Console.Write("Selection non valide, réesayer : ");
+                answer = Console.ReadLine();
+            }
+
         }
+
+        static List<Client> GetClientFromExcel()
+        {
+
+        }
+
     }
 }

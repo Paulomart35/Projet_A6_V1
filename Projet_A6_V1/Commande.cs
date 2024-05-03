@@ -8,17 +8,21 @@ namespace Projet_A6_V1
 {
     internal class Commande
     {
+        private static int derniernumcom = 1;
+        
         public int Idcommande;
-        public Client client;
+        public int Idclient;
         public Livraison livraison;
         public double prix;
         public List<Salarie> chauffeurs;
         //public List<vehicule> véhicules;
         public DateTime date;
 
-        public Commande(Client client, Livraison livraison, double prix, Salarie chauffeur, DateTime date)
+        public Commande(int idclient, Livraison livraison, double prix, List<Salarie> chauffeur, DateTime date)
         {
-            this.client=client;
+            this.Idcommande = derniernumcom;
+            derniernumcom++;
+            this.idclient=idclient;
             this.livraison=livraison;
             this.prix=prix;
             this.chauffeur=chauffeur;
