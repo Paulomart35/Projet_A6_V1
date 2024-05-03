@@ -12,7 +12,7 @@ namespace Projet_A6_V1
     {
         //peut-être mettre ça en List car un client plusieurs module(mais j'ai eu la flemme pour l'instant)
 
-        public int num_commande;
+        public List<int> num_commande;
 
         public Client(int num_ss, string nom, string prenom, DateTime date_naissance, string adresse, string mail, string telephone, int num_commande) 
             : base(num_ss, nom, prenom, date_naissance, adresse, mail, telephone)
