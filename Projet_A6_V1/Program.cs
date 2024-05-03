@@ -33,7 +33,7 @@ namespace Projet_A6_V1
 
         }
 
-        /*
+        
         static void ModuleClient()
         {
             Console.Write("Voulez-vous Ajouter une nouveau client ? Si non, cela affichera la liste pour effectuer une modification ou une suppresion. y/n ?");

@@ -149,8 +149,14 @@ namespace Projet_A6_V1
 
         public static void Affiche_Client(Client client)
         {
-            Console.WriteLine($"Numéro SS : {client.Num_ss}, Nom : {client.nom}, Prénom : {client.Prenom}, Date de naissance : {client.Date_naissance}, Adresse : {client.adresse}, Email : {client.mail}, Téléphone : {client.telephone}, Numéro de commande : {client.num_commande[0]}");
+            Console.WriteLine($"Numéro SS : {client.Num_ss}, Nom : {client.nom}, Prénom : {client.Prenom}, Date de naissance : {client.Date_naissance}, Adresse : {client.adresse}, Email : {client.mail}, Téléphone : {client.telephone}, Numéro(s) de commande : ");
+
+            client.num_commande.ForEach(commande =>
+            {
+                Console.WriteLine(commande);
+            });
         }
+
 
 
     }
