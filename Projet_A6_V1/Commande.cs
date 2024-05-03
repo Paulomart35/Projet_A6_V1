@@ -10,19 +10,19 @@ namespace Projet_A6_V1
     {
         private static int derniernumcom = 1;
         
-        public int Idcommande;
-        public int Idclient;
+        public int idcommande;
+        public int num_ss;
         public Livraison livraison;
         public double prix;
         public List<Salarie> chauffeurs;
         //public List<vehicule> véhicules;
         public DateTime date;
 
-        public Commande(int idclient, Livraison livraison, double prix, List<Salarie> chauffeur, DateTime date)
+        public Commande(int num_ss, Livraison livraison, double prix, List<Salarie> chauffeur, DateTime date)
         {
-            this.Idcommande = derniernumcom;
+            this.idcommande = derniernumcom;
             derniernumcom++;
-            this.Idclient=idclient;
+            this.num_ss=num_ss;
             this.livraison=livraison;
             this.prix=prix;
             this.chauffeurs=chauffeur;
