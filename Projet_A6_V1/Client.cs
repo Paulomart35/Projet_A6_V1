@@ -99,7 +99,7 @@ namespace Projet_A6_V1
                         lecture_clients.Add(client);
                     }
                 }
-
+                // 1 delegate
                 lecture_clients = lecture_clients.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ToList();
 
                 foreach (Client client in lecture_clients)
