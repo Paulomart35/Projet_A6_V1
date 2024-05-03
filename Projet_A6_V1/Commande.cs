@@ -8,10 +8,12 @@ namespace Projet_A6_V1
 {
     internal class Commande
     {
+        public int Idcommande;
         public Client client;
         public Livraison livraison;
         public double prix;
-        public Salarie chauffeur;
+        public List<Salarie> chauffeurs;
+        //public List<vehicule> véhicules;
         public DateTime date;
 
         public Commande(Client client, Livraison livraison, double prix, Salarie chauffeur, DateTime date)
