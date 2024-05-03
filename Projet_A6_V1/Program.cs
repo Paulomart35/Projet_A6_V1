@@ -10,10 +10,22 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
+            //Adresse adressea = new Adresse(205, "rue", "ville");
+            //Adresse adresseb = new Adresse(205, "rue", "ville");
+            //Livraison liv = new Livraison(adresseb,adressea);
+            //Commande test = new Commande(1, 12, liv, 124, 3, DateTime.Now);
 
-            Client nouveauClient = Client.Ajoute();
-            
-            //Client.Afficher();
+            //test.Ecrire_commande_excel();
+
+            //Commande test2 = Commande.Lire_excel()[0];
+            //test2.idcommande = 3;
+            //test2.Ecrire_commande_excel();
+
+            Client client = new Client(1, "dfvr","sdvsv",DateTime.Now,new Adresse(205,"qsrfv","eqrv"),"qsrv","&é'&é'&é", new List<int> { 1, 2, 3, 4 }) ;
+            client.Ecrire_client_excel();
+            List<Client> client2 = Client.Lire_excel();
+
+            Client.Affiche_Client(client2[0]);
             //Client.Afficher();
 
 
@@ -28,7 +40,10 @@ namespace Projet_A6_V1
             string answer = Console.ReadLine();
             if(answer == "y")
             {
-                List<Client> ListdesClients = Client.Afficher();
+                List<Client> ListedesClients = Client.Lire_excel();
+                Client.Affiche_List(ListedesClients);
+
+
 
             }
             else if (answer == "n")
@@ -43,10 +58,7 @@ namespace Projet_A6_V1
 
         }
 
-        static List<Client> GetClientFromExcel()
-        {
 
-        }
-        */
+
     }
 }

@@ -8,13 +8,26 @@ namespace Projet_A6_V1
 {
     internal class Livraison
     {
-        public string départ;
-        public string arrivee;
+        public Adresse départ;
+        public Adresse arrivee;
 
-        public Livraison(string départ, string arrivee)
+        public Livraison(Adresse départ, Adresse arrivee)
         {
             this.départ=départ;
             this.arrivee=arrivee;
         }
+
+        public Livraison()
+        {
+            this.arrivee = null;
+            this.départ = null;
+        }
+
+        public string toString()
+        {
+            return this.départ.toString() + "," + this.arrivee.toString();
+        }
+
     }
+
 }
