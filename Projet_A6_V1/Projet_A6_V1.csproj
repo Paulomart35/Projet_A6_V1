@@ -52,6 +52,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Commande.cs" />
     <Compile Include="Livraison.cs" />
+    <Compile Include="Noeud.cs" />
     <Compile Include="Personne.cs" />
     <Compile Include="PoidsLourd.cs" />
     <Compile Include="Program.cs" />

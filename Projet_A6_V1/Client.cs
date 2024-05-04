@@ -105,7 +105,6 @@ namespace Projet_A6_V1
 
         }
 
-
         public static List<Client> Lire_excel()
         {
             string path = "Client_Transconnect.csv";
