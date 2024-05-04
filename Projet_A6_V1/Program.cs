@@ -67,10 +67,24 @@ namespace Projet_A6_V1
 
 
             //Client.Supprimer_client(987654321);
-            Client.Modifier_client(123456789);
-            List<Client> list = Client.Lire_excel_trier();
-            Client.Affiche_List(list);
+            //Client.Modifier_client(123456789);
+            //List<Client> list = Client.Lire_excel_trier();
+            //Client.Affiche_List(list);
+
+            Salarie sal1 = new Salarie(123456789, "Dupont", "Jean", new DateTime(1980, 5, 15), new Adresse(1, "75001", "Paris"), "jean.dupont@example.com", "0123456789", "Bac+5", new DateTime(2010, 7, 1), "Ingénieur", 50000);
+            Salarie sal2 = new Salarie(987654321, "Martin", "Sophie", new DateTime(1985, 10, 20), new Adresse(5, "69002", "Lyon"), "sophie.martin@example.com", "0987654321", "Bac+3", new DateTime(2015, 3, 10), "Développeur", 40000);
+            Salarie sal3 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "Bac+2", new DateTime(2018, 1, 5), "Commercial", 35000);
             
+            List<Salarie> list = new List<Salarie>();
+            
+
+            sal1.Ecrire_salarie_csv();
+            sal2.Ecrire_salarie_csv();
+            sal3.Ecrire_salarie_csv();
+
+            list = Salarie.Lire_csv();
+
+
 
             Console.ReadKey();
 
