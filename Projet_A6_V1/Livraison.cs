@@ -54,7 +54,7 @@ namespace Projet_A6_V1
                     int kilometrage = int.Parse(values[2]);
                     string duree = values[3];
 
-                    if (adresse_départ.Ville == this.départ.Ville && adresse_arrivee.Ville == this.arrivee.Ville)
+                    if (adresse_départ.Ville == this.départ.Ville && adresse_arrivee.Ville == this.arrivee.Ville || adresse_arrivee.Ville == this.départ.Ville && adresse_départ.Ville == this.arrivee.Ville)
                     {
                         montant_total = kilometrage * tarif_kilometre;
                     }

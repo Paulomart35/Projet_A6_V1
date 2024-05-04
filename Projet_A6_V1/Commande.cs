@@ -10,7 +10,7 @@ namespace Projet_A6_V1
 {
     internal class Commande
     {
-        //private static int derniernumcom = 1;
+        private static int derniernumcom = 0;
         
         public int idcommande;
         public int num_ss;
@@ -23,23 +23,33 @@ namespace Projet_A6_V1
         public Commande(int idcommande, int num_ss, Livraison livraison, double prix, int chauffeur, DateTime date)
         {
             this.idcommande = idcommande;
-           
             this.num_ss=num_ss;
             this.livraison=livraison;
             this.prix=prix;
             this.idchauffeur=chauffeur;
             this.date=date;
         }
-        public Commande(int idcommande, int num_ss, Livraison livraison, int chauffeur, DateTime date)
-        {
-            this.idcommande = idcommande;
 
+        public Commande(int num_ss, Livraison livraison, double prix, int chauffeur, DateTime date)
+        {
+            this.idcommande = ++derniernumcom;
+            this.num_ss=num_ss;
+            this.livraison=livraison;
+            this.prix=prix;
+            this.idchauffeur=chauffeur;
+            this.date=date;
+        }
+        public Commande(int num_ss, Livraison livraison, int chauffeur, DateTime date)
+        {
+            this.idcommande = ++derniernumcom;
             this.num_ss=num_ss;
             this.livraison=livraison;
             this.prix=0;
             this.idchauffeur=chauffeur;
             this.date=date;
         }
+        
+
 
         public static List<Commande> Lire_excel()
         {
@@ -101,8 +111,8 @@ namespace Projet_A6_V1
         public static Commande Nouvelle_commande()
         {
             Console.WriteLine($"Saisir les informations pour la commande:");
-            Console.Write("Id_commande : ");
-            int idcommande = Convert.ToInt32(Console.ReadLine());
+            //Console.Write("Id_commande : ");
+            //int idcommande = Convert.ToInt32(Console.ReadLine());
 
             Console.Write("Num SS : ");
             int num_ss = Convert.ToInt32(Console.ReadLine());
@@ -119,7 +129,7 @@ namespace Projet_A6_V1
 
             double prix = livraison.Calcul_prix();
 
-            Commande nv_commande = new Commande(idcommande, num_ss, livraison, prix, id_chauffeur, date);
+            Commande nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, date);
 
             nv_commande.Ecrire_commande_excel();
             return nv_commande;
