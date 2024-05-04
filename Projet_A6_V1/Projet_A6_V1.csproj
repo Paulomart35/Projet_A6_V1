@@ -48,6 +48,7 @@
     <Compile Include="CamionCiterne.cs" />
     <Compile Include="CamionFrigorifique.cs" />
     <Compile Include="Camionnette.cs" />
+    <Compile Include="Chauffeur.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Commande.cs" />
     <Compile Include="Livraison.cs" />
