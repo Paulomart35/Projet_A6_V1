@@ -53,7 +53,7 @@ namespace Projet_A6_V1
             return new Adresse(numero, rue, ville);
         }
 
-        public string toString()
+        public override string ToString()
         {
             return numero.ToString() + "," + rue + "," + ville;  
         }

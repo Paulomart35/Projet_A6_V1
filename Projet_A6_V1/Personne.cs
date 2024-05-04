@@ -43,11 +43,13 @@ namespace Projet_A6_V1
         public string Prenom
         {
             get { return prenom; }
+            set { prenom = value; }
         }
 
         public DateTime Date_naissance
         {
             get { return date_naissance; }
+            set { date_naissance = value;}
         }
 
         public Adresse Adresse

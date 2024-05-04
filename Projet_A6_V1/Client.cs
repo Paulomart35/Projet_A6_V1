@@ -75,7 +75,7 @@ namespace Projet_A6_V1
                 {
                     writer.WriteLine(text);
                 }
-                Console.WriteLine("Client" + this.num_ss +" ajouté à la base de donné");
+                Console.WriteLine($"Le client avec le numéro de sécurité sociale {num_ss} a été ajouté avec succès.");
             }
             catch(Exception ex) 
             {
@@ -83,6 +83,28 @@ namespace Projet_A6_V1
             }
 
         }
+
+        public static List<Client> Lire_excel_trier()
+        {
+            List<Client> lecture_clients = Lire_excel();
+            Console.Write("Trier par ordre alphabétique (1)\nTrier par ville (2)\nTrier par montant des achats cumulé(3) : ");
+            int choix = Convert.ToInt32(Console.ReadLine());
+            switch (choix)
+            {
+                case 1:
+                    lecture_clients = lecture_clients.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ToList();
+                    break;
+                case 2:
+                    lecture_clients = lecture_clients.OrderBy(c => c.Adresse).ToList();
+                    break;
+                    //case 3:
+                    //    lecture_clients = lecture_clients.OrderBy(c => c.Num_commande).ToList();
+                    //    break;
+            }
+            return lecture_clients;
+
+        }
+
 
         public static List<Client> Lire_excel()
         {
@@ -115,28 +137,51 @@ namespace Projet_A6_V1
                         lecture_clients.Add(client);
                     }
                 }
-
-                Console.WriteLine("Trier par ordre alphabétique (1)\nTrier par ville (2)\nTrier par montant des achats cumulé(3)");
-                int choix = Convert.ToInt32(Console.ReadLine());
-                switch (choix)
-                {
-                    case 1:
-                        lecture_clients = lecture_clients.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ToList();
-                        break;
-                    case 2:
-                        lecture_clients = lecture_clients.OrderBy(c => c.Adresse).ToList();
-                        break;
-                    //case 3:
-                    //    lecture_clients = lecture_clients.OrderBy(c => c.Num_commande).ToList();
-                    //    break;
-                }
-
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
             return lecture_clients;
+        }
+
+        public static void Supprimer_client(int num_ss)
+        {
+            string path = "Client_Transconnect.csv";
+            try
+            {
+                List<Client> clients = Lire_excel();
+
+                Client clientASupprimer = clients.Find(c => c.Num_ss == num_ss);
+
+                if (clientASupprimer != null)
+                {
+                    clients.Remove(clientASupprimer);
+
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        foreach (Client client in clients)
+                        {
+                            string text = $"{client.Num_ss},{client.Nom},{client.Prenom},{client.Date_naissance},{client.Adresse.Numero},{client.Adresse.Rue},{client.Adresse.Ville},{client.Mail},{client.Telephone}";
+                            foreach (int num_commande in client.num_commande)
+                            {
+                                text += $",{num_commande}";
+                            }
+                            writer.WriteLine(text);
+                        }
+                    }
+
+                    Console.WriteLine($"Le client avec le numéro de sécurité sociale {num_ss} a été supprimé avec succès.");
+                }
+                else
+                {
+                    Console.WriteLine($"Aucun client trouvé avec le numéro de sécurité sociale {num_ss}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
         }
 
         public static void Affiche_List(List<Client> lecture_clients)
@@ -147,14 +192,69 @@ namespace Projet_A6_V1
             }
         }
 
+        public static void Modifier_client(int num_ss)
+        {
+            string path = "Client_Transconnect.csv";
+            try
+            {
+                List<Client> clients = Lire_excel();
+
+                Client clientAModifier = clients.Find(c => c.Num_ss == num_ss);
+
+                if (clientAModifier != null)
+                {
+                    Console.WriteLine("Informations actuelles du client :");
+                    Affiche_Client(clientAModifier);
+
+                    Console.WriteLine("Saisissez les nouvelles informations :");
+                    Console.Write("Nom : ");
+                    clientAModifier.Nom = Console.ReadLine();
+                    Console.Write("Prénom : ");
+                    clientAModifier.Prenom = Console.ReadLine();
+                    Console.Write("Date de naissance (AAAA-MM-JJ) : ");
+                    clientAModifier.Date_naissance = DateTime.Parse(Console.ReadLine());
+                    Adresse adresse = new Adresse(0, "", "");
+                    clientAModifier.adresse = adresse.Demander_adresse();
+                    Console.Write("Email : ");
+                    clientAModifier.Mail = Console.ReadLine();
+                    Console.Write("Téléphone : ");
+                    clientAModifier.Telephone = Console.ReadLine();
+
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        foreach (Client client in clients)
+                        {
+                            string text = $"{client.Num_ss},{client.Nom},{client.Prenom},{client.Date_naissance},{client.Adresse.Numero},{client.Adresse.Rue},{client.Adresse.Ville},{client.Mail},{client.Telephone}";
+                            foreach (int num_commande in client.num_commande)
+                            {
+                                text += $",{num_commande}";
+                            }
+                            writer.WriteLine(text);
+                        }
+                    }
+
+                    Console.WriteLine($"Le client avec le numéro de sécurité sociale {num_ss} a été modifié avec succès.");
+                }
+                else
+                {
+                    Console.WriteLine($"Aucun client trouvé avec le numéro de sécurité sociale {num_ss}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+        }
+
         public static void Affiche_Client(Client client)
         {
-            Console.WriteLine($"Numéro SS : {client.Num_ss}, Nom : {client.nom}, Prénom : {client.Prenom}, Date de naissance : {client.Date_naissance}, Adresse : {client.adresse}, Email : {client.mail}, Téléphone : {client.telephone}, Numéro(s) de commande : ");
+            Console.Write($"Numéro SS : {client.Num_ss}\n\tNom : {client.nom}\n\tPrénom : {client.Prenom}\n\tDate de naissance : {client.Date_naissance}\n\tAdresse : {client.adresse.ToString()}\n\tEmail : {client.mail}\n\tTéléphone : {client.telephone}\n\tNuméro(s) de commande : ");
 
             client.num_commande.ForEach(commande =>
             {
-                Console.WriteLine(commande);
+                Console.Write(commande+", ");
             });
+            Console.WriteLine("\n");
         }
 
 

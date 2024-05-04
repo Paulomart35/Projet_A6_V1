@@ -23,9 +23,9 @@ namespace Projet_A6_V1
             this.départ = null;
         }
 
-        public string toString()
+        public override string ToString()
         {
-            return this.départ.toString() + "," + this.arrivee.toString();
+            return this.départ.ToString() + "," + this.arrivee.ToString();
         }
 
     }

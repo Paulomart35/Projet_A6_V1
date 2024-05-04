@@ -21,18 +21,55 @@ namespace Projet_A6_V1
             //test2.idcommande = 3;
             //test2.Ecrire_commande_excel();
 
-            Client client = new Client(1, "dfvr","sdvsv",DateTime.Now,new Adresse(205,"qsrfv","eqrv"),"qsrv","&é'&é'&é", new List<int> { 1, 2, 3, 4 }) ;
-            client.Ecrire_client_excel();
-            List<Client> client2 = Client.Lire_excel();
+            //Client client = new Client(1, "dfvr","sdvsv",DateTime.Now,new Adresse(205,"qsrfv","eqrv"),"qsrv","&é'&é'&é", new List<int> { 1, 2, 3, 4 });
+            //client.Ecrire_client_excel();
+            //List<Client> client2 = Client.Lire_excel();
 
-            Client.Affiche_Client(client2[0]);
+            //Client.Affiche_Client(client2[0]);
             //Client.Afficher();
 
 
+            //Test supp client
+            /*
+            Client client10 = new Client(
+            num_ss: 123456789,
+            nom: "Dupont",
+            prenom: "Alice",
+            date_naissance: new DateTime(1990, 5, 15),
+            adresse: new Adresse(numero: 10, rue: "Rue de la Liberté", ville: "Paris"),
+            mail: "alice.dupont@example.com",
+            telephone: "01 23 45 67 89",
+            num_commande: new List<int> { 1001, 1002 });
 
-            //dfghjklmlkjhgfd
-            //hgfdsdfghjklkjhgfds
+            Client client11 = new Client(
+                num_ss: 987654321,
+                nom: "Durand",
+                prenom: "Bob",
+                date_naissance: new DateTime(1985, 8, 21),
+                adresse: new Adresse(numero: 5, rue: "Avenue des Roses", ville: "Lyon"),
+                mail: "bob.durand@example.com",
+                telephone: "06 12 34 56 78",
+                num_commande: new List<int> { 1003 });
 
+            Client client12 = new Client(
+                num_ss: 456123789,
+                nom: "Martin",
+                prenom: "Carole",
+                date_naissance: new DateTime(1978, 3, 10),
+                adresse: new Adresse(numero: 20, rue: "Boulevard des Alpes", ville: "Marseille"),
+                mail: "carole.martin@example.com",
+                telephone: "03 45 67 89 12",
+                num_commande: new List<int> { 1004, 1005, 1006 }
+            );
+            client10.Ecrire_client_excel();
+            client11.Ecrire_client_excel();
+            client12.Ecrire_client_excel();
+            */
+
+            //Client.Supprimer_client(987654321);
+            //List<Client> list = Client.Lire_excel_trier();
+            //Client.Affiche_List(list);
+            Client.Modifier_client(123456789);
 
             Console.ReadKey();
 

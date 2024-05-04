@@ -10,7 +10,7 @@ namespace Projet_A6_V1
 {
     internal class Commande
     {
-        private static int derniernumcom = 1;
+        //private static int derniernumcom = 1;
         
         public int idcommande;
         public int num_ss;
@@ -72,7 +72,7 @@ namespace Projet_A6_V1
             string path = "Commande_Transconnect.csv";
             try
             {
-                string text = (this.idcommande + "," + this.num_ss + "," + this.livraison.toString() + "," + this.prix + "," + this.idchauffeur + "," + this.date);
+                string text = (this.idcommande + "," + this.num_ss + "," + this.livraison.ToString() + "," + this.prix + "," + this.idchauffeur + "," + this.date);
                 using (StreamWriter writer = new StreamWriter(path, true))
                 {
                     writer.WriteLine(text);
