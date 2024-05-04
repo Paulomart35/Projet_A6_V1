@@ -95,7 +95,7 @@ namespace Projet_A6_V1
                     lecture_clients = lecture_clients.OrderBy(c => c.Nom).ThenBy(c => c.Prenom).ToList();
                     break;
                 case 2:
-                    lecture_clients = lecture_clients.OrderBy(c => c.Adresse).ToList();
+                    lecture_clients = lecture_clients.OrderBy(c => c.Adresse.Ville).ToList();
                     break;
                     //case 3:
                     //    lecture_clients = lecture_clients.OrderBy(c => c.Num_commande).ToList();
@@ -207,19 +207,50 @@ namespace Projet_A6_V1
                     Affiche_Client(clientAModifier);
 
                     Console.WriteLine("Saisissez les nouvelles informations :");
-                    Console.Write("Nom : ");
-                    clientAModifier.Nom = Console.ReadLine();
-                    Console.Write("Prénom : ");
-                    clientAModifier.Prenom = Console.ReadLine();
-                    Console.Write("Date de naissance (AAAA-MM-JJ) : ");
-                    clientAModifier.Date_naissance = DateTime.Parse(Console.ReadLine());
-                    Adresse adresse = new Adresse(0, "", "");
-                    clientAModifier.adresse = adresse.Demander_adresse();
-                    Console.Write("Email : ");
-                    clientAModifier.Mail = Console.ReadLine();
-                    Console.Write("Téléphone : ");
-                    clientAModifier.Telephone = Console.ReadLine();
-
+                    Console.Write("Voulez-vous modifier le nom (y/n) : ");
+                    char a1 = Console.ReadKey().KeyChar;
+                    if (a1 == 'y')
+                    {
+                        Console.Write("\nNouveau nom : ");
+                        clientAModifier.Nom = Console.ReadLine();
+                    }
+                    Console.Write("\nVoulez-vous modifier le prénom (y/n) : ");
+                    char a2 = Console.ReadKey().KeyChar;
+                    if (a2 == 'y')
+                    {
+                        Console.Write("\nNouveau prénom : ");
+                        clientAModifier.Prenom = Console.ReadLine();
+                    }
+                    Console.Write("\nVoulez-vous modifier la date de naissance (y/n) : ");
+                    char a3 = Console.ReadKey().KeyChar;
+                    if (a3 == 'y')
+                    {
+                        Console.Write("\nNouvelle la date de naissance (AAAA-MM-JJ) : ");
+                        clientAModifier.Date_naissance = DateTime.Parse(Console.ReadLine());
+                    }
+                    Console.Write("\nVoulez-vous modifier l'adresse (y/n) : ");
+                    char a4 = Console.ReadKey().KeyChar;
+                    if (a4 == 'y')
+                    {
+                        Console.Write("\nNouvelle adresse : ");
+                        Adresse adresse = new Adresse(0, "", "");
+                        clientAModifier.adresse = adresse.Demander_adresse();
+                    }
+                    Console.Write("\nVoulez-vous modifier le mail (y/n) : ");
+                    char a5 = Console.ReadKey().KeyChar;
+                    if (a5 == 'y')
+                    {
+                        Console.Write("\nNouveau mail : ");
+                        clientAModifier.Mail = Console.ReadLine();
+                    }
+                    Console.Write("\nVoulez-vous modifier le téléphone (y/n) : ");
+                    char a6 = Console.ReadKey().KeyChar;
+                    if (a6 == 'y')
+                    {
+                        Console.Write("\nNouveau téléphone : ");
+                        clientAModifier.Telephone = Console.ReadLine();
+                    }
+                    Console.WriteLine("\n");
                     using (StreamWriter writer = new StreamWriter(path))
                     {
                         foreach (Client client in clients)
