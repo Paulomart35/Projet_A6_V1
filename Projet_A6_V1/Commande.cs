@@ -95,5 +95,55 @@ namespace Projet_A6_V1
             }
 
         }
+
+
+
+        public static Commande Nouvelle_commande()
+        {
+            Console.WriteLine($"Saisir les informations pour la commande:");
+            Console.Write("Id_commande : ");
+            int idcommande = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Num SS : ");
+            int num_ss = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Livraison : ");
+            Livraison livraison = new Livraison(null, null);
+            livraison = livraison.Demander_Livraison();
+
+            Console.Write("Id chauffeur : ");
+            int id_chauffeur = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Date (AAAA-MM-JJ) : ");
+            DateTime date = DateTime.Parse(Console.ReadLine());
+
+            double prix = livraison.Calcul_prix();
+
+            Commande nv_commande = new Commande(idcommande, num_ss, livraison, prix, id_chauffeur, date);
+
+            nv_commande.Ecrire_commande_excel();
+            return nv_commande;
+
+        }
+
+        public static void Affiche_commande(Commande commande)
+        {
+            Console.WriteLine($"ID commande : {commande.idcommande}");
+            Console.WriteLine($"Numéro SS : {commande.num_ss}");
+            Console.WriteLine($"Livraison : Départ - {commande.livraison.départ.Ville}, Arrivée - {commande.livraison.arrivee.Ville}");
+            Console.WriteLine($"Prix : {commande.prix}");
+            Console.WriteLine($"ID chauffeur : {commande.idchauffeur}");
+            Console.WriteLine($"Date : {commande.date}");
+
+            Console.WriteLine();
+        }
+
+        public static void Affiche_List_Commande(List<Commande> lecture_commandes)
+        {
+            foreach (Commande commande in lecture_commandes)
+            {
+                Affiche_commande(commande);
+            }
+        }
     }
 }
