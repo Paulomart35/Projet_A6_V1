@@ -58,7 +58,6 @@ namespace Projet_A6_V1
 
         }
 
-        //Historique pour le module client
         public void Ecrire_client_excel()
         {
             string path = "Client_Transconnect.csv";
@@ -97,12 +96,30 @@ namespace Projet_A6_V1
                 case 2:
                     lecture_clients = lecture_clients.OrderBy(c => c.Adresse.Ville).ToList();
                     break;
-                    //case 3:
-                    //    lecture_clients = lecture_clients.OrderBy(c => c.Num_commande).ToList();
-                    //    break;
+                case 3:
+                    //A tester
+                    List<Commande> list_commande = new List<Commande>();
+                    list_commande = Commande.Lire_excel();
+                    lecture_clients = lecture_clients.OrderBy(c => c.CalculPrixCommande(list_commande)).ToList();
+                    break;
             }
             return lecture_clients;
 
+        }
+
+        //A tester
+        public double CalculPrixCommande(List<Commande> commandes)
+        {
+            double montantTotal = 0;
+            foreach (int numCommande in this.num_commande)
+            {
+                Commande commande = commandes.Find(c => c.idcommande == numCommande);
+                if (commande != null)
+                {
+                    montantTotal += commande.prix;
+                }
+            }
+            return montantTotal;
         }
 
         public static List<Client> Lire_excel()

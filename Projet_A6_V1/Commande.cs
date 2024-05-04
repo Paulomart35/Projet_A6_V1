@@ -30,6 +30,16 @@ namespace Projet_A6_V1
             this.idchauffeur=chauffeur;
             this.date=date;
         }
+        public Commande(int idcommande, int num_ss, Livraison livraison, int chauffeur, DateTime date)
+        {
+            this.idcommande = idcommande;
+
+            this.num_ss=num_ss;
+            this.livraison=livraison;
+            this.prix=0;
+            this.idchauffeur=chauffeur;
+            this.date=date;
+        }
 
         public static List<Commande> Lire_excel()
         {
