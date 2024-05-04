@@ -67,10 +67,16 @@ namespace Projet_A6_V1
 
 
             //Client.Supprimer_client(987654321);
-            Client.Modifier_client(123456789);
-            List<Client> list = Client.Lire_excel_trier();
-            Client.Affiche_List(list);
-            
+            //Client.Modifier_client(123456789);
+            //List<Client> list = Client.Lire_excel_trier();
+            //Client.Affiche_List(list);
+
+            //Calcul prix
+            Livraison livraison = new Livraison(new Adresse(3, "allee", "Paris"), new Adresse(6, "rue", "Lyon"));
+            Commande commande1 = new Commande(101, 123456, livraison, 123, DateTime.Now);
+            double prix = livraison.Calcul_prix();
+            Console.WriteLine(prix);
+
 
             Console.ReadKey();
 
