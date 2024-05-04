@@ -63,13 +63,14 @@ namespace Projet_A6_V1
             );
             client10.Ecrire_client_excel();
             client11.Ecrire_client_excel();
-            client12.Ecrire_client_excel();
-            */
+            client12.Ecrire_client_excel();*/
+
 
             //Client.Supprimer_client(987654321);
-            //List<Client> list = Client.Lire_excel_trier();
-            //Client.Affiche_List(list);
             Client.Modifier_client(123456789);
+            List<Client> list = Client.Lire_excel_trier();
+            Client.Affiche_List(list);
+            
 
             Console.ReadKey();
 
