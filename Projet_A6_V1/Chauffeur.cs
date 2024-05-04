@@ -12,8 +12,8 @@ namespace Projet_A6_V1
         protected bool dispo;
 
         public Chauffeur(int num_ss, string nom, string prenom, DateTime date_naissance, Adresse adresse, string mail, string telephone,
-             DateTime entree_societe, string poste, int salaire, int idchauffeur, bool dispo)
-            : base(num_ss, nom, prenom, date_naissance, adresse, mail, telephone,entree_societe,poste,salaire)
+             string niveau, DateTime entree_societe, string poste, int salaire, int idchauffeur, bool dispo)
+            : base(num_ss, nom, prenom, date_naissance, adresse, mail, telephone,niveau,entree_societe,poste,salaire)
         {
             this.idchauffeur = idchauffeur;
             this.dispo = dispo;
