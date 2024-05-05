@@ -122,8 +122,9 @@ namespace Projet_A6_V1
 
 
             Commande c = Commande.Nouvelle_commande();
-            Commande.Affiche_commande(c);
-
+            //Commande.Affiche_commande(c);
+            List<Commande> list = Commande.Lire_excel();
+            Commande.Affiche_List_Commande(list);
             Console.ReadKey();
 
         }

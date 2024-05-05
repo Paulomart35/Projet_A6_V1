@@ -40,7 +40,7 @@ namespace Projet_A6_V1
         {
             string path = "Distances.csv";
             double montant_total = 0;
-            double tarif_kilometre = 0.1; //à définir ??
+            double tarif_kilometre = 10; //à définir ??
             using (StreamReader reader = new StreamReader(path))
             {
                 string line;

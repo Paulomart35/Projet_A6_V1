@@ -69,7 +69,9 @@ namespace Projet_A6_V1
                         
                         Adresse adressed = new Adresse(int.Parse(values[2]), values[3], values[4]);
                         Adresse adressea = new Adresse(int.Parse(values[5]), values[6], values[7]);
-                        Livraison livraison = new Livraison(adressed, adressea);
+                        //int kilometrage = int.Parse(values[8]);
+                        //string duree = values[9];
+                        Livraison livraison = new Livraison(adressed, adressea/*, kilometrage, duree*/);
                         double prix = double.Parse(values[8]);
                         int idchauffeur = int.Parse(values[9]);
                         DateTime data = DateTime.Parse(values[10]);
@@ -90,14 +92,20 @@ namespace Projet_A6_V1
         public void Ecrire_commande_excel()
         {
             string path = "Commande_Transconnect.csv";
+            List<Commande> list = Lire_excel();
+            int dernierid = 0;
+            if (list.Count > 0)
+            {
+                dernierid = list.Last().idcommande;
+            }
             try
             {
-                string text = (this.idcommande + "," + this.num_ss + "," + this.livraison.ToString() + "," + this.prix + "," + this.idchauffeur + "," + this.date);
+                string text = (++dernierid + "," + this.num_ss + "," + this.livraison.ToString() + "," + this.prix + "," + this.idchauffeur + "," + this.date);
                 using (StreamWriter writer = new StreamWriter(path, true))
                 {
                     writer.WriteLine(text);
                 }
-                Console.WriteLine("Commande" + this.idcommande + " ajouté à la base de donné");
+                Console.WriteLine("Commande" + ++dernierid + " ajouté à la base de donné");
             }
             catch (Exception ex)
             {
