@@ -115,6 +115,24 @@ namespace Projet_A6_V1
 
         }
 
+        public static Noeud<Salarie> CreationArbre(List<Salarie> organigramme)
+        {
+            organigramme = Salarie.TrieNiveau(organigramme);
+
+            Noeud<Salarie> Directeur = new Noeud<Salarie>(organigramme[0]);
+            for (int i = 1; i < organigramme.Count; i++)
+            {
+                //ajout d'un algo récusif je pense pour créé l'arbre
+                
+                int niveau = Directeur.Valeur.niveau.Length;
+                if (organigramme[i].niveau.Length <= 2)
+                {
+
+                }
+            }
+            return Directeur;
+        }
+
 
 
     }

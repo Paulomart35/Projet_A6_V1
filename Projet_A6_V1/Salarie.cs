@@ -80,6 +80,11 @@ namespace Projet_A6_V1
             return lecture_salaries;
         }
 
+        public static List<Salarie> TrieNiveau(List<Salarie> orga)
+        {
+            return orga.OrderBy(o => o.niveau).ToList();
+        }
+
         public string Poste
         {
             get { return poste; }

@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace Projet_A6_V1
 {
-    internal class Noeud
+    internal class Noeud<T>
     {
-        public int Valeur { get; set; }
-        public Noeud Fils { get; set; }
-        public Noeud Frere { get; set; }
+        public T Valeur { get; set; }
+        public List<Noeud<T>> Fils { get; set; }
+        public Noeud<T> Frere { get; set; }
 
-        public Noeud(int valeur)
+        public Noeud(T valeur)
         {
             Valeur = valeur;
-            Fils = null;
+            Fils = new List<Noeud<T>>();
         }
 
-        public void AjouterFils(Noeud fils)
+        public void AjouterFils(Noeud<T> fils)
         {
-            Fils = fils;
+            Fils.Add(fils);
         }
 
-        public void AjouterFrere(Noeud frere)
+        public void AjouterFrere(Noeud<T> frere)
         {
             Frere = frere;
         }
