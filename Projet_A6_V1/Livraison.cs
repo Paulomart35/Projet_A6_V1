@@ -40,7 +40,7 @@ namespace Projet_A6_V1
         {
             string path = "Distances.csv";
             double montant_total = 0;
-            double tarif_kilometre = 0.1;
+            double tarif_kilometre = 10; //à définir ??
             using (StreamReader reader = new StreamReader(path))
             {
                 string line;
@@ -54,13 +54,23 @@ namespace Projet_A6_V1
                     int kilometrage = int.Parse(values[2]);
                     string duree = values[3];
 
-                    if (adresse_départ.Ville == this.départ.Ville && adresse_arrivee.Ville == this.arrivee.Ville)
+                    if (adresse_départ.Ville == this.départ.Ville && adresse_arrivee.Ville == this.arrivee.Ville || adresse_arrivee.Ville == this.départ.Ville && adresse_départ.Ville == this.arrivee.Ville)
                     {
                         montant_total = kilometrage * tarif_kilometre;
                     }
                 }
             }
+            //ajouté au calcul véhicule loué
             return montant_total;
+        }
+
+        public Livraison Demander_Livraison()
+        {
+            Adresse départ = new Adresse(0, "", "");
+            départ = départ.Demander_adresse();
+            Adresse arrivee = new Adresse(0, "", "");
+            arrivee = arrivee.Demander_adresse();
+            return new Livraison(départ, arrivee);
         }
 
     }
