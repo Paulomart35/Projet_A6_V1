@@ -163,5 +163,70 @@ namespace Projet_A6_V1
                 Affiche_commande(commande);
             }
         }
+
+        public static void Modifier_commande(int idcommande)
+        {
+            string path = "Commande_Transconnect.csv";
+            try
+            {
+                List<Commande> commandes = Lire_excel();
+
+                Commande commandeAModifier = commandes.Find(c => c.idcommande == idcommande);
+
+                if (commandeAModifier != null)
+                {
+                    Console.WriteLine("Informations actuelles de la commande :");
+                    Affiche_commande(commandeAModifier);
+
+                    Console.WriteLine("Saisissez les nouvelles informations :");
+                    Console.Write("Voulez-vous modifier la livraison (y/n) : ");
+                    char a1 = Console.ReadKey().KeyChar;
+                    if (a1 == 'y')
+                    {
+                        Console.Write("\nNouvelle livraison : ");
+                        Livraison nouvelleLivraison = new Livraison(null, null);
+                        nouvelleLivraison = nouvelleLivraison.Demander_Livraison();
+                        commandeAModifier.livraison = nouvelleLivraison;
+                        commandeAModifier.prix = commandeAModifier.livraison.Calcul_prix();
+                    }
+                    Console.Write("\nVoulez-vous modifier l'id chauffeur (y/n) : ");
+                    char a2 = Console.ReadKey().KeyChar;
+                    if (a2 == 'y')
+                    {
+                        Console.Write("\nNouvel id chauffeur : ");
+                        commandeAModifier.idchauffeur = Convert.ToInt32(Console.ReadLine());
+                    }
+                    Console.Write("\nVoulez-vous modifier la date (y/n) : ");
+                    char a3 = Console.ReadKey().KeyChar;
+                    if (a3 == 'y')
+                    {
+                        Console.Write("\nNouvelle date (AAAA-MM-JJ) : ");
+                        commandeAModifier.date = DateTime.Parse(Console.ReadLine());
+                    }
+                    
+                    Console.WriteLine("\n");
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        foreach (Commande commande in commandes)
+                        {
+                            string text = $"{commande.idcommande},{commande.num_ss},{commande.livraison.départ.Numero},{commande.livraison.départ.Rue},{commande.livraison.départ.Ville},{commande.livraison.arrivee.Numero},{commande.livraison.arrivee.Rue},{commande.livraison.arrivee.Ville},{commande.prix},{commande.idchauffeur},{commande.date}";
+                            writer.WriteLine(text);
+                        }
+                    }
+
+                    Console.WriteLine($"La commande avec le numéro de sécurité sociale {idcommande} a été modifiée avec succès.");
+                }
+                else
+                {
+                    Console.WriteLine($"Aucune commande trouvée avec le numéro de sécurité sociale {idcommande}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+        }
+
+
     }
 }
