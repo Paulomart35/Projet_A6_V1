@@ -9,18 +9,18 @@ namespace Projet_A6_V1
     internal class Noeud<T>
     {
         public T Valeur { get; set; }
-        public List<Noeud<T>> Fils { get; set; }
+        public Noeud<T> Fils { get; set; }
         public Noeud<T> Frere { get; set; }
 
         public Noeud(T valeur)
         {
             Valeur = valeur;
-            Fils = new List<Noeud<T>>();
+            //Fils = new Noeud<T>();
         }
 
         public void AjouterFils(Noeud<T> fils)
         {
-            Fils.Add(fils);
+            this.Fils = fils;
         }
 
         public void AjouterFrere(Noeud<T> frere)
