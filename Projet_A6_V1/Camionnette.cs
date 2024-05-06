@@ -6,13 +6,27 @@ using System.Threading.Tasks;
 
 namespace Projet_A6_V1
 {
-    internal class Camionnette : Vehicule  
+    internal class Camionnette : Vehicule
     {
         public string usage;
 
         public Camionnette(string usage) : base()
         {
             this.usage=usage;
+        }
+
+        public Camionnette() : base() { }
+
+        public Camionnette demander_attribut()
+        {
+            Console.Write("Quel usage : ");
+            string us = Console.ReadLine();
+            return new Camionnette(us);
+        }
+
+        public string ecriture_attributs()
+        {
+            return usage;
         }
     }
 }

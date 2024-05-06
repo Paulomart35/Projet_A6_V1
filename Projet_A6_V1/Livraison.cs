@@ -36,11 +36,31 @@ namespace Projet_A6_V1
             return this.départ.ToString() + "," + this.arrivee.ToString();
         }
 
-        public double Calcul_prix()
+        public double Calcul_prix(string vehicule)
         {
             string path = "Distances.csv";
             double montant_total = 0;
-            double tarif_kilometre = 10; //à définir ??
+            double tarif_kilometre = 1;
+            double tarif_vehicule = 0;
+            switch (vehicule)
+            {
+                case "Voiture":
+                    tarif_vehicule = 10;
+                    break;
+                case "Camionnette":
+                    tarif_vehicule = 20;
+                    break;
+                case "CamionFrigorifique":
+                    tarif_vehicule = 30;
+                    break;
+                case "CamionCiterne":
+                    tarif_vehicule = 40;
+                    break;
+                case "CamionBenne":
+                    tarif_vehicule = 50;
+                    break;
+
+            }
             using (StreamReader reader = new StreamReader(path))
             {
                 string line;
@@ -56,11 +76,10 @@ namespace Projet_A6_V1
 
                     if (adresse_départ.Ville == this.départ.Ville && adresse_arrivee.Ville == this.arrivee.Ville || adresse_arrivee.Ville == this.départ.Ville && adresse_départ.Ville == this.arrivee.Ville)
                     {
-                        montant_total = kilometrage * tarif_kilometre;
+                        montant_total = kilometrage * tarif_kilometre * tarif_vehicule;
                     }
                 }
             }
-            //ajouté au calcul véhicule loué
             return montant_total;
         }
 
@@ -132,14 +151,14 @@ namespace Projet_A6_V1
             }
 
             // Afficher la matrice de distances
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    Console.Write(distances[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
+            //for (int i = 0; i < n; i++)
+            //{
+            //    for (int j = 0; j < n; j++)
+            //    {
+            //        Console.Write(distances[i, j] + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
 
             return distances;
         }
@@ -196,14 +215,14 @@ namespace Projet_A6_V1
                 path.Add(distances[i]);
             }
 
-            Console.WriteLine("Villes traversées : ");
+            Console.WriteLine("Chemin le plus court\nVilles traversées : ");
             int compteur = 0;
             do
             {
-                Console.WriteLine(traversedCities[compteur]);
+                Console.Write(traversedCities[compteur] + " ");
                 compteur++;
             } while (traversedCities[compteur] != liste_ville[endVertex]);
-            Console.WriteLine(liste_ville[endVertex]); 
+            Console.Write(liste_ville[endVertex] + "\n"); 
 
             return path;
         }
