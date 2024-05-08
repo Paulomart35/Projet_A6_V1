@@ -8,7 +8,7 @@ namespace Projet_A6_V1
 {
     internal interface IVehicule
     {
-        Vehicule demander_attribut();
+        string demander_attribut();
 
     }
 }

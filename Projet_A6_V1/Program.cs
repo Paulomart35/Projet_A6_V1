@@ -121,11 +121,11 @@ namespace Projet_A6_V1
 
 
             
-            Commande c = Commande.Nouvelle_commande();
+            //Commande c = Commande.Nouvelle_commande();
             //Commande.Affiche_commande(c);
-            /*Commande.Modifier_commande(2);
+            Commande.Modifier_commande(1);
             List<Commande> list = Commande.Lire_excel();
-            Commande.Affiche_List_Commande(list);*/
+            Commande.Affiche_List_Commande(list);
             //Adresse adresseDepart = new Adresse(1, "Rue de la Liberté", "Paris");
             //Adresse adresseArrivee = new Adresse(10, "Avenue des Champs-Élysées", "Paris");
             //Livraison livraison = new Livraison(adresseDepart, adresseArrivee, 50, "2 heures");

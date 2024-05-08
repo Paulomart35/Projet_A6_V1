@@ -30,7 +30,6 @@ namespace Projet_A6_V1
         public string ecriture_attributs()
         {
             string str = Convert.ToString(this.nb_passager);
-            Console.WriteLine(str);
             return str;
             
         }

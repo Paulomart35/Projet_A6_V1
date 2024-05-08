@@ -10,7 +10,7 @@ namespace Projet_A6_V1
     {
         public int nb_grp_electrogene;
 
-        public CamionFrigorifique(int volume, List<string> matiere, int nb_grp_electrogene) : base(volume, matiere)
+        public CamionFrigorifique(double volume, List<string> matiere, int nb_grp_electrogene) : base(volume, matiere)
         {
             this.nb_grp_electrogene=nb_grp_electrogene;
         }
@@ -20,7 +20,7 @@ namespace Projet_A6_V1
         public CamionFrigorifique demander_attribut()
         {
             Console.Write("Volume en L : ");
-            int vol = Convert.ToInt32(Console.ReadLine());
+            double vol = Convert.ToInt32(Console.ReadLine());
             Console.Write("Nombre de matière : ");
             int long_list = Convert.ToInt32(Console.ReadLine());
             List<string> list = new List<string>(long_list);

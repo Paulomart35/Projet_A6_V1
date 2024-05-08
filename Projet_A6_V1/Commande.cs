@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Data;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Projet_A6_V1
 {
@@ -74,15 +75,72 @@ namespace Projet_A6_V1
                         
                         Adresse adressed = new Adresse(int.Parse(values[2]), values[3], values[4]);
                         Adresse adressea = new Adresse(int.Parse(values[5]), values[6], values[7]);
-                        //int kilometrage = int.Parse(values[8]);
-                        //string duree = values[9];
-                        Livraison livraison = new Livraison(adressed, adressea/*, kilometrage, duree*/);
+                        Livraison livraison = new Livraison(adressed, adressea);
                         double prix = double.Parse(values[8]);
                         int idchauffeur = int.Parse(values[9]);
                         DateTime data = DateTime.Parse(values[10]);
-                        Vehicule vehicule = new Vehicule(int.Parse(values[11]));
-
-                        Commande commande = new Commande(idcommande,num_ss, livraison, prix, idchauffeur, data, vehicule);
+                        string vehicule = values[11];
+                        double volume = 0;
+                        List<string> matiere = new List<string>();
+                        Commande commande = new Commande();
+                        switch (vehicule)
+                        {
+                            case "Voiture":
+                                int nbPassagers = int.Parse(values[12]); 
+                                Vehicule voiture = new Voiture(nbPassagers);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, voiture);
+                                break;
+                            case "Camionnette":
+                                string usage = values[12];
+                                Vehicule camionnette = new Camionnette(usage);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionnette);
+                                break;
+                            case "CamionFrigorifique":
+                                volume = double.Parse(values[12]);
+                                string[] matieres = values[13].Split('/');
+                                foreach (string m in matieres)
+                                {
+                                    matiere.Add(m);
+                                }
+                                int nbGrpElectrogene = int.Parse(values[14]); 
+                                Vehicule camionFrigorifique = new CamionFrigorifique(volume, matiere, nbGrpElectrogene);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionFrigorifique);
+                                break;
+                            case "CamionCiterne":
+                                volume = double.Parse(values[12]); 
+                                string[] matieres2 = values[13].Split('/'); 
+                                foreach (string m in matieres2)
+                                {
+                                    matiere.Add(m);
+                                }
+                                string typeCuve = values[14]; 
+                                Vehicule camionCiterne = new CamionCiterne(volume, matiere, typeCuve);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionCiterne);
+                                break;
+                            case "CamionBenne":
+                                volume = double.Parse(values[12]); 
+                                string[] matieres3 = values[13].Split('/'); 
+                                foreach (string m in matieres3)
+                                {
+                                    matiere.Add(m);
+                                }
+                                string typeTravaux = values[14]; 
+                                List<string> equipements = new List<string>();
+                                string[] equipementsArray = values[15].Split('/'); 
+                                foreach (string e in equipementsArray)
+                                {
+                                    equipements.Add(e);
+                                }
+                                int nbBennes = int.Parse(values[16]); 
+                                bool grue = bool.Parse(values[17]); 
+                                Vehicule camionBenne = new CamionBenne(volume, matiere, typeTravaux, equipements, nbBennes, grue);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionBenne);
+                                break;
+                            case null:
+                                Vehicule v = new Vehicule();
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, v);
+                                break;
+                        }
                         lecture_commandes.Add(commande);
                     }
                 }
@@ -98,16 +156,15 @@ namespace Projet_A6_V1
         public void Ecrire_commande_excel()
         {
             string path = "Commande_Transconnect.csv";
-            /*List<Commande> list = Lire_excel();
+            List<Commande> list = Lire_excel();
             int dernierid = 0;
             if (list.Count > 0)
             {
                 dernierid = list.Last().idcommande;
-            }*/
-            int dernierid = 0;
+            }
             try
             {
-                string text = (++dernierid + "," + this.num_ss + "," + this.livraison.ToString() + "," + this.prix + "," + this.idchauffeur + "," + this.date + "," + this.vehicule.GetType().Name);
+                string text = (++derniernumcom + "," + this.num_ss + "," + this.livraison.ToString() + "," + this.prix + "," + this.idchauffeur + "," + this.date + "," + this.vehicule.GetType().Name);
                 switch (this.vehicule.GetType().Name)
                 {
                     case "Voiture":
@@ -135,7 +192,7 @@ namespace Projet_A6_V1
                 {
                     writer.WriteLine(text);
                 }
-                Console.WriteLine("Commande" + ++dernierid + " ajouté à la base de donné");
+                Console.WriteLine("Commande" + ++derniernumcom + " ajouté à la base de donné");
             }
             catch (Exception ex)
             {
@@ -164,7 +221,7 @@ namespace Projet_A6_V1
             DateTime date = DateTime.Parse(Console.ReadLine());
 
             Commande nv_commande = new Commande();
-            Console.WriteLine("Type de véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
+            Console.Write("Type de véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
             string rep = Console.ReadLine();
             double prix = livraison.Calcul_prix(rep);
             switch (rep)
@@ -210,6 +267,38 @@ namespace Projet_A6_V1
             Console.WriteLine($"ID chauffeur : {commande.idchauffeur}");
             Console.WriteLine($"Date : {commande.date}");
 
+            // Affichez les informations du véhicule
+            Console.WriteLine($"Type de véhicule : {commande.vehicule.GetType().Name}");
+            if (commande.vehicule is Voiture voiture)
+            {
+                Console.WriteLine($"Nombre de passagers : {voiture.nb_passager}");
+            }
+            else if (commande.vehicule is Camionnette camionnette)
+            {
+                Console.WriteLine($"Usage : {camionnette.usage}");
+            }
+            else if (commande.vehicule is CamionFrigorifique camionFrigorifique)
+            {
+                Console.WriteLine($"Volume : {camionFrigorifique.volume}");
+                Console.WriteLine($"Matières : {string.Join(", ", camionFrigorifique.matiere)}");
+                Console.WriteLine($"Nombre de groupes électrogènes : {camionFrigorifique.nb_grp_electrogene}");
+            }
+            else if (commande.vehicule is CamionCiterne camionCiterne)
+            {
+                Console.WriteLine($"Volume : {camionCiterne.volume}");
+                Console.WriteLine($"Matières : {string.Join(", ", camionCiterne.matiere)}");
+                Console.WriteLine($"Type de cuve : {camionCiterne.type_cuve}");
+            }
+            else if (commande.vehicule is CamionBenne camionBenne)
+            {
+                Console.WriteLine($"Volume : {camionBenne.volume}");
+                Console.WriteLine($"Matières : {string.Join(", ", camionBenne.matiere)}");
+                Console.WriteLine($"Type de travaux : {camionBenne.type_travaux}");
+                Console.WriteLine($"Équipements : {string.Join(", ", camionBenne.equipements)}");
+                Console.WriteLine($"Nombre de bennes : {camionBenne.nb_bennes}");
+                Console.WriteLine($"Grue : {camionBenne.grue}");
+            }
+
             Console.WriteLine();
         }
 
@@ -221,7 +310,7 @@ namespace Projet_A6_V1
             }
         }
 
-        public static void Modifier_commande(int idcommande)
+        /*public static void Modifier_commande(int idcommande)
         {
             string path = "Commande_Transconnect.csv";
             try
@@ -238,7 +327,7 @@ namespace Projet_A6_V1
                     Console.WriteLine("Saisissez les nouvelles informations :");
                     Console.Write("Voulez-vous modifier la livraison (y/n) : ");
                     char a1 = Console.ReadKey().KeyChar;
-                    /*if (a1 == 'y')
+                    if (a1 == 'y')
                     {
                         Console.Write("\nNouvelle livraison : ");
                         Livraison nouvelleLivraison = new Livraison(null, null);
@@ -248,7 +337,7 @@ namespace Projet_A6_V1
                         string veh = Console.ReadLine();
                         //demander vehicule modifier appeler demandeer attributs 
                         commandeAModifier.prix = commandeAModifier.livraison.Calcul_prix(veh);
-                    }*/
+                    }
                     Console.Write("\nVoulez-vous modifier l'id chauffeur (y/n) : ");
                     char a2 = Console.ReadKey().KeyChar;
                     if (a2 == 'y')
@@ -284,6 +373,98 @@ namespace Projet_A6_V1
             catch (Exception ex)
             {
                 throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+        }*/
+
+        public static void Modifier_commande(int idcommande)
+        {
+            string path = "Commande_Transconnect.csv";
+            try
+            {
+                List<Commande> commandes = Lire_excel();
+
+                Commande commandeAModifier = commandes.Find(c => c.idcommande == idcommande);
+
+                if (commandeAModifier != null)
+                {
+                    Console.WriteLine("Informations actuelles de la commande :");
+                    Affiche_commande(commandeAModifier);
+
+                    Console.WriteLine("Saisissez les nouvelles informations :");
+                    Console.Write("Voulez-vous modifier la livraison (y/n) : ");
+                    char a1 = Console.ReadKey().KeyChar;
+                    if (a1 == 'y')
+                    {
+                        Console.Write("\nNouvelle livraison : ");
+                        Livraison nouvelleLivraison = new Livraison(null, null);
+                        nouvelleLivraison = nouvelleLivraison.Demander_Livraison();
+                        commandeAModifier.livraison = nouvelleLivraison;
+                    }
+                    Console.Write("\nVoulez-vous modifier l'id chauffeur (y/n) : ");
+                    char a2 = Console.ReadKey().KeyChar;
+                    if (a2 == 'y')
+                    {
+                        Console.Write("\nNouvel id chauffeur : ");
+                        commandeAModifier.idchauffeur = Convert.ToInt32(Console.ReadLine());
+                    }
+                    Console.Write("\nVoulez-vous modifier la date (y/n) : ");
+                    char a3 = Console.ReadKey().KeyChar;
+                    if (a3 == 'y')
+                    {
+                        Console.Write("\nNouvelle date (AAAA-MM-JJ) : ");
+                        commandeAModifier.date = DateTime.Parse(Console.ReadLine());
+                    }
+
+                    // Ajouter la possibilité de modifier les attributs spécifiques au type de véhicule
+                    Console.Write("\nVoulez-vous modifier les attributs du véhicule (y/n) : ");
+                    char a4 = Console.ReadKey().KeyChar;
+                    if (a4 == 'y')
+                    {
+                        Console.Write("\nNouveau véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
+                        string veh = Console.ReadLine();
+                        commandeAModifier.vehicule = Demander_vehicule(veh);
+                    }
+
+                    Console.WriteLine("\n");
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        foreach (Commande commande in commandes)
+                        {
+                            string text = $"{commande.idcommande},{commande.num_ss},{commande.livraison.départ.Numero},{commande.livraison.départ.Rue},{commande.livraison.départ.Ville},{commande.livraison.arrivee.Numero},{commande.livraison.arrivee.Rue},{commande.livraison.arrivee.Ville},{commande.prix},{commande.idchauffeur},{commande.date}";
+                            writer.WriteLine(text);
+                        }
+                    }
+
+                    Console.WriteLine($"La commande avec le numéro de commande {idcommande} a été modifiée avec succès.");
+                }
+                else
+                {
+                    Console.WriteLine($"Aucune commande trouvée avec le numéro de commande {idcommande}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+        }
+
+        // Méthode pour demander et créer un nouveau véhicule en fonction du type
+        private static Vehicule Demander_vehicule(string type)
+        {
+            switch (type)
+            {
+                case "Voiture":
+                    return new Voiture().demander_attribut();
+                case "Camionnette":
+                    return new Camionnette().demander_attribut();
+                case "CamionFrigorifique":
+                    return new CamionFrigorifique().demander_attribut();
+                case "CamionCiterne":
+                    return new CamionCiterne().demander_attribut();
+                case "CamionBenne":
+                    return new CamionBenne().demander_attribut();
+                default:
+                    throw new ArgumentException("Type de véhicule non valide");
             }
         }
 
