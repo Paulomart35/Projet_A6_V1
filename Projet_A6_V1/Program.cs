@@ -70,7 +70,7 @@ namespace Projet_A6_V1
             //Client.Modifier_client(123456789);
             //List<Client> list = Client.Lire_excel_trier();
             //Client.Affiche_List(list);
-            
+            /*
             Salarie sal1 = new Salarie(123456789, "Dupont", "Jean", new DateTime(1980, 5, 15), new Adresse(1, "75001", "Paris"), "jean.dupont@example.com", "0123456789", "a", new DateTime(2010, 7, 1), "Directeur", 50000);
             Salarie sal2 = new Salarie(987654321, "Martin", "Sophie", new DateTime(1985, 10, 20), new Adresse(5, "69002", "Lyon"), "sophie.martin@example.com", "0987654321", "aa", new DateTime(2015, 3, 10), "Dir com", 40000);
             Salarie sal3 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "aaa", new DateTime(2018, 1, 5), "com", 35000);
@@ -94,7 +94,7 @@ namespace Projet_A6_V1
             list.Add(sal8);
             list.Add(sal9);
             list.Add(sal10);
-            list.Add(sal11);
+            list.Add(sal11);*/
 
             
 
@@ -113,25 +113,23 @@ namespace Projet_A6_V1
             Commande.Affiche_List_Commande(list);
             
             */
-
-            Noeud<Salarie> racine = CreationArbre(list);
-
-            ParcourirArbre(racine,0);
-
-
-
             /*
+            Noeud<Salarie> racine = CreationArbre(list);
+            
+            ParcourirArbre(racine,0);*/
+
+
+
+            
             //Commande c = Commande.Nouvelle_commande();
-            //Commande.Affiche_commande(c);.
-            Commande.Modifier_commande(2);
+            //Commande.Affiche_commande(c);
+            Commande.Modifier_commande(1);
             List<Commande> list = Commande.Lire_excel();
             Commande.Affiche_List_Commande(list);
-            Adresse adresseDepart = new Adresse(1, "Rue de la Liberté", "Paris");
-            Adresse adresseArrivee = new Adresse(10, "Avenue des Champs-Élysées", "Paris");
-            Livraison livraison = new Livraison(adresseDepart, adresseArrivee, 50, "2 heures");
-            livraison.Distancepluscourte();
-
-            */
+            //Adresse adresseDepart = new Adresse(1, "Rue de la Liberté", "Paris");
+            //Adresse adresseArrivee = new Adresse(10, "Avenue des Champs-Élysées", "Paris");
+            //Livraison livraison = new Livraison(adresseDepart, adresseArrivee, 50, "2 heures");
+            //livraison.Distancepluscourte();
             Console.ReadKey();
         }
 

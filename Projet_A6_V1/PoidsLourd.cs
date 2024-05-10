@@ -17,5 +17,7 @@ namespace Projet_A6_V1
             this.matiere=matiere;
             //
         }
+
+        public PoidsLourd() { }
     }
 }
