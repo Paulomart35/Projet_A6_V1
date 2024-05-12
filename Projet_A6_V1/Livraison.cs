@@ -31,6 +31,8 @@ namespace Projet_A6_V1
             this.duree=null;
         }
 
+        public Livraison() { }
+
         public override string ToString()
         {
             return this.départ.ToString() + "," + this.arrivee.ToString();
@@ -150,20 +152,84 @@ namespace Projet_A6_V1
                 distances[arrivee, depart] = distance;
             }
 
-            // Afficher la matrice de distances
-            //for (int i = 0; i < n; i++)
-            //{
-            //    for (int j = 0; j < n; j++)
-            //    {
-            //        Console.Write(distances[i, j] + " ");
-            //    }
-            //    Console.WriteLine();
-            //}
-
             return distances;
         }
 
-        public List<int> Dijkstra(int[,] graph, int startVertex, int endVertex)
+        public List<string> Dijkstra2(int[,] graph, int startVertex, int endVertex)
+        {
+            List<string> liste_ville = Liste_ville();
+            var traversedCities = new List<string>();
+            int verticesCount = graph.GetLength(0);
+            var distances = new int[verticesCount];
+            var visited = new bool[verticesCount];
+            var previous = new int[verticesCount];
+            var path = new List<int>();
+            List<string> path_villes = new List<string>();
+
+            for (int i = 0; i < verticesCount; i++)
+            {
+                distances[i] = int.MaxValue;
+                visited[i] = false;
+                previous[i] = -1;
+            }
+
+            distances[startVertex] = 0;
+
+            for (int count = 0; count < verticesCount - 1; count++)
+            {
+                int minDistance = int.MaxValue;
+                int minIndex = -1;
+
+                for (int v = 0; v < verticesCount; v++)
+                {
+                    if (!visited[v] && distances[v] <= minDistance)
+                    {
+                        minDistance = distances[v];
+                        minIndex = v;
+                    }
+                }
+
+                int u = minIndex;
+                visited[u] = true;
+                traversedCities.Add(liste_ville[u]);
+
+                for (int v = 0; v < verticesCount; v++)
+                {
+                    if (!visited[v] && graph[u, v] != 0 &&
+                        distances[u] != int.MaxValue &&
+                        distances[u] + graph[u, v] < distances[v])
+                    {
+                        distances[v] = distances[u] + graph[u, v];
+                        previous[v] = u;
+                    }
+                }
+            }
+
+
+            // Reconstruire le chemin
+            int current = endVertex;
+            while (current != -1)
+            {
+                path.Add(current);
+                current = previous[current];
+            }
+            path.Reverse();
+
+            //Console.WriteLine("Chemin le plus court\nVilles traversées : ");
+            int compteur = 0;
+            do
+            {
+                //Console.Write(liste_ville[path[compteur]] + " ");
+                path_villes.Add(liste_ville[path[compteur]]);
+                compteur++;
+            } while (compteur < path.Count);
+            //Console.Write("\n");
+
+            return path_villes;
+
+        }
+
+        public List<int> Dijkstra1(int[,] graph, int startVertex, int endVertex)
         {
             List<string> liste_ville = Liste_ville();
             var traversedCities = new List<string>();
@@ -210,35 +276,109 @@ namespace Projet_A6_V1
                 }
             }
 
+
             for (int i = 0; i < verticesCount; i++)
             {
                 path.Add(distances[i]);
             }
 
-            Console.WriteLine("Chemin le plus court\nVilles traversées : ");
-            int compteur = 0;
-            do
-            {
-                Console.Write(traversedCities[compteur] + " ");
-                compteur++;
-            } while (traversedCities[compteur] != liste_ville[endVertex]);
-            Console.Write(liste_ville[endVertex] + "\n"); 
-
             return path;
+           
         }
 
+        /* 
+        0 - Paris
+        1 - Rouen
+        2 - Lyon
+        3 - Angers
+        4 - La Rochelle
+        5 - Bordeaux
+        6 - Biarritz
+        7 - Toulouse
+        8 - Pau
+        9 - Nimes
+        10 - Montpellier
+        11 - Marseilles
+        12 - Marseille
+        13 - Avignon
+        14 - Monaco
+        15 - Marseille
+        16 - Toulon
+         */
 
-        public void Distancepluscourte()
+        public static List<string> Liste__des_ville()
         {
+            return new List<string> { "Paris", "Rouen", "Lyon", "Angers", "La Rochelle", "Bordeaux", "Biarritz", "Toulouse", "Pau", "Nimes", "Montpellier", "Marseilles", "Marseille", "Avignon", "Monaco", "Marseille", "Toulon" };
+        }
+
+        public int Convert_toint(string ville)
+        {
+            int num = 0;
+            switch (ville)
+            {
+                case "Paris":
+                    num = 0;
+                    break;
+                case "Rouen":
+                    num = 1;
+                    break;
+                case "Lyon":
+                    num = 2;
+                    break;
+                case "Angers":
+                    num = 3;
+                    break;
+                case "La Rochelle":
+                    num = 4;
+                    break;
+                case "Bordeaux":
+                    num = 5;
+                    break;
+                case "Biarritz":
+                    num = 6;
+                    break;
+                case "Toulouse":
+                    num = 7;
+                    break;
+                case "Pau":
+                    num = 8;
+                    break;
+                case "Nimes":
+                    num = 9;
+                    break;
+                case "Montpellier":
+                    num = 10;
+                    break;
+                case "Marseilles":
+                    num = 11;
+                    break;
+                case "Marseille":
+                    num = 12;
+                    break;
+                case "Avignon":
+                    num = 13;
+                    break;
+                case "Monaco":
+                    num = 14;
+                    break;
+                case "Toulon":
+                    num = 16;
+                    break;
+                default:
+                    Console.WriteLine("City not found");
+                    break;
+            }
+            return num;
+        }
+
+        public void Distancepluscourte(string ville_depart, string ville_arrivee)
+        {
+            
             List<string> liste_ville = Liste_ville();
             int[,] mat = Transformation_matrice();
-            int startVertex = 0; //ville départ
-            int endVertex = 0; //ville arrivée
-
-            Console.Write("Ville départ : ");
-            string ville_depart = Console.ReadLine();
-            Console.Write("Ville arrivée : ");
-            string ville_arrivee = Console.ReadLine();
+            int startVertex = Convert_toint(ville_depart);
+            int endVertex = Convert_toint(ville_arrivee);
+            
 
             for (int i = 0; i < liste_ville.Count; i++)
             {
@@ -252,8 +392,59 @@ namespace Projet_A6_V1
                     endVertex = j;
 
             }
-            List<int> distances = Dijkstra(mat, startVertex, endVertex);
+            List<int> distances = Dijkstra1(mat, startVertex, endVertex);
+            List<string> distances2 = Dijkstra2(mat, startVertex, endVertex);
+
             Console.WriteLine($"La distance la plus courte entre {ville_depart} et {ville_arrivee} est de {distances[endVertex]}km");
+
+        }
+
+        public List<string> Demander_ville_traverse(string ville_depart, string ville_arrivee)
+        {
+            List<string> liste_ville = Liste_ville();
+            int[,] mat = Transformation_matrice();
+            int startVertex = Convert_toint(ville_depart);
+            int endVertex = Convert_toint(ville_arrivee);
+
+
+            for (int i = 0; i < liste_ville.Count; i++)
+            {
+                if (ville_depart == liste_ville[i])
+                    startVertex = i;
+
+            }
+            for (int j = 0; j < liste_ville.Count; j++)
+            {
+                if (ville_arrivee == liste_ville[j])
+                    endVertex = j;
+
+            }
+            return Dijkstra2(mat, startVertex, endVertex);
+        }
+
+        public int Demander_kilometrage(string ville_depart, string ville_arrivee)
+        {
+            List<string> liste_ville = Liste_ville();
+            int[,] mat = Transformation_matrice();
+            int startVertex = Convert_toint(ville_depart);
+            int endVertex = Convert_toint(ville_arrivee);
+
+
+            for (int i = 0; i < liste_ville.Count; i++)
+            {
+                if (ville_depart == liste_ville[i])
+                    startVertex = i;
+
+            }
+            for (int j = 0; j < liste_ville.Count; j++)
+            {
+                if (ville_arrivee == liste_ville[j])
+                    endVertex = j;
+
+            }
+            List<int> distances = Dijkstra1(mat, startVertex, endVertex);
+            return distances[endVertex];
+
         }
 
 

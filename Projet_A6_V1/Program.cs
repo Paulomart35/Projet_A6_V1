@@ -96,7 +96,7 @@ namespace Projet_A6_V1
             list.Add(sal10);
             list.Add(sal11);*/
 
-            
+
 
             /*
             //Calcul prix
@@ -119,13 +119,13 @@ namespace Projet_A6_V1
             ParcourirArbre(racine,0);*/
 
 
-
-            
-            //Commande c = Commande.Nouvelle_commande();
-            //Commande.Affiche_commande(c);
-            Commande.Modifier_commande(1);
-            List<Commande> list = Commande.Lire_excel();
-            Commande.Affiche_List_Commande(list);
+            Commande c = Commande.Nouvelle_commande();
+            //Livraison l = new Livraison();
+            //l.Distancepluscourte("Toulouse", "Montpellier");
+            Commande.Affiche_commande(c);
+            //Commande.Modifier_commande(1);
+            //List<Commande> list = Commande.Lire_excel();
+            //Commande.Affiche_List_Commande(list);
             //Adresse adresseDepart = new Adresse(1, "Rue de la Liberté", "Paris");
             //Adresse adresseArrivee = new Adresse(10, "Avenue des Champs-Élysées", "Paris");
             //Livraison livraison = new Livraison(adresseDepart, adresseArrivee, 50, "2 heures");
