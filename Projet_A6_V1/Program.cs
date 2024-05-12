@@ -70,18 +70,18 @@ namespace Projet_A6_V1
             //Client.Modifier_client(123456789);
             //List<Client> list = Client.Lire_excel_trier();
             //Client.Affiche_List(list);
-            /*
+            
             Salarie sal1 = new Salarie(123456789, "Dupont", "Jean", new DateTime(1980, 5, 15), new Adresse(1, "75001", "Paris"), "jean.dupont@example.com", "0123456789", "a", new DateTime(2010, 7, 1), "Directeur", 50000);
-            Salarie sal2 = new Salarie(987654321, "Martin", "Sophie", new DateTime(1985, 10, 20), new Adresse(5, "69002", "Lyon"), "sophie.martin@example.com", "0987654321", "aa", new DateTime(2015, 3, 10), "Dir com", 40000);
-            Salarie sal3 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "aaa", new DateTime(2018, 1, 5), "com", 35000);
+            Salarie sal2 = new Salarie(987654321, "Martin", "Sophie", new DateTime(1985, 10, 20), new Adresse(5, "69002", "Lyon"), "sophie.martin@example.com", "0987654321", "aa", new DateTime(2015, 3, 10), "Directeur commercial", 40000);
+            Salarie sal3 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "aaa", new DateTime(2018, 1, 5), "commercial", 35000);
             Salarie sal4 = new Salarie(444555666, "Leclerc", "Marie", new DateTime(1982, 9, 25), new Adresse(10, "13001", "Marseille"), "marie.leclerc@example.com", "0234567890", "ab", new DateTime(2012, 6, 20), "dir op", 60000);
-            Salarie sal5 = new Salarie(888999000, "Dubois", "Thomas", new DateTime(1975, 4, 10), new Adresse(20, "67000", "Strasbourg"), "thomas.dubois@example.com", "0789456123", "aba", new DateTime(2005, 8, 15), "che op", 70000);
-            Salarie sal6 = new Salarie(222333444, "Moreau", "Céline", new DateTime(1988, 12, 5), new Adresse(30, "44000", "Nantes"), "celine.moreau@example.com", "0369852147", "abb", new DateTime(2016, 9, 30), "chef op", 55000);
-            Salarie sal7 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "ac", new DateTime(2018, 1, 5), "dir RH", 35000);
+            Salarie sal5 = new Salarie(888999000, "Dubois", "Thomas", new DateTime(1975, 4, 10), new Adresse(20, "67000", "Strasbourg"), "thomas.dubois@example.com", "0789456123", "aba", new DateTime(2005, 8, 15), "chef opérationnel", 70000);
+            Salarie sal6 = new Salarie(222333444, "Moreau", "Céline", new DateTime(1988, 12, 5), new Adresse(30, "44000", "Nantes"), "celine.moreau@example.com", "0369852147", "abb", new DateTime(2016, 9, 30), "chef opérationnel", 55000);
+            Salarie sal7 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "ac", new DateTime(2018, 1, 5), "directeur RH", 35000);
             Salarie sal8 = new Salarie(444555666, "Leclerc", "Marie", new DateTime(1982, 9, 25), new Adresse(10, "13001", "Marseille"), "marie.leclerc@example.com", "0234567890", "aca", new DateTime(2012, 6, 20), "RH", 60000);
-            Salarie sal9 = new Salarie(888999000, "Dubois", "Thomas", new DateTime(1975, 4, 10), new Adresse(20, "67000", "Strasbourg"), "thomas.dubois@example.com", "0789456123", "abaa", new DateTime(2005, 8, 15), "che op", 70000);
-            Salarie sal10 = new Salarie(222333444, "Moreau", "Céline", new DateTime(1988, 12, 5), new Adresse(30, "44000", "Nantes"), "celine.moreau@example.com", "0369852147", "abab", new DateTime(2016, 9, 30), "chef op", 55000);
-            Salarie sal11 = new Salarie(444555666, "Leclerc", "Marie", new DateTime(1982, 9, 25), new Adresse(10, "13001", "Marseille"), "marie.leclerc@example.com", "0234567890", "aab", new DateTime(2012, 6, 20), "com 2", 60000);
+            Salarie sal9 = new Salarie(888999000, "Dubois", "Thomas", new DateTime(1975, 4, 10), new Adresse(20, "67000", "Strasbourg"), "thomas.dubois@example.com", "0789456123", "abaa", new DateTime(2005, 8, 15), "chef opérationnel", 70000);
+            Salarie sal10 = new Salarie(222333444, "Moreau", "Céline", new DateTime(1988, 12, 5), new Adresse(30, "44000", "Nantes"), "celine.moreau@example.com", "0369852147", "abab", new DateTime(2016, 9, 30), "chef opérationnel", 55000);
+            Salarie sal11 = new Salarie(444555666, "Leclerc", "Marie", new DateTime(1982, 9, 25), new Adresse(10, "13001", "Marseille"), "marie.leclerc@example.com", "0234567890", "aab", new DateTime(2012, 6, 20), "commercial 2", 60000);
             List<Salarie> list = new List<Salarie>();
             
             list.Add(sal1);
@@ -94,9 +94,13 @@ namespace Projet_A6_V1
             list.Add(sal8);
             list.Add(sal9);
             list.Add(sal10);
-            list.Add(sal11);*/
+            list.Add(sal11);
 
+            
 
+            Noeud<Salarie> racine = CreationArbre(list);
+
+            ParcourirArbre(racine);
 
             /*
             //Calcul prix
@@ -116,7 +120,9 @@ namespace Projet_A6_V1
             /*
             Noeud<Salarie> racine = CreationArbre(list);
             
-            ParcourirArbre(racine,0);*/
+            ;*/
+
+
 
 
             Commande c = Commande.Nouvelle_commande();
@@ -154,6 +160,41 @@ namespace Projet_A6_V1
             {
                 Console.Write("Selection non valide, réesayer : ");
                 answer = Console.ReadLine();
+            }
+
+        }
+
+        static void ModulePatron()
+        {
+            Console.Write("Voulez-vous accéder aux client (1), aux salariés (2) ou aux commandes (3) : ");
+            string reponse = Console.ReadLine();
+            if(reponse == "1")
+            {
+                ModuleClient();
+            }
+            else if(reponse == "2")
+            {
+                ModuleSalarie();
+            }
+        }
+
+        static void ModuleSalarie()
+        {
+            Console.WriteLine("Voulez-vous affciher l'organigramme (1), licensier (2) ou ajouter un salarié (3) ? : ");
+            string reponse = Console.ReadLine();
+            if (reponse == "1")
+            {
+                List<Salarie> list = Salarie.Lire_csv();
+                Noeud<Salarie> racine = CreationArbre(list);
+                ParcourirArbre(racine);
+            }
+            else if (reponse == "2")
+            {
+               
+            }
+            else if(reponse=="3")
+            {
+
             }
 
         }
@@ -200,26 +241,26 @@ namespace Projet_A6_V1
             return racine;
         }
 
-        static void AfficheOrganigramme(Noeud<Salarie> tree)
-        {
 
-        }
 
-        static void ParcourirArbre(Noeud<Salarie> noeud, int space)
+        static void ParcourirArbre(Noeud<Salarie> noeud)
         {
             if (noeud == null)
                 return;
 
-            for(int i = 0; i < space; i++)
+            for(int i = 1; i < noeud.Valeur.niveau.Length; i++)
             {
-                Console.Write("-----");
+                if (i == noeud.Valeur.niveau.Length - 1)
+                { Console.Write("└─ "); }
+                else
+                { Console.Write("     "); }
             }
 
-            Console.WriteLine($"{noeud.Valeur.Poste}");
+            Console.WriteLine($"{noeud.Valeur.poste}");
 
-            ParcourirArbre(noeud.Fils,space + 1);
-            space = 0;
-            ParcourirArbre(noeud.Frere, space + 1);
+            ParcourirArbre(noeud.Fils);
+
+            ParcourirArbre(noeud.Frere);
 
             
         }
