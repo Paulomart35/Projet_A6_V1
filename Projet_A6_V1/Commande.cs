@@ -18,10 +18,12 @@ namespace Projet_A6_V1
         public Livraison livraison;
         public double prix;
         public int idchauffeur;
+        public int kilometrage;
+        public List<string> ville_traverse;
         public DateTime date;
         public Vehicule vehicule;
 
-        public Commande(int idcommande, int num_ss, Livraison livraison, double prix, int chauffeur, DateTime date, Vehicule vehicule)
+        public Commande(int idcommande, int num_ss, Livraison livraison, double prix, int chauffeur, int kilometrage, List<string> ville_traverse, DateTime date, Vehicule vehicule)
         {
             this.idcommande = idcommande;
             this.num_ss=num_ss;
@@ -30,9 +32,11 @@ namespace Projet_A6_V1
             this.idchauffeur=chauffeur;
             this.date=date;
             this.vehicule=vehicule;
+            this.kilometrage=kilometrage;
+            this.ville_traverse=ville_traverse;
         }
 
-        public Commande(int num_ss, Livraison livraison, double prix, int chauffeur, DateTime date, Vehicule vehicule)
+        public Commande(int num_ss, Livraison livraison, double prix, int chauffeur, int kilometrage, List<string> ville_traverse, DateTime date, Vehicule vehicule)
         {
             this.idcommande = ++derniernumcom;
             this.num_ss=num_ss;
@@ -41,8 +45,10 @@ namespace Projet_A6_V1
             this.idchauffeur=chauffeur;
             this.vehicule=vehicule;
             this.date=date;
+            this.kilometrage=kilometrage;
+            this.ville_traverse=ville_traverse;
         }
-        public Commande(int num_ss, Livraison livraison, int chauffeur, DateTime date, Vehicule vehicule)
+        public Commande(int num_ss, Livraison livraison, int chauffeur, int kilometrage, List<string> ville_traverse, DateTime date, Vehicule vehicule)
         {
             this.idcommande = ++derniernumcom;
             this.num_ss=num_ss;
@@ -51,6 +57,8 @@ namespace Projet_A6_V1
             this.idchauffeur=chauffeur;
             this.vehicule=vehicule;
             this.date=date;
+            this.kilometrage=kilometrage;
+            this.ville_traverse=ville_traverse;
         }
 
         public Commande() { }
@@ -78,67 +86,74 @@ namespace Projet_A6_V1
                         Livraison livraison = new Livraison(adressed, adressea);
                         double prix = double.Parse(values[8]);
                         int idchauffeur = int.Parse(values[9]);
-                        DateTime data = DateTime.Parse(values[10]);
-                        string vehicule = values[11];
+                        int kilometrage = int.Parse(values[10]);
+                        List<string> ville_traverse = new List<string>();
+                        string[] vt = values[11].Split('/');
+                        foreach (string v in vt)
+                        {
+                            ville_traverse.Add(v);
+                        }
+                        DateTime data = DateTime.Parse(values[12]);
+                        string vehicule = values[13];
                         double volume = 0;
                         List<string> matiere = new List<string>();
                         Commande commande = new Commande();
                         switch (vehicule)
                         {
                             case "Voiture":
-                                int nbPassagers = int.Parse(values[12]); 
+                                int nbPassagers = int.Parse(values[14]); 
                                 Vehicule voiture = new Voiture(nbPassagers);
-                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, voiture);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, kilometrage, ville_traverse, data, voiture);
                                 break;
                             case "Camionnette":
-                                string usage = values[12];
+                                string usage = values[14];
                                 Vehicule camionnette = new Camionnette(usage);
-                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionnette);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, kilometrage, ville_traverse, data, camionnette);
                                 break;
                             case "CamionFrigorifique":
-                                volume = double.Parse(values[12]);
-                                string[] matieres = values[13].Split('/');
+                                volume = double.Parse(values[14]);
+                                string[] matieres = values[15].Split('/');
                                 foreach (string m in matieres)
                                 {
                                     matiere.Add(m);
                                 }
-                                int nbGrpElectrogene = int.Parse(values[14]); 
+                                int nbGrpElectrogene = int.Parse(values[16]); 
                                 Vehicule camionFrigorifique = new CamionFrigorifique(volume, matiere, nbGrpElectrogene);
-                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionFrigorifique);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, kilometrage, ville_traverse, data, camionFrigorifique);
                                 break;
                             case "CamionCiterne":
-                                volume = double.Parse(values[12]); 
-                                string[] matieres2 = values[13].Split('/'); 
+                                volume = double.Parse(values[14]); 
+                                string[] matieres2 = values[15].Split('/'); 
                                 foreach (string m in matieres2)
                                 {
                                     matiere.Add(m);
                                 }
-                                string typeCuve = values[14]; 
+                                string typeCuve = values[16]; 
                                 Vehicule camionCiterne = new CamionCiterne(volume, matiere, typeCuve);
-                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionCiterne);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, kilometrage, ville_traverse, data, camionCiterne);
                                 break;
                             case "CamionBenne":
-                                volume = double.Parse(values[12]); 
-                                string[] matieres3 = values[13].Split('/'); 
+                                volume = double.Parse(values[14]); 
+                                string[] matieres3 = values[15].Split('/'); 
                                 foreach (string m in matieres3)
                                 {
                                     matiere.Add(m);
                                 }
-                                string typeTravaux = values[14]; 
+                                string typeTravaux = values[16]; 
                                 List<string> equipements = new List<string>();
-                                string[] equipementsArray = values[15].Split('/'); 
+                                string[] equipementsArray = values[17].Split('/'); 
                                 foreach (string e in equipementsArray)
                                 {
                                     equipements.Add(e);
                                 }
-                                int nbBennes = int.Parse(values[16]); 
-                                bool grue = bool.Parse(values[17]); 
+                                int nbBennes = int.Parse(values[18]); 
+                                bool grue = bool.Parse(values[19]); 
                                 Vehicule camionBenne = new CamionBenne(volume, matiere, typeTravaux, equipements, nbBennes, grue);
-                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, camionBenne);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, kilometrage, ville_traverse, data, camionBenne);
                                 break;
                             case null:
                                 Vehicule v = new Vehicule();
-                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, data, v);
+                                commande = new Commande(idcommande, num_ss, livraison, prix, idchauffeur, kilometrage, ville_traverse, data, v);
                                 break;
                         }
                         lecture_commandes.Add(commande);
@@ -157,14 +172,18 @@ namespace Projet_A6_V1
         {
             string path = "Commande_Transconnect.csv";
             List<Commande> list = Lire_excel();
-            int dernierid = 0;
             if (list.Count > 0)
             {
-                dernierid = list.Last().idcommande;
+                derniernumcom = list.Last().idcommande;
             }
             try
             {
-                string text = (++derniernumcom + "," + this.num_ss + "," + this.livraison.ToString() + "," + this.prix + "," + this.idchauffeur + "," + this.date + "," + this.vehicule.GetType().Name);
+                string str = "";
+                foreach (string v in this.ville_traverse)
+                {
+                    str += v + "/";
+                }
+                string text = (++derniernumcom + "," + this.num_ss + "," + this.livraison.ToString() + "," + this.prix + "," + this.idchauffeur + "," + this.kilometrage + "," + str + "," + this.date + "," + this.vehicule.GetType().Name);
                 switch (this.vehicule.GetType().Name)
                 {
                     case "Voiture":
@@ -224,32 +243,34 @@ namespace Projet_A6_V1
             Console.Write("Type de véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
             string rep = Console.ReadLine();
             double prix = livraison.Calcul_prix(rep);
+            List<string> v_t = livraison.Demander_ville_traverse(livraison.départ.ville, livraison.arrivee.ville);
+            int km = livraison.Demander_kilometrage(livraison.départ.ville, livraison.arrivee.ville);
             switch (rep)
             {
                 case "Voiture":
                     Voiture voiture = new Voiture();
                     voiture = voiture.demander_attribut();
-                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, date, voiture);
+                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, km, v_t, date, voiture);
                     break;
                 case "Camionnette":
                     Camionnette camionnette = new Camionnette();
                     camionnette = camionnette.demander_attribut();
-                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, date, camionnette);
+                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, km, v_t, date, camionnette);
                     break;
                 case "CamionFrigorifique":
                     CamionFrigorifique camionFrigorifique = new CamionFrigorifique();
                     camionFrigorifique = camionFrigorifique.demander_attribut();
-                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, date, camionFrigorifique);
+                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, km, v_t, date, camionFrigorifique);
                     break;
                 case "CamionCiterne":
                     CamionCiterne camionCiterne = new CamionCiterne();
                     camionCiterne = camionCiterne.demander_attribut();
-                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, date, camionCiterne);
+                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, km, v_t, date, camionCiterne);
                     break;
                 case "CamionBenne":
                     CamionBenne camionBenne = new CamionBenne();
                     camionBenne = camionBenne.demander_attribut();
-                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, date, camionBenne);
+                    nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, km, v_t, date, camionBenne);
                     break;
 
             }
@@ -265,6 +286,8 @@ namespace Projet_A6_V1
             Console.WriteLine($"Livraison : Départ - {commande.livraison.départ.Ville}, Arrivée - {commande.livraison.arrivee.Ville}");
             Console.WriteLine($"Prix : {commande.prix}");
             Console.WriteLine($"ID chauffeur : {commande.idchauffeur}");
+            Console.WriteLine($"Kilometrage : {commande.kilometrage}");
+            Console.WriteLine($"Ville traversée : {string.Join(", ", commande.ville_traverse)}");
             Console.WriteLine($"Date : {commande.date}");
 
             // Affichez les informations du véhicule

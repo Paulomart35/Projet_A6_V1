@@ -98,8 +98,10 @@ namespace Projet_A6_V1
 
 
 
-            //Commande c = Commande.Nouvelle_commande();
-            //Commande.Affiche_commande(c);
+            Commande c = Commande.Nouvelle_commande();
+            //Livraison l = new Livraison();
+            //l.Distancepluscourte("Toulouse", "Montpellier");
+            Commande.Affiche_commande(c);
             //Commande.Modifier_commande(1);
             //List<Commande> list = Commande.Lire_excel();
             //Commande.Affiche_List_Commande(list);
