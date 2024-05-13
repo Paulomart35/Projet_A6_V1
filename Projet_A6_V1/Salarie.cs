@@ -139,14 +139,22 @@ namespace Projet_A6_V1
 
         public static List<Salarie> AjouterNouveauSalarie(List<Salarie> salaries, Salarie nouveau,Salarie sup)
         {
-            List<Salarie> memniveau = salaries.FindAll(c => c.niveau.Length == (sup.niveau.Length +1));
-            memniveau.OrderBy(c => c.niveau).ToList();
-            Salarie dernier = memniveau.Last();
-            char derder = dernier.niveau[dernier.niveau.Length - 1];
-            int ascii = (int)derder;
-            ascii++;
-            derder = (char)ascii;
-            nouveau.niveau = dernier.niveau.Substring(0, dernier.niveau.Length - 1) + derder;
+            List<Salarie> memniveau = salaries.FindAll(c => (c.niveau.Length == (sup.niveau.Length +1) && c.niveau.StartsWith(sup.niveau)));
+            if(memniveau.Count != 0)
+            {
+                memniveau.OrderBy(c => c.niveau).ToList();
+                Salarie dernier = memniveau.Last();
+                char derder = dernier.niveau[dernier.niveau.Length - 1];
+                int ascii = (int)derder;
+                ascii++;
+                derder = (char)ascii;
+                nouveau.niveau = dernier.niveau.Substring(0, dernier.niveau.Length - 1) + derder;
+                
+            }
+            else
+            {
+                nouveau.niveau = sup.niveau + "a";
+            }
             salaries.Add(nouveau);
             nouveau.Ecrire_salarie_csv();
             return salaries;
