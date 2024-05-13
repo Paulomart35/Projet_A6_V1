@@ -491,6 +491,55 @@ namespace Projet_A6_V1
             }
         }
 
+        //Statistique
+        public static double MoyennePrixCommandes(List<Commande> commandes)
+        {
+            if (commandes.Count == 0)
+            {
+                return 0;
+            }
+            double sommePrix = 0;
+            foreach (Commande commande in commandes)
+            {
+                sommePrix += commande.prix;
+            }
+            double moyenne = sommePrix / commandes.Count;
+
+            return moyenne;
+        }
+
+        public static void AfficherCommandesClient(int numSS, List<Commande> commandes)
+        {
+            List<Commande> commandesClient = commandes.Where(c => c.num_ss == numSS).ToList();
+
+            if (commandesClient.Count == 0)
+            {
+                Console.WriteLine("Aucune commande trouvée pour ce client.");
+                return;
+            }
+
+            Console.WriteLine($"Liste des commandes pour le client avec le numéro de sécurité sociale {numSS} :");
+            foreach (Commande commande in commandesClient)
+            {
+                Affiche_commande(commande); 
+            }
+        }
+
+        public static int[] GetNombreLivraisonsParChauffeur(List<Commande> commandes)
+        {
+            int nombreChauffeurs = commandes.Max(c => c.idchauffeur) + 1; // Nombre de chauffeurs
+            int[] nombreLivraisonsParChauffeur = new int[nombreChauffeurs]; // Tableau pour stocker le nombre de livraisons pour chaque chauffeur
+
+            foreach (Commande commande in commandes)
+            {
+                int idChauffeur = commande.idchauffeur;
+                nombreLivraisonsParChauffeur[idChauffeur]++;
+            }
+
+            return nombreLivraisonsParChauffeur;
+        }
+
+
 
     }
 }

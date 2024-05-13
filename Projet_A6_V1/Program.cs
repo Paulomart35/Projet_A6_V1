@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,7 +71,7 @@ namespace Projet_A6_V1
             //Client.Modifier_client(123456789);
             //List<Client> list = Client.Lire_excel_trier();
             //Client.Affiche_List(list);
-            
+            /*
             Salarie sal1 = new Salarie(123456789, "Dupont", "Jean", new DateTime(1980, 5, 15), new Adresse(1, "75001", "Paris"), "jean.dupont@example.com", "0123456789", "a", new DateTime(2010, 7, 1), "Directeur", 50000);
             Salarie sal2 = new Salarie(987654321, "Martin", "Sophie", new DateTime(1985, 10, 20), new Adresse(5, "69002", "Lyon"), "sophie.martin@example.com", "0987654321", "aa", new DateTime(2015, 3, 10), "Directeur commercial", 40000);
             Salarie sal3 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "aaa", new DateTime(2018, 1, 5), "commercial", 35000);
@@ -100,8 +101,7 @@ namespace Projet_A6_V1
 
             Noeud<Salarie> racine = CreationArbre(list);
 
-            ParcourirArbre(racine);
-
+            ParcourirArbre(racine);*/
             /*
             //Calcul prix
             Livraison livraison = new Livraison(new Adresse(3, "allee", "Paris"), new Adresse(6, "rue", "Lyon"));
@@ -125,10 +125,10 @@ namespace Projet_A6_V1
 
 
 
-            Commande c = Commande.Nouvelle_commande();
+            //Commande c = Commande.Nouvelle_commande();
             //Livraison l = new Livraison();
             //l.Distancepluscourte("Toulouse", "Montpellier");
-            Commande.Affiche_commande(c);
+            //Commande.Affiche_commande(c);
             //Commande.Modifier_commande(1);
             //List<Commande> list = Commande.Lire_excel();
             //Commande.Affiche_List_Commande(list);
@@ -136,51 +136,151 @@ namespace Projet_A6_V1
             //Adresse adresseArrivee = new Adresse(10, "Avenue des Champs-Élysées", "Paris");
             //Livraison livraison = new Livraison(adresseDepart, adresseArrivee, 50, "2 heures");
             //livraison.Distancepluscourte();
+            ModuleAcceuil();
             Console.ReadKey();
         }
 
         
-        static void ModuleClient()
+        static void ModuleClient_patron()
         {
-            Console.Write("Voulez-vous Ajouter une nouveau client ? Si non, cela affichera la liste pour effectuer une modification ou une suppresion. y/n ?");
-            string answer = Console.ReadLine();
-            if(answer == "y")
+            Console.WriteLine("\nClient\n\t1. Ajouter un client\n\t2. Supprimer un client\n\t3. Modifier un client\n\t4. Afficher les clients triés");
+            int rep_client = Convert.ToInt32(Console.ReadLine());
+            switch (rep_client)
             {
-                List<Client> ListedesClients = Client.Lire_excel();
-                Client.Affiche_List(ListedesClients);
-
-
-
+                case 1:
+                    Client.Ajoute();
+                    break;
+                case 2:
+                    Console.Write("Num SS du client à supprimer : ");
+                    int rep_num = Convert.ToInt32(Console.ReadLine());
+                    Client.Supprimer_client(rep_num);
+                    break;
+                case 3:
+                    Console.Write("Num SS du client à modifier : ");
+                    int rep_num2 = Convert.ToInt32(Console.ReadLine());
+                    Client.Modifier_client(rep_num2);
+                    break;
+                case 4:
+                    List<Client> list = Client.Lire_excel_trier();
+                    Client.Affiche_List(list);
+                    break;
             }
-            else if (answer == "n")
+
+        }
+
+        static void ModuleClient_client()
+        {
+            Console.Write("Quel est votre numéro de sécurité sociale : ");
+            int num_ss = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nClient\n\t1. Ajouter son compte\n\t2. Modifier son compte");
+            int rep_client = Convert.ToInt32(Console.ReadLine());
+            switch (rep_client)
             {
-                
+                case 1:
+                    Client.Ajoute();
+                    break;
+                case 2:
+                    Client.Modifier_client(num_ss);
+                    break;
             }
-            else
+        }
+
+
+        static void ModuleAcceuil()
+        {
+            Console.WriteLine("Qui êtes vous ?\n\t1. Patron/chef\n\t2.Client");
+            int rep_acceuil = Convert.ToInt32(Console.ReadLine());
+            switch (rep_acceuil)
             {
-                Console.Write("Selection non valide, réesayer : ");
-                answer = Console.ReadLine();
+                case 1:
+                    ModulePatron();
+                    break;
+                case 2:
+                    ModuleClient_client();
+                    break;
             }
 
         }
 
         static void ModulePatron()
         {
-            Console.Write("Voulez-vous accéder aux client (1), aux salariés (2) ou aux commandes (3) : ");
+            Console.Write("Voulez-vous accéder aux clients (1), aux salariés (2), aux commandes (3), aux statistiques (4) : ");
             string reponse = Console.ReadLine();
             if(reponse == "1")
             {
-                ModuleClient();
+                ModuleClient_patron();
             }
             else if(reponse == "2")
             {
                 ModuleSalarie();
             }
+            else if (reponse == "3")
+            {
+                ModuleCommandes();
+            }
+            else if (reponse == "4")
+            {
+                ModuleStatistiques();
+            }
+        }
+
+        static void ModuleStatistiques()
+        {
+            Console.WriteLine("\nStatistique\n\t1. Afficher par chauffeur le nombre de livraisons effectuées\n\t2. Afficher les commandes selon une période de temps\n\t3. Afficher la moyenne des prix des commandes\n\t4. Afficher la moyenne des comptes clients\n\t5. Afficher la liste des commandes pour un client");
+            int rep_stats = Convert.ToInt32(Console.ReadLine());
+            List<Commande> listeCommandes = Commande.Lire_excel();
+            switch (rep_stats)
+            {
+                case 1:
+                    int[] nombreLivraisonsParChauffeur = Commande.GetNombreLivraisonsParChauffeur(listeCommandes);
+
+                    for (int i = 0; i < nombreLivraisonsParChauffeur.Length; i++)
+                    {
+                        if (nombreLivraisonsParChauffeur[i] != 0)
+                            Console.WriteLine($"Le chauffeur avec l'ID {i} a effectué {nombreLivraisonsParChauffeur[i]} livraisons.");
+                    }
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                     
+                    double moyennePrix = Commande.MoyennePrixCommandes(listeCommandes);
+                    Console.WriteLine($"La moyenne des prix des commandes est : {moyennePrix}€");
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+                    Console.Write("Statistique pour quel numéro SS : ");
+                    int numeroSSClient = Convert.ToInt32(Console.ReadLine()); 
+                    Commande.AfficherCommandesClient(numeroSSClient, listeCommandes);
+                    break;
+            }
+        }
+
+        static void ModuleCommandes()
+        {
+            Console.Write("\nCommande\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes : ");
+            int rep_commande = Convert.ToInt32(Console.ReadLine());
+            switch (rep_commande)
+            {
+                case 1:
+                    Commande c = Commande.Nouvelle_commande();
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                    List<Commande> list = Commande.Lire_excel();
+                    Commande.Affiche_List_Commande(list);
+                    break;
+            }
         }
 
         static void ModuleSalarie()
         {
-            Console.WriteLine("Voulez-vous affciher l'organigramme (1), licensier (2) ou ajouter un salarié (3) ? : ");
+            Console.Write("Voulez-vous afficher l'organigramme (1), licensier (2), ajouter un salarié (3), affichier la liste des salariés (4) : ");
             string reponse = Console.ReadLine();
             if (reponse == "1")
             {
@@ -198,6 +298,7 @@ namespace Projet_A6_V1
             }
 
         }
+
 
         public static Noeud<Salarie> CreationArbre(List<Salarie> organigramme)
         {
