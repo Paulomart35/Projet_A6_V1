@@ -24,6 +24,45 @@ namespace Projet_A6_V1
             this.salaire = salaire;
         }
 
+        public static Salarie Création()
+        {
+            Console.WriteLine("Entrez le numéro de sécurité sociale : ");
+            int num_ss = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Entrez le nom du salarié : ");
+            string nom = Console.ReadLine();
+
+            Console.WriteLine("Entrez le prénom du salarié : ");
+            string prenom = Console.ReadLine();
+
+            Console.WriteLine("Entrez la date de naissance (format : AAAA-MM-JJ) : ");
+            DateTime date_naissance = Convert.ToDateTime(Console.ReadLine());
+
+
+            Adresse adresse = new Adresse(0, "", "");
+            adresse = adresse.Demander_adresse();
+            // Vous pouvez réutiliser votre fonction de création d'adresse ici
+
+            Console.WriteLine("Entrez l'adresse email du salarié : ");
+            string mail = Console.ReadLine();
+
+            Console.WriteLine("Entrez le numéro de téléphone du salarié : ");
+            string telephone = Console.ReadLine();
+
+            
+            DateTime entree_societe = DateTime.Now;
+
+            Console.WriteLine("Entrez le poste du salarié : ");
+            string poste = Console.ReadLine();
+
+            Console.WriteLine("Entrez le salaire du salarié : ");
+            int salaire = Convert.ToInt32(Console.ReadLine());
+
+            // Création et retour de l'objet Salarie avec les informations saisies
+            return new Salarie(num_ss, nom, prenom, date_naissance, adresse, mail, telephone, "", entree_societe, poste, salaire);
+        }
+
+
         public void Ecrire_salarie_csv()
         {
             string path = "Salarie_Transconnect.csv";
@@ -83,6 +122,42 @@ namespace Projet_A6_V1
         public static List<Salarie> TrieNiveau(List<Salarie> orga)
         {
             return orga.OrderBy(o => o.niveau).ToList();
+        }
+
+        public static void MettreAJourNiveaux(List<Salarie> salaries, Salarie salarieSupprime)
+        {
+            foreach (var salarie in salaries)
+            {
+                if (salarie.Poste.StartsWith(salarieSupprime.Poste))
+                {
+                    // Mettre à jour le niveau du salarié
+                    salarie.Poste = salarie.Poste.Remove(0, salarieSupprime.Poste.Length);
+                    
+                }
+            }
+        }
+
+        public static List<Salarie> AjouterNouveauSalarie(List<Salarie> salaries, Salarie nouveau,Salarie sup)
+        {
+            List<Salarie> memniveau = salaries.FindAll(c => c.niveau.Length == (sup.niveau.Length +1));
+            memniveau.OrderBy(c => c.niveau).ToList();
+            Salarie dernier = memniveau.Last();
+            char derder = dernier.niveau[dernier.niveau.Length - 1];
+            int ascii = (int)derder;
+            ascii++;
+            derder = (char)ascii;
+            nouveau.niveau = dernier.niveau.Substring(0, dernier.niveau.Length - 1) + derder;
+            salaries.Add(nouveau);
+            nouveau.Ecrire_salarie_csv();
+            return salaries;
+        }
+
+        public static void Updatecsv(List<Salarie> salaries)
+        {
+            string path = "Salarie_Transconnect.csv";
+            File.WriteAllText(path,string.Empty);
+
+            salaries.ForEach(c => c.Ecrire_salarie_csv());
         }
 
         public string Poste

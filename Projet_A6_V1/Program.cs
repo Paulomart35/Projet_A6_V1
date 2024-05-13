@@ -70,37 +70,10 @@ namespace Projet_A6_V1
             //Client.Modifier_client(123456789);
             //List<Client> list = Client.Lire_excel_trier();
             //Client.Affiche_List(list);
-            
-            Salarie sal1 = new Salarie(123456789, "Dupont", "Jean", new DateTime(1980, 5, 15), new Adresse(1, "75001", "Paris"), "jean.dupont@example.com", "0123456789", "a", new DateTime(2010, 7, 1), "Directeur", 50000);
-            Salarie sal2 = new Salarie(987654321, "Martin", "Sophie", new DateTime(1985, 10, 20), new Adresse(5, "69002", "Lyon"), "sophie.martin@example.com", "0987654321", "aa", new DateTime(2015, 3, 10), "Directeur commercial", 40000);
-            Salarie sal3 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "aaa", new DateTime(2018, 1, 5), "commercial", 35000);
-            Salarie sal4 = new Salarie(444555666, "Leclerc", "Marie", new DateTime(1982, 9, 25), new Adresse(10, "13001", "Marseille"), "marie.leclerc@example.com", "0234567890", "ab", new DateTime(2012, 6, 20), "dir op", 60000);
-            Salarie sal5 = new Salarie(888999000, "Dubois", "Thomas", new DateTime(1975, 4, 10), new Adresse(20, "67000", "Strasbourg"), "thomas.dubois@example.com", "0789456123", "aba", new DateTime(2005, 8, 15), "chef opérationnel", 70000);
-            Salarie sal6 = new Salarie(222333444, "Moreau", "Céline", new DateTime(1988, 12, 5), new Adresse(30, "44000", "Nantes"), "celine.moreau@example.com", "0369852147", "abb", new DateTime(2016, 9, 30), "chef opérationnel", 55000);
-            Salarie sal7 = new Salarie(555666777, "Garcia", "Pierre", new DateTime(1990, 8, 8), new Adresse(5, "33000", "Bordeaux"), "pierre.garcia@example.com", "0456789123", "ac", new DateTime(2018, 1, 5), "directeur RH", 35000);
-            Salarie sal8 = new Salarie(444555666, "Leclerc", "Marie", new DateTime(1982, 9, 25), new Adresse(10, "13001", "Marseille"), "marie.leclerc@example.com", "0234567890", "aca", new DateTime(2012, 6, 20), "RH", 60000);
-            Salarie sal9 = new Salarie(888999000, "Dubois", "Thomas", new DateTime(1975, 4, 10), new Adresse(20, "67000", "Strasbourg"), "thomas.dubois@example.com", "0789456123", "abaa", new DateTime(2005, 8, 15), "chef opérationnel", 70000);
-            Salarie sal10 = new Salarie(222333444, "Moreau", "Céline", new DateTime(1988, 12, 5), new Adresse(30, "44000", "Nantes"), "celine.moreau@example.com", "0369852147", "abab", new DateTime(2016, 9, 30), "chef opérationnel", 55000);
-            Salarie sal11 = new Salarie(444555666, "Leclerc", "Marie", new DateTime(1982, 9, 25), new Adresse(10, "13001", "Marseille"), "marie.leclerc@example.com", "0234567890", "aab", new DateTime(2012, 6, 20), "commercial 2", 60000);
-            List<Salarie> list = new List<Salarie>();
-            
-            list.Add(sal1);
-            list.Add(sal2);
-            list.Add(sal3);
-            list.Add(sal4);
-            list.Add(sal5);
-            list.Add(sal6);
-            list.Add(sal7);
-            list.Add(sal8);
-            list.Add(sal9);
-            list.Add(sal10);
-            list.Add(sal11);
 
-            
 
-            Noeud<Salarie> racine = CreationArbre(list);
 
-            ParcourirArbre(racine);
+
 
             /*
             //Calcul prix
@@ -123,8 +96,8 @@ namespace Projet_A6_V1
             ;*/
 
 
-            
-            
+
+
             //Commande c = Commande.Nouvelle_commande();
             //Commande.Affiche_commande(c);
             //Commande.Modifier_commande(1);
@@ -188,7 +161,17 @@ namespace Projet_A6_V1
             }
             else if (reponse == "2")
             {
-               
+                List<Salarie> list = Salarie.Lire_csv();
+                Salarie salnv = Salarie.Création();
+
+                Console.Write("Quelle est le num_SS du supérieur de votre nouveau salarié : ");
+                int num_SS = Convert.ToInt32(Console.ReadLine());
+                Salarie slarariesup = list.Find(s => s.num_ss == num_SS);
+
+                Salarie.AjouterNouveauSalarie(list, salnv, slarariesup);
+
+                Salarie.Updatecsv(list);
+                Console.WriteLine("Salarie Ajouté");
             }
             else if(reponse=="3")
             {

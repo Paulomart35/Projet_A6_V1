@@ -9,7 +9,7 @@ namespace Projet_A6_V1
 {
     abstract class Personne
     {
-        protected int num_ss;
+        public int num_ss;
         protected string nom;
         protected string prenom;
         protected DateTime date_naissance;
