@@ -30,6 +30,14 @@ namespace Projet_A6_V1
             this.telephone=telephone;
         }
 
+        public Personne(int num_ss, string nom)
+        {
+            this.num_ss=num_ss;
+            this.nom=nom;
+        }
+
+        public Personne() { }
+
         public override string ToString()
         {
             return $"Numéro de sécurité sociale: {num_ss}\n" +
