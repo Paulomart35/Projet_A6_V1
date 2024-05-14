@@ -54,7 +54,7 @@ namespace Projet_A6_V1
             Console.Clear();
             Console.WriteLine("Souhaitez-vous vous connecter pour accéder à vos informations ou créée un compte chez nous ?" +
                 "\n\t1.Se connecter" +
-                "\n\t2.Créée un compte");
+                "\n\t2.Créer un compte");
             int reponse = Convert.ToInt32(Console.ReadLine());
             bool end = false;
             if(reponse == 1)
@@ -74,33 +74,37 @@ namespace Projet_A6_V1
                     num_ss = Convert.ToInt32(rep);
                     connecte = Clients.Find(c => c.Num_ss == num_ss);
                 }
-
-                Console.Clear();
-                Console.WriteLine("Bonjour " + connecte.Prenom + " ! Que voulez-vous faire ?" +
-                    "\n\t1.Voir mes infos" +
-                    "\n\t2.Modifier mon compte" +
-                    "\n\t3.Voir mes commandes" +
-                    "\n\t4.Passer une commande" +
-                    "\n\t5.Retour");
-                int rep_client = Convert.ToInt32(Console.ReadLine());
-                switch (rep_client)
+                while(end != true)
                 {
-                    case 1:
-                        Client.Affiche_Client(connecte);
-                        break;
-                    case 2:
-                        Client.Modifier_client(connecte.num_ss);
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
+                    end = ModuleCompte(connecte);
                 }
                 
             }
             else if(reponse == 2)
             {
-
+                Console.Clear();
+                List<Client> Clients = Client.Lire_excel();
+                Console.WriteLine("Vérifions que vous n'avez pas déjà un compte chez nous :");
+                Console.Write("Numéro de sécurité sociale : ");
+                int num_ss = Convert.ToInt32(Console.ReadLine());
+                Client connecte = Clients.Find(c => c.Num_ss == num_ss);
+                if(connecte != null)
+                {
+                    Console.WriteLine("Oh mais vous posséder déjà un compte ! Cliquez sur une touche pour y accéder !");
+                    Console.ReadKey();
+                    while(end != true)
+                    {
+                        end = ModuleCompte(connecte);
+                    }
+                }
+                else
+                {
+                    Client nouveau = Client.Ajoute();
+                    while (end != true)
+                    {
+                        end = ModuleCompte(nouveau);
+                    }
+                }
             }
             else
             {
@@ -109,12 +113,44 @@ namespace Projet_A6_V1
             }
 
 
-            Console.WriteLine("\n Souhaitez-vous continuer dans le partie Client ? y/n");
+            Console.WriteLine("\nSouhaitez-vous continuer dans le partie Client ? y/n");
             string fin = Console.ReadLine();
-            if (fin == "n") { end = true; }
+            if (fin == "y") { end = true; }
             return end;
 
             
+        }
+        static bool ModuleCompte(Client connecte)
+        {
+            bool end = false;
+            Console.Clear();
+            Console.WriteLine("Bonjour " + connecte.Prenom + " ! Que voulez-vous faire ?" +
+                "\n\t1.Voir mes infos" +
+                "\n\t2.Modifier mon compte" +
+                "\n\t3.Voir mes commandes" +
+                "\n\t4.Passer une commande" +
+                "\n\t5.Retour");
+            int rep_client = Convert.ToInt32(Console.ReadLine());
+            switch (rep_client)
+            {
+                case 1:
+                    Client.Affiche_Client(connecte);
+                    break;
+                case 2:
+                    Client.Modifier_client(connecte.num_ss);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    return true;
+            }
+            Console.WriteLine("\nSouhaitez-vous continuer sur votre compte ? y/n");
+            string fin = Console.ReadLine();
+            if (fin == "n") { end = true; }
+            return end;
+     
         }
 
         static bool ModuleAcceuil()
