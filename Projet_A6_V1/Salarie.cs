@@ -24,6 +24,13 @@ namespace Projet_A6_V1
             this.salaire = salaire;
         }
 
+        public Salarie(int num_ss, string nom, string poste) : base(num_ss, nom)
+        {
+            this.poste = poste;
+        }
+
+        public Salarie() :base() { }
+
         public static Salarie Création()
         {
             Console.WriteLine("Entrez le numéro de sécurité sociale : ");

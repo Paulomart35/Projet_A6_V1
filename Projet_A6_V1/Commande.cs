@@ -220,8 +220,6 @@ namespace Projet_A6_V1
 
         }
 
-
-
         public static Commande Nouvelle_commande()
         {
             Console.WriteLine($"Saisir les informations pour la commande:");

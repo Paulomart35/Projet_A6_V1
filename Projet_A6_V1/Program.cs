@@ -11,7 +11,9 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            ModuleAcceuil();
+            //ModuleAcceuil();
+            Chauffeur c = new Chauffeur();
+            c.Ajout();
             Console.ReadKey();
         }
 
