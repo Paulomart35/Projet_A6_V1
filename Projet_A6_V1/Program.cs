@@ -12,7 +12,7 @@ namespace Projet_A6_V1
         static void Main(string[] args)
         {
             bool end = true;
-            while(end != false)
+            while (end != false)
             {
                 end = ModuleAcceuil();
             }
@@ -288,6 +288,13 @@ namespace Projet_A6_V1
                 case 3:
                     List<Commande> list = Commande.Lire_excel();
                     Commande.Affiche_List_Commande(list);
+                    break;
+                case 4:
+                    Console.Clear();
+                    Console.Write("Id du chauffeur : ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
+                    Chauffeur.plan_route(id);
                     break;
             }
         }

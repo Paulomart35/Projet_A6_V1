@@ -38,7 +38,7 @@ namespace Projet_A6_V1
             return this.départ.ToString() + "," + this.arrivee.ToString();
         }
 
-        public double Calcul_prix(string vehicule)
+        public double Calcul_prix(string vehicule, int idchauffeur)
         {
             string path = "Distances.csv";
             double montant_total = 0;
@@ -47,21 +47,35 @@ namespace Projet_A6_V1
             switch (vehicule)
             {
                 case "Voiture":
-                    tarif_vehicule = 10;
+                    tarif_vehicule = 100;
                     break;
                 case "Camionnette":
-                    tarif_vehicule = 20;
+                    tarif_vehicule = 200;
                     break;
                 case "CamionFrigorifique":
-                    tarif_vehicule = 30;
+                    tarif_vehicule = 300;
                     break;
                 case "CamionCiterne":
-                    tarif_vehicule = 40;
+                    tarif_vehicule = 400;
                     break;
                 case "CamionBenne":
-                    tarif_vehicule = 50;
+                    tarif_vehicule = 500;
                     break;
 
+            }
+            int anciennette_chauffeur = Chauffeur.Lire_anciennete(idchauffeur);
+            int cout_anciennete = 0;
+            switch(anciennette_chauffeur)
+            {
+                case 1:
+                    cout_anciennete = 20;
+                    break;
+                case 2:
+                    cout_anciennete = 40;
+                    break;
+                case 3:
+                    cout_anciennete = 60;
+                    break;
             }
             using (StreamReader reader = new StreamReader(path))
             {
@@ -78,7 +92,7 @@ namespace Projet_A6_V1
 
                     if (adresse_départ.Ville == this.départ.Ville && adresse_arrivee.Ville == this.arrivee.Ville || adresse_arrivee.Ville == this.départ.Ville && adresse_départ.Ville == this.arrivee.Ville)
                     {
-                        montant_total = kilometrage * tarif_kilometre * tarif_vehicule;
+                        montant_total = kilometrage * tarif_kilometre + tarif_vehicule + cout_anciennete;
                     }
                 }
             }
