@@ -64,7 +64,6 @@ namespace Projet_A6_V1
         public Commande() { }
         
 
-
         public static List<Commande> Lire_excel()
         {
             string path = "Commande_Transconnect.csv";
@@ -219,7 +218,6 @@ namespace Projet_A6_V1
             }
 
         }
-
         public static Commande Nouvelle_commande()
         {
             Console.WriteLine($"Saisir les informations pour la commande:");
@@ -231,8 +229,7 @@ namespace Projet_A6_V1
             Livraison livraison = new Livraison(null, null);
             livraison = livraison.Demander_Livraison();
 
-            Console.Write("Id chauffeur : ");
-            int id_chauffeur = Convert.ToInt32(Console.ReadLine());
+            int id_chauffeur = Chauffeur.choisir_chauffeur();
 
             Console.Write("Date (AAAA-MM-JJ) : ");
             DateTime date = DateTime.Parse(Console.ReadLine());
@@ -240,7 +237,7 @@ namespace Projet_A6_V1
             Commande nv_commande = new Commande();
             Console.Write("Type de véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
             string rep = Console.ReadLine();
-            double prix = livraison.Calcul_prix(rep);
+            double prix = livraison.Calcul_prix(rep, id_chauffeur);
             List<string> v_t = livraison.Demander_ville_traverse(livraison.départ.ville, livraison.arrivee.ville);
             int km = livraison.Demander_kilometrage(livraison.départ.ville, livraison.arrivee.ville);
             switch (rep)
@@ -468,8 +465,6 @@ namespace Projet_A6_V1
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
         }
-
-        // Méthode pour demander et créer un nouveau véhicule en fonction du type
         private static Vehicule Demander_vehicule(string type)
         {
             switch (type)
@@ -489,7 +484,8 @@ namespace Projet_A6_V1
             }
         }
 
-        //Statistique
+
+        #region Statistique
         public static double MoyennePrixCommandes(List<Commande> commandes)
         {
             if (commandes.Count == 0)
@@ -536,6 +532,7 @@ namespace Projet_A6_V1
 
             return nombreLivraisonsParChauffeur;
         }
+        #endregion
 
 
 

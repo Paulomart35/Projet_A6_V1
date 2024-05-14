@@ -31,7 +31,7 @@ namespace Projet_A6_V1
 
         public Chauffeur() : base() { }
 
-        public void plan_route(int idchauffeur)
+        public static void plan_route(int idchauffeur)
         {
             string path = "Commande_Transconnect.csv";
             try
@@ -43,18 +43,22 @@ namespace Projet_A6_V1
                     {
                         string[] values = line.Split(',');
                         int chauffeur = int.Parse(values[9]);
-                        Console.WriteLine("idchauffeur " + chauffeur);
-                        List<string> ville_traverse = new List<string>();
-                        string[] vt = values[11].Split('/');
-                        foreach (string v in vt)
+                        if (chauffeur == idchauffeur)
                         {
-                            ville_traverse.Add(v);
-                            Console.WriteLine(v +", ");
+                            Console.WriteLine("Numéro SS : " + values[1]);
+                            Console.WriteLine("id chauffeur : " + chauffeur);
+                            List<string> ville_traverse = new List<string>();
+                            string[] vt = values[11].Split('/');
+                            foreach (string v in vt)
+                            {
+                                ville_traverse.Add(v);
+                            }
+                            DateTime data = DateTime.Parse(values[12]);
+                            Console.WriteLine("Date : " + data.ToShortDateString());
+                            Console.WriteLine("Villes traversées : " + string.Join(", ", ville_traverse));
+                            Console.WriteLine("Véhicule : " + values[13]);
+                            Console.WriteLine();
                         }
-                        DateTime data = DateTime.Parse(values[12]);
-                        Console.WriteLine(data);
-                        string vehicule = values[13];
-                        Console.WriteLine("Vehicule " + vehicule);
                     }
                 }
             }
@@ -62,8 +66,6 @@ namespace Projet_A6_V1
             {
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
-
-
         }
 
         public int lire_idchauffeur()
@@ -113,6 +115,33 @@ namespace Projet_A6_V1
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
             return list_num_ss;
+        }
+
+        public static int Lire_anciennete(int idchauffeur)
+        {
+            int anciennete = 0;
+            try
+            {
+                using (StreamReader reader = new StreamReader("Chauffeur_Transconnect.csv"))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] values = line.Split(',');
+                        int id = int.Parse(values[3]);
+                        if(id == idchauffeur)
+                        {
+                            anciennete = int.Parse(values[5]);
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+            return anciennete;
         }
 
         public void Ajout()
@@ -180,6 +209,52 @@ namespace Projet_A6_V1
                 throw new ApplicationException("Erreur dans le programme :", ex);
             }
 
+        }
+
+        public static int choisir_chauffeur()
+        {
+            string pathCommande = "Commande_Transconnect.csv";
+            string pathChauffeur = "Chauffeur_Transconnect.csv";
+            List<int> chauffeursDisponibles = new List<int>();
+            using (StreamReader readerCommande = new StreamReader(pathCommande))
+            {
+                string lineCommande;
+                while ((lineCommande = readerCommande.ReadLine()) != null)
+                {
+                    string[] valuesCommande = lineCommande.Split(',');
+                    int chauffeurCommande = int.Parse(valuesCommande[9]);
+                    DateTime dateCommande = DateTime.Parse(valuesCommande[12]);
+                    if (dateCommande.Date == DateTime.Now.Date) // Même jour
+                    {
+                        chauffeursDisponibles.Remove(chauffeurCommande);
+                    }
+                }
+            }
+
+            using (StreamReader readerChauffeur = new StreamReader(pathChauffeur))
+            {
+                string lineChauffeur;
+                while ((lineChauffeur = readerChauffeur.ReadLine()) != null)
+                {
+                    string[] valuesChauffeur = lineChauffeur.Split(',');
+                    int idchauffeur = int.Parse(valuesChauffeur[3]);
+                    bool dispo = bool.Parse(valuesChauffeur[4]);
+                    if (dispo)
+                    {
+                        chauffeursDisponibles.Add(idchauffeur);
+                    }
+                }
+            }
+            if (chauffeursDisponibles.Count > 0)
+            {
+                Random rand = new Random();
+                int index = rand.Next(chauffeursDisponibles.Count);
+                return chauffeursDisponibles[index];
+            }
+            else
+            {
+                throw new ApplicationException("Aucun chauffeur disponible pour aujourd'hui.");
+            }
         }
 
 

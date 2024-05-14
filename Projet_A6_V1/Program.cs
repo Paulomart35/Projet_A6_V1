@@ -11,16 +11,13 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            Chauffeur c = new Chauffeur();
-            c.Ajout();
-            /*
             bool end = true;
-            while(end != false)
+            while (end != false)
             {
                 end = ModuleAcceuil();
             }
             Console.Clear();
-            Console.WriteLine("En revoir");*/
+            Console.WriteLine("En revoir");
             Console.ReadKey();
         }
 
@@ -277,7 +274,7 @@ namespace Projet_A6_V1
 
         static void ModuleCommandes()
         {
-            Console.Write("\nCommande\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes : ");
+            Console.WriteLine("\nCommande\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes\n\t4. Afficher le plan de route d'un chauffeur");
             int rep_commande = Convert.ToInt32(Console.ReadLine());
             switch (rep_commande)
             {
@@ -290,6 +287,13 @@ namespace Projet_A6_V1
                 case 3:
                     List<Commande> list = Commande.Lire_excel();
                     Commande.Affiche_List_Commande(list);
+                    break;
+                case 4:
+                    Console.Clear();
+                    Console.Write("Id du chauffeur : ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
+                    Chauffeur.plan_route(id);
                     break;
             }
         }
