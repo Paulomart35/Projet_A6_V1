@@ -11,13 +11,16 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
+            Chauffeur c = new Chauffeur();
+            c.Ajout();
+            /*
             bool end = true;
             while(end != false)
             {
                 end = ModuleAcceuil();
             }
             Console.Clear();
-            Console.WriteLine("En revoir");
+            Console.WriteLine("En revoir");*/
             Console.ReadKey();
         }
 

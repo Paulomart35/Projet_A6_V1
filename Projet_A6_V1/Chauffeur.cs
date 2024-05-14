@@ -66,10 +66,58 @@ namespace Projet_A6_V1
 
         }
 
+        public int lire_idchauffeur()
+        {
+            List<int> list_id = new List<int>();
+            try
+            {
+                using (StreamReader reader = new StreamReader("Chauffeur_Transconnect.csv"))
+                {
+                    string line;
+                    int idchauffeur = 0;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] values = line.Split(',');
+
+                        idchauffeur = int.Parse(values[3]);
+                        list_id.Add(idchauffeur);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+            return list_id.Last();
+        }
+
+        public List<int> lire_num_ss()
+        {
+            List<int> list_num_ss = new List<int>();
+            try
+            {
+                using (StreamReader reader = new StreamReader("Chauffeur_Transconnect.csv"))
+                {
+                    string line;
+                    int num_ss = 0;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] values = line.Split(',');
+                        num_ss = int.Parse(values[0]);
+                        list_num_ss.Add(num_ss);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+            return list_num_ss;
+        }
+
         public void Ajout()
         {
             string path = "Salarie_Transconnect.csv";
-            List<Chauffeur> lectures_chauffeur = new List<Chauffeur>();
             try
             {
                 using (StreamReader reader = new StreamReader(path))
@@ -98,16 +146,14 @@ namespace Projet_A6_V1
                             {
                                 niveau_anciennete = 3;
                             }
-                            idchauffeur = 0;
-                            Chauffeur chauff = new Chauffeur(num_ss, nom, poste, idchauffeur++, true, niveau_anciennete);
-                            lectures_chauffeur.Add(chauff);
-                            chauff.Ecrire_chauffeur_excel();
+                            Chauffeur chauff = new Chauffeur(num_ss, nom, poste, lire_idchauffeur() + 1, true, niveau_anciennete);
+                            List<int> list = lire_num_ss(); 
+                            if (!list.Contains(num_ss))
+                            {
+                                chauff.Ecrire_chauffeur_excel();
+                            }
+                                
                         }
-                        else
-                        {
-                            Console.WriteLine("Aucun poste 'chauffeur'");
-                        }
-
                     }
                 }
             }
