@@ -131,16 +131,77 @@ namespace Projet_A6_V1
             return orga.OrderBy(o => o.niveau).ToList();
         }
 
-        public static void MettreAJourNiveaux(List<Salarie> salaries, Salarie salarieSupprime)
+        public static void Modifier_Salarie(int num_ss)
         {
-            foreach (var salarie in salaries)
+            string path = "Salarie_Transconnect.csv";
+            try
             {
-                if (salarie.Poste.StartsWith(salarieSupprime.Poste))
+                List<Salarie> salaries = Lire_csv();
+
+                Salarie salarieAModifier = salaries.Find(s => s.Num_ss == num_ss);
+
+                if (salarieAModifier != null)
                 {
-                    // Mettre à jour le niveau du salarié
-                    salarie.Poste = salarie.Poste.Remove(0, salarieSupprime.Poste.Length);
-                    
+                    Console.WriteLine("Informations actuelles du salarié :");
+                    Console.WriteLine(salarieAModifier.ToString());
+
+                    Console.WriteLine("Saisissez les nouvelles informations :");
+                    Console.Write("Voulez-vous modifier le nom (y/n) : ");
+                    char a1 = Console.ReadKey().KeyChar;
+                    if (a1 == 'y')
+                    {
+                        Console.Write("\nNouveau nom : ");
+                        salarieAModifier.Nom = Console.ReadLine();
+                    }
+                    Console.Write("\nVoulez-vous modifier le prénom (y/n) : ");
+                    char a2 = Console.ReadKey().KeyChar;
+                    if (a2 == 'y')
+                    {
+                        Console.Write("\nNouveau prénom : ");
+                        salarieAModifier.Prenom = Console.ReadLine();
+                    }
+                    Console.Write("\nVoulez-vous modifier l'adresse (y/n) : ");
+                    char a3 = Console.ReadKey().KeyChar;
+                    if (a3 == 'y')
+                    {
+                        Console.Write("\nNouvelle adresse : ");
+                        Adresse adresse = new Adresse(0, "", "");
+                        salarieAModifier.Adresse = adresse.Demander_adresse();
+                    }
+                    Console.Write("\nVoulez-vous modifier le mail (y/n) : ");
+                    char a4 = Console.ReadKey().KeyChar;
+                    if (a4 == 'y')
+                    {
+                        Console.Write("\nNouveau mail : ");
+                        salarieAModifier.Mail = Console.ReadLine();
+                    }
+                    Console.Write("\nVoulez-vous modifier le salaire (y/n) : ");
+                    char a5 = Console.ReadKey().KeyChar;
+                    if (a5 == 'y')
+                    {
+                        Console.Write("\nNouveau salaire : ");
+                        salarieAModifier.Salaire = int.Parse(Console.ReadLine());
+                    }
+                    Console.WriteLine("\n");
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        foreach (Salarie salarie in salaries)
+                        {
+                            string text = $"{salarie.Num_ss},{salarie.Nom},{salarie.Prenom},{salarie.Date_naissance},{salarie.Adresse.Numero},{salarie.Adresse.Rue},{salarie.Adresse.Ville},{salarie.Mail},{salarie.Telephone},{salarie.niveau},{salarie.entree_societe},{salarie.Poste},{salarie.Salaire}";
+                            writer.WriteLine(text);
+                        }
+                    }
+
+                    Console.WriteLine($"Le salarié avec le numéro de sécurité sociale {num_ss} a été modifié avec succès.");
                 }
+                else
+                {
+                    Console.WriteLine($"Aucun salarié trouvé avec le numéro de sécurité sociale {num_ss}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
             }
         }
 

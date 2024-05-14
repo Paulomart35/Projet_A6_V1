@@ -99,7 +99,7 @@ namespace Projet_A6_V1
                 }
                 else
                 {
-                    Client nouveau = Client.Ajoute();
+                    Client nouveau = Client.AjouteUtilisateur();
                     while (end != true)
                     {
                         end = ModuleCompte(nouveau);
@@ -274,7 +274,8 @@ namespace Projet_A6_V1
 
         static void ModuleCommandes()
         {
-            Console.Write("\nCommande\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes : ");
+            Console.Clear();
+            Console.Write("Voulez-vous :\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes : ");
             int rep_commande = Convert.ToInt32(Console.ReadLine());
             switch (rep_commande)
             {
@@ -298,7 +299,7 @@ namespace Projet_A6_V1
                 "\n\t1.Afficher l'organigramme " +
                 "\n\t2.Ajouter un salarié " +
                 "\n\t3.Licencier (à faire ou pas)" +
-                "\n\t4.Changer le poste d'un salarié (à faire ou pas)" +
+                "\n\t4.Modifier les infos d'un salarié" +
                 "\n\t5.Afficher la liste des salariés" +
                 "\n\t6.Retour");
             int reponse = Convert.ToInt32(Console.ReadLine());
@@ -332,6 +333,9 @@ namespace Projet_A6_V1
                 case 3:
                     break;
                 case 4:
+                    Console.Write("Num SS du salarié à modifier : ");
+                    int rep_num2 = Convert.ToInt32(Console.ReadLine());
+                    Salarie.Modifier_Salarie(rep_num2);
                     break;
                 case 5:
                     List<Salarie> Salaries = Salarie.Lire_csv();

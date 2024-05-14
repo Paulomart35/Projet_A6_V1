@@ -58,6 +58,44 @@ namespace Projet_A6_V1
 
         }
 
+        public static Client AjouteUtilisateur()
+        {
+            Console.WriteLine($"Veuillez entrer vos informations :");
+            Console.Write("Numéro de sécurité sociale: ");
+            int num_ss = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Nom : ");
+            string nom = Console.ReadLine();
+
+            Console.Write("Prénom : ");
+            string prenom = Console.ReadLine();
+
+            Console.Write("Date de naissance (AAAA-MM-JJ) : ");
+            DateTime date_naissance = DateTime.Parse(Console.ReadLine());
+
+            Adresse adresse = new Adresse(0, "", "");
+            adresse = adresse.Demander_adresse();
+
+            Console.Write("Email : ");
+            string mail = Console.ReadLine();
+
+            Console.Write("Téléphone : ");
+            string telephone = Console.ReadLine();
+
+            
+            List<int> num_commande = new List<int>();
+            
+
+            Client nvclient = new Client(num_ss, nom, prenom, date_naissance, adresse, mail, telephone, num_commande);
+
+            nvclient.Ecrire_client_excel();
+
+
+
+            return nvclient;
+
+        }
+
         public void Ecrire_client_excel()
         {
             string path = "Client_Transconnect.csv";
