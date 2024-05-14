@@ -38,6 +38,17 @@ namespace Projet_A6_V1
 
         public Personne() { }
 
+        public override string ToString()
+        {
+            return $"Numéro de sécurité sociale: {num_ss}\n" +
+            $"Nom: {nom}\n" +
+            $"Prénom: {prenom}\n" +
+            $"Date de naissance: {date_naissance}\n" +
+            $"Adresse: {adresse}\n" +
+            $"Adresse email: {mail}\n" +
+            $"Téléphone: {telephone}\n";
+        }
+
         public int Num_ss
         {
             get { return num_ss; }
