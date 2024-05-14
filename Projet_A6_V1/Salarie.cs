@@ -180,6 +180,13 @@ namespace Projet_A6_V1
             set { salaire = value; }
         }
 
-
+        public override string ToString()
+        {
+            return base.ToString() +
+                   //$"Niveau: {niveau}\n" +
+                   $"Date d'entrée dans la société: {entree_societe}\n" +
+                   $"Poste: {poste}\n" +
+                   $"Salaire: {salaire}\n";
+        }
     }
 }

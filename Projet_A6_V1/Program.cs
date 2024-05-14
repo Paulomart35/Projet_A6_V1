@@ -11,7 +11,13 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            ModuleAcceuil();
+            bool end = true;
+            while(end != false)
+            {
+                end = ModuleAcceuil();
+            }
+            Console.Clear();
+            Console.WriteLine("En revoir");
             Console.ReadKey();
         }
 
@@ -43,44 +49,132 @@ namespace Projet_A6_V1
 
         }
 
-        static void ModuleClient_client()
+        static bool ModuleClient_client()
         {
-            Console.Write("Quel est votre numéro de sécurité sociale : ");
-            int num_ss = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\nClient\n\t1. Ajouter son compte\n\t2. Modifier son compte");
-            int rep_client = Convert.ToInt32(Console.ReadLine());
-            switch (rep_client)
+            Console.Clear();
+            Console.WriteLine("Souhaitez-vous vous connecter pour accéder à vos informations ou créée un compte chez nous ?" +
+                "\n\t1.Se connecter" +
+                "\n\t2.Créée un compte");
+            int reponse = Convert.ToInt32(Console.ReadLine());
+            bool end = false;
+            if(reponse == 1)
             {
-                case 1:
-                    Client.Ajoute();
-                    break;
-                case 2:
-                    Client.Modifier_client(num_ss);
-                    break;
+                Console.Clear();
+                List<Client> Clients = Client.Lire_excel();
+               
+                Console.WriteLine("Pour vous connectez, saissisez votre numéro de sécurité sociale ainsi que votre nom :");
+                Console.Write("Numéro de sécurité sociale : ");
+                int num_ss = Convert.ToInt32(Console.ReadLine());
+                Client connecte = Clients.Find(c => c.Num_ss == num_ss);
+                while ( connecte == null)
+                {
+                    Console.WriteLine("Numéro de sécurité sociale introuvable, réessayez (si vous souhaiter quitter : q) : ");
+                    string rep = Console.ReadLine();
+                    if(rep == "q") { return false;}
+                    num_ss = Convert.ToInt32(rep);
+                    connecte = Clients.Find(c => c.Num_ss == num_ss);
+                }
+
+                Console.Clear();
+                Console.WriteLine("Bonjour " + connecte.Prenom + " ! Que voulez-vous faire ?" +
+                    "\n\t1.Voir mes infos" +
+                    "\n\t2.Modifier mon compte" +
+                    "\n\t3.Voir mes commandes" +
+                    "\n\t4.Passer une commande" +
+                    "\n\t5.Retour");
+                int rep_client = Convert.ToInt32(Console.ReadLine());
+                switch (rep_client)
+                {
+                    case 1:
+                        Client.Affiche_Client(connecte);
+                        break;
+                    case 2:
+                        Client.Modifier_client(connecte.num_ss);
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                }
+                
             }
+            else if(reponse == 2)
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("Réponse non utilisable, appuyez sur une touche pour revenir à l'acceuil...");
+                Console.ReadKey(); 
+            }
+
+
+            Console.WriteLine("\n Souhaitez-vous continuer dans le partie Client ? y/n");
+            string fin = Console.ReadLine();
+            if (fin == "n") { end = true; }
+            return end;
+
+            
         }
 
-
-        static void ModuleAcceuil()
+        static bool ModuleAcceuil()
         {
-            Console.WriteLine("Qui êtes vous ?\n\t1. Patron/chef\n\t2.Client");
+            Console.Clear();
+            Console.WriteLine("Bienvenue chez Trans-Connect !");
+            Console.WriteLine("Qui êtes vous ?" +
+                "\n\t1.Administrateur" +
+                "\n\t2.Client");
             int rep_acceuil = Convert.ToInt32(Console.ReadLine());
+            bool end = false;
             switch (rep_acceuil)
             {
                 case 1:
-                    ModulePatron();
+                    Console.Clear();
+                    Console.Write("Entrez le mot de passe administrateur : ");
+                    string reponse = Console.ReadLine();
+                    while (reponse != "patron")
+                    {
+                        Console.Write("Mot de passe incorrect, réessayez : ");
+                        reponse = Console.ReadLine();
+                    }
+                    while (end != true)
+                    {
+                        end = ModulePatron();
+                    }
                     break;
+                
                 case 2:
-                    ModuleClient_client();
+                    while(end != true)
+                    {
+                        end = ModuleClient_client();
+                    }
                     break;
+                
+                default:
+                    Console.WriteLine("Réponse non utilisable");
+                    
+                    break;
+                    
+                
             }
+            Console.WriteLine("\nSouhaitez-vous quitter l'interface ? y/n");
+            string fin = Console.ReadLine();
+            if (fin == "y") { end = true; }
+            return end;
 
         }
 
-        static void ModulePatron()
+        static bool ModulePatron()
         {
-            Console.Write("Voulez-vous accéder aux clients (1), aux salariés (2), aux commandes (3), aux statistiques (4) : ");
+            Console.Clear();
+            Console.WriteLine("Voulez-vous accéder : " +
+                "\n\t1.Aux clients " +
+                "\n\t2.Aux salariés " +
+                "\n\t3.Aux commandes " +
+                "\n\t4.Aux statistiques" +
+                "\n\t5.Retour");
             string reponse = Console.ReadLine();
+            bool end = false;  
             if(reponse == "1")
             {
                 ModuleClient_patron();
@@ -97,6 +191,14 @@ namespace Projet_A6_V1
             {
                 ModuleStatistiques();
             }
+            else if(reponse == "5")
+            {
+                return true;
+            }
+            Console.WriteLine("\nSouhaitez-vous continuer dans le partie Administrateur ? y/n");
+            reponse = Console.ReadLine();
+            if( reponse == "n") { end = true;}
+            return end;
         }
 
         static void ModuleStatistiques()
@@ -155,20 +257,24 @@ namespace Projet_A6_V1
 
         static void ModuleSalarie()
         {
-            Console.Write("Voulez-vous : " +
-                "\n\t1.afficher l'organigramme " +
-                "\n\t2.ajouter un salarié " +
-                "\n\t3.licensier" +
-                "\n\t4.Changer le post d'un salarié" +
-                "\n\t5.affichier la liste des salariés");
+            Console.Clear();
+            Console.WriteLine("Voulez-vous : " +
+                "\n\t1.Afficher l'organigramme " +
+                "\n\t2.Ajouter un salarié " +
+                "\n\t3.Licencier (à faire ou pas)" +
+                "\n\t4.Changer le poste d'un salarié (à faire ou pas)" +
+                "\n\t5.Afficher la liste des salariés" +
+                "\n\t6.Retour");
             int reponse = Convert.ToInt32(Console.ReadLine());
             switch(reponse)
             {
                 case 1:
+                    Console.Clear();
                     List<Salarie> list = Salarie.Lire_csv();
                     list = Salarie.TrieNiveau(list);
                     Noeud<Salarie> racine = CreationArbre(list);
-                    ParcourirArbre(racine);
+                    Console.WriteLine("Voici l'organigramme de l'entreprise");
+                    ParcourirArbre(racine); 
                     break;
                 case 2:
                     List<Salarie> salaries = Salarie.Lire_csv();
@@ -188,6 +294,14 @@ namespace Projet_A6_V1
                     }
                     break;
                 case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    List<Salarie> Salaries = Salarie.Lire_csv();
+                    Salaries.ForEach(c => Console.WriteLine(c.ToString()));
+                    break;
+                case 6:
                     break;
             }
 
@@ -251,7 +365,7 @@ namespace Projet_A6_V1
                 { Console.Write("     "); }
             }
 
-            Console.WriteLine($"{noeud.Valeur.niveau}");
+            Console.WriteLine($"{noeud.Valeur.Nom} {noeud.Valeur.Prenom}");
 
             ParcourirArbre(noeud.Fils);
 
