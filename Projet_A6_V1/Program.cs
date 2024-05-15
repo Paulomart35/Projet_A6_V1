@@ -11,13 +11,15 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            bool end = true;
+            Commande.Modifier_commande(2);
+
+            /*bool end = true;
             while (end != false)
             {
                 end = ModuleAcceuil();
             }
             Console.Clear();
-            Console.WriteLine("En revoir");
+            Console.WriteLine("En revoir");*/
             Console.ReadKey();
         }
 
@@ -275,7 +277,7 @@ namespace Projet_A6_V1
         static void ModuleCommandes()
         {
             Console.Clear();
-            Console.Write("Voulez-vous :\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes : ");
+            Console.Write("Voulez-vous :\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes\n\t4. Afficher le plan de route : ");
             int rep_commande = Convert.ToInt32(Console.ReadLine());
             switch (rep_commande)
             {
@@ -283,7 +285,9 @@ namespace Projet_A6_V1
                     Commande c = Commande.Nouvelle_commande();
                     break;
                 case 2:
-
+                    Console.Write("Quel numéro de commande souhaitez vous modifier ?");
+                    int num = Convert.ToInt32(Console.ReadLine());
+                    Commande.Modifier_commande(num);
                     break;
                 case 3:
                     List<Commande> list = Commande.Lire_excel();

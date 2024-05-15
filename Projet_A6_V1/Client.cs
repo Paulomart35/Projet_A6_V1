@@ -160,6 +160,36 @@ namespace Projet_A6_V1
             return montantTotal;
         }
 
+        public static bool Lire_si_client_existe(int num_ss_a_verif)
+        {
+            string path = "Client_Transconnect.csv";
+            bool client_existe = false;
+            List<int> list_num_ss = new List<int>();
+            try
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] values = line.Split(',');
+
+                        int num_ss = int.Parse(values[0]);
+                        list_num_ss.Add(num_ss);
+                    }
+                }
+                if (list_num_ss.Contains(num_ss_a_verif))
+                {
+                    client_existe = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+            return client_existe;
+        }
+
         public static List<Client> Lire_excel()
         {
             string path = "Client_Transconnect.csv";

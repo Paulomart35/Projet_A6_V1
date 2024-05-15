@@ -224,7 +224,7 @@ namespace Projet_A6_V1
                     string[] valuesCommande = lineCommande.Split(',');
                     int chauffeurCommande = int.Parse(valuesCommande[9]);
                     DateTime dateCommande = DateTime.Parse(valuesCommande[12]);
-                    if (dateCommande.Date == DateTime.Now.Date) // Même jour
+                    if (dateCommande.Date == DateTime.Now.Date) 
                     {
                         chauffeursDisponibles.Remove(chauffeurCommande);
                     }
@@ -253,7 +253,7 @@ namespace Projet_A6_V1
             }
             else
             {
-                throw new ApplicationException("Aucun chauffeur disponible pour aujourd'hui.");
+                throw new ApplicationException("Aucun chauffeur disponible.");
             }
         }
 

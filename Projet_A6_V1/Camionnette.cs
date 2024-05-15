@@ -26,7 +26,7 @@ namespace Projet_A6_V1
 
         public string ecriture_attributs()
         {
-            return usage;
+            return this.usage;
         }
     }
 }
