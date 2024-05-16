@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_A6_V1
 {
-    internal class CamionCiterne : PoidsLourd
+    internal class CamionCiterne : PoidsLourd, IVehicule
     {
         public string type_cuve;
 

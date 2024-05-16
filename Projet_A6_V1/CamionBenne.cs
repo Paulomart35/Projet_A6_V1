@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_A6_V1
 {
-    internal class CamionBenne : PoidsLourd
+    internal class CamionBenne : PoidsLourd, IVehicule
     {
         public string type_travaux;
         public List<string> equipements;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_A6_V1
 {
-    internal class Camionnette : Vehicule
+    internal class Camionnette : Vehicule, IVehicule
     {
         public string usage;
 
