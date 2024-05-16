@@ -140,7 +140,7 @@ namespace Projet_A6_V1
         public static List<Client> Lire_excel_trier()
         {
             List<Client> lecture_clients = Lire_excel();
-            Console.Write("Trier par ordre alphabétique (1)\nTrier par ville (2)\nTrier par montant des achats cumulé(3) : ");
+            Console.Write("Trier par ordre alphabétique (1)\nTrier par ville (2)\nTrier par montant des achats cumulés(3) : ");
             int choix = Convert.ToInt32(Console.ReadLine());
             switch (choix)
             {
@@ -151,28 +151,25 @@ namespace Projet_A6_V1
                     lecture_clients = lecture_clients.OrderBy(c => c.Adresse.Ville).ToList();
                     break;
                 case 3:
-                    //A tester
-                    List<Commande> list_commande = new List<Commande>();
-                    list_commande = Commande.Lire_excel();
-                    lecture_clients = lecture_clients.OrderBy(c => c.CalculPrixCommande(list_commande)).ToList();
+                    List<Commande> list = Commande.Lire_excel();
+                    lecture_clients = lecture_clients.OrderBy(c => CalculerMontantTotalAchats(c)).ToList();
                     break;
             }
             return lecture_clients;
 
         }
 
-        //A tester
-        public double CalculPrixCommande(List<Commande> commandes)
+        private static double CalculerMontantTotalAchats(Client client)
         {
+            List<Commande> commandesClient = Commande.Lire_excel().Where(c => c.num_ss == client.Num_ss).ToList();
+
             double montantTotal = 0;
-            foreach (int numCommande in this.num_commande)
+
+            foreach (Commande commande in commandesClient)
             {
-                Commande commande = commandes.Find(c => c.idcommande == numCommande);
-                if (commande != null)
-                {
-                    montantTotal += commande.prix;
-                }
+                montantTotal += commande.prix;
             }
+
             return montantTotal;
         }
 

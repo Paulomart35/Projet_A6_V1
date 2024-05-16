@@ -11,10 +11,6 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            //Commande.Modifier_commande(2);
-            List<int> list = new List<int>();
-            
-
             bool end = true;
             while (end != false)
             {
@@ -309,7 +305,7 @@ namespace Projet_A6_V1
             switch (rep_commande)
             {
                 case 1:
-                    Commande c = Commande.Nouvelle_commande();
+                    Commande.Nouvelle_commande();
                     break;
                 case 2:
                     Console.Write("Quel numéro de commande souhaitez vous modifier ?");

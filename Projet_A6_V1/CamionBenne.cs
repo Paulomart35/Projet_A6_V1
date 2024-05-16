@@ -71,14 +71,16 @@ namespace Projet_A6_V1
         public string ecriture_attributs()
         {
             string str = Convert.ToString(volume) + ",";
-            foreach (string m in this.matiere)
+            str += this.matiere[0];
+            for (int i = 1; i < this.matiere.Count; i++)
             {
-                str += m + "/";
+                str += "/" + this.matiere[i];
             }
-            str += "," + type_travaux + ","; 
-            foreach (string e in this.equipements)
+            str += "," + type_travaux + ",";
+            str += this.equipements[0];
+            for (int i = 1; i < this.equipements.Count; i++)
             {
-                str += e + "/";
+                str += "/" + this.equipements[i];
             }
             str += "," + Convert.ToString(nb_bennes) + ","; 
             str += Convert.ToString(grue);

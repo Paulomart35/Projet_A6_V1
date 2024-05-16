@@ -29,7 +29,7 @@ namespace Projet_A6_V1
             int long_list = Convert.ToInt32(Console.ReadLine());
             List<string> list = new List<string>(long_list);
             string mat = null;
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 1; i < long_list+1; i++)
             {
                 Console.Write($"Matière {i} : ");
                 mat = Console.ReadLine();
@@ -47,9 +47,10 @@ namespace Projet_A6_V1
         public string ecriture_attributs()
         {
             string str = Convert.ToString(volume) + ",";
-            foreach (string m in matiere)
+            str += matiere[0];
+            for (int i = 1; i < matiere.Count; i++)
             {
-                str += m + "/";
+                str += "/" + matiere[i];
             }
             str += "," + type_cuve;
             return str;
