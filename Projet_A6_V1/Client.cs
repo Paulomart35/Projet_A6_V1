@@ -124,7 +124,7 @@ namespace Projet_A6_V1
                 {
                     writer.WriteLine(text);
                 }
-                Console.WriteLine($"Le client avec le numéro de sécurité sociale {num_ss} a été ajouté avec succès.");
+                //Console.WriteLine($"Le client avec le numéro de sécurité sociale {num_ss} a été ajouté avec succès.");
             }
             catch(Exception ex) 
             {
