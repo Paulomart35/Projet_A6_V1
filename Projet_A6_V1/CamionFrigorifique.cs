@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_A6_V1
 {
-    internal class CamionFrigorifique : PoidsLourd
+    internal class CamionFrigorifique : PoidsLourd, IVehicule
     {
         public int nb_grp_electrogene;
 

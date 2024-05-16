@@ -11,18 +11,21 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            Commande.Modifier_commande(2);
+            //Commande.Modifier_commande(2);
+            List<int> list = new List<int>();
+            
 
-            /*bool end = true;
+            bool end = true;
             while (end != false)
             {
                 end = ModuleAcceuil();
             }
             Console.Clear();
-            Console.WriteLine("En revoir");*/
+            Console.WriteLine("En revoir");
             Console.ReadKey();
         }
 
+        
         
         static void ModuleClient_patron()
         {
@@ -309,7 +312,7 @@ namespace Projet_A6_V1
             Console.WriteLine("Voulez-vous : " +
                 "\n\t1.Afficher l'organigramme " +
                 "\n\t2.Ajouter un salarié " +
-                "\n\t3.Licencier (à faire ou pas)" +
+                "\n\t3.Licencier" +
                 "\n\t4.Modifier les infos d'un salarié" +
                 "\n\t5.Afficher la liste des salariés" +
                 "\n\t6.Retour");
@@ -318,13 +321,12 @@ namespace Projet_A6_V1
             {
                 case 1:
                     Console.Clear();
-                    List<Salarie> list = Salarie.Lire_csv();
-                    list = Salarie.TrieNiveau(list);
-                    Noeud<Salarie> racine = CreationArbre(list);
                     Console.WriteLine("Voici l'organigramme de l'entreprise");
-                    ParcourirArbre(racine); 
+                    AfficherOrga();
                     break;
                 case 2:
+                    Console.Clear();
+                    AfficherOrgaetNum();
                     List<Salarie> salaries = Salarie.Lire_csv();
                     Console.Write("Quelle est le num_SS du supérieur de votre nouveau salarié : ");
                     int num_SS = Convert.ToInt32(Console.ReadLine());
@@ -334,6 +336,8 @@ namespace Projet_A6_V1
                         Salarie salnv = Salarie.Création();
                         Salarie.AjouterNouveauSalarie(salaries, salnv, salariesup);
                         Salarie.Updatecsv(salaries);
+                        Chauffeur c = new Chauffeur();
+                        c.Ajout();
                         Console.WriteLine("Salarie Ajouté");
                     }
                     else
@@ -342,13 +346,39 @@ namespace Projet_A6_V1
                     }
                     break;
                 case 3:
+                    Console.Clear();
+                    
+
+                    Console.WriteLine("Voici l'organigramme de l'entreprise");
+                    AfficherOrga();
+
+                    List<Salarie> sasa = Salarie.Lire_csv();
+                    Console.Write("Quelle est le num_SS du salarié que vous souhaitez licenscier : ");
+                    int Num_SS = Convert.ToInt32(Console.ReadLine());
+                    Salarie salarielic = sasa.Find(s => s.num_ss == Num_SS);
+                    if (salarielic != null)
+                    {          
+                        sasa.Remove(salarielic);
+                        Console.WriteLine("Salarie licencié");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Le num_SS que vous chercher n'est pas attribué");
+                    }
+
+                    Noeud<Salarie> rac = CreationArbre(sasa);
+                    Console.WriteLine("Voici le nouvel organigramme de l'entreprise");
+                    ParcourirArbre(rac);
                     break;
                 case 4:
+                    Console.Clear();
+                    AfficherOrgaetNum();
                     Console.Write("Num SS du salarié à modifier : ");
                     int rep_num2 = Convert.ToInt32(Console.ReadLine());
                     Salarie.Modifier_Salarie(rep_num2);
                     break;
                 case 5:
+                    Console.Clear();
                     List<Salarie> Salaries = Salarie.Lire_csv();
                     Salaries.ForEach(c => Console.WriteLine(c.ToString()));
                     break;
@@ -357,7 +387,6 @@ namespace Projet_A6_V1
             }
 
         }
-
 
         public static Noeud<Salarie> CreationArbre(List<Salarie> organigramme)
         {
@@ -401,14 +430,12 @@ namespace Projet_A6_V1
             return racine;
         }
 
-
-
         static void ParcourirArbre(Noeud<Salarie> noeud)
         {
             if (noeud == null)
                 return;
 
-            for(int i = 1; i < noeud.Valeur.niveau.Length; i++)
+            for (int i = 1; i < noeud.Valeur.niveau.Length; i++)
             {
                 if (i == noeud.Valeur.niveau.Length - 1)
                 { Console.Write("└─ "); }
@@ -422,7 +449,45 @@ namespace Projet_A6_V1
 
             ParcourirArbre(noeud.Frere);
 
+
+        }
+
+        static void ParcourirArbreNum(Noeud<Salarie> noeud)
+        {
+            if (noeud == null)
+                return;
+
+            for(int i = 1; i < noeud.Valeur.niveau.Length; i++)
+            {
+                if (i == noeud.Valeur.niveau.Length - 1)
+                { Console.Write("└─ "); }
+                else
+                { Console.Write("     "); }
+            }
+
+            Console.WriteLine($"{noeud.Valeur.Nom} {noeud.Valeur.Prenom} {noeud.Valeur.Num_ss}");
+
+            ParcourirArbreNum(noeud.Fils);
+
+            ParcourirArbreNum(noeud.Frere);
+
             
+        }
+
+        static void AfficherOrga()
+        {
+            List<Salarie> list = Salarie.Lire_csv();
+            list = Salarie.TrieNiveau(list);
+            Noeud<Salarie> racine = CreationArbre(list);
+            ParcourirArbre(racine);
+        }
+
+        static void AfficherOrgaetNum()
+        {
+            List<Salarie> list = Salarie.Lire_csv();
+            list = Salarie.TrieNiveau(list);
+            Noeud<Salarie> racine = CreationArbre(list);
+            ParcourirArbreNum(racine);
         }
 
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projet_A6_V1
 {
-    internal class Voiture : Vehicule
+    internal class Voiture : Vehicule, IVehicule
     {
         public int nb_passager;
 

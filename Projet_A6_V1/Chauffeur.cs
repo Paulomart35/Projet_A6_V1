@@ -156,7 +156,7 @@ namespace Projet_A6_V1
                     {
                         string[] values = line.Split(',');
                         poste = values[11];
-                        if (poste == "chauffeur")
+                        if (poste == "Chauffeur")
                         {
                             num_ss = int.Parse(values[0]);
                             nom = values[1];
