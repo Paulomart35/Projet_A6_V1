@@ -226,9 +226,13 @@ namespace Projet_A6_V1
 
             Console.Write("Num SS : ");
             int num_ss = Convert.ToInt32(Console.ReadLine());
+            List<Client> clients = Client.Lire_excel();
 
             if(Client.Lire_si_client_existe(num_ss))
             {
+                Client ceclient = clients.Find(c => c.num_ss == num_ss);
+                int nbCommande = ceclient.num_commande.Count();
+
                 Console.Write("Livraison : ");
                 Livraison livraison = new Livraison(null, null);
                 livraison = livraison.Demander_Livraison();
@@ -244,6 +248,12 @@ namespace Projet_A6_V1
                 List<string> v_t = livraison.Demander_ville_traverse(livraison.départ.ville, livraison.arrivee.ville);
                 int km = livraison.Demander_kilometrage(livraison.départ.ville, livraison.arrivee.ville);
                 double prix = livraison.Calcul_prix(rep, id_chauffeur, km);
+                if(nbCommande != 0)
+                {
+                    if(nbCommande < 2) { prix = prix * 0.97;Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 3%");}
+                    else if (nbCommande < 3) { prix *= 0.95; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 5%"); }
+                    else { prix *= 0.9; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 10%"); }
+                }
                 switch (rep)
                 {
                     case "Voiture":
@@ -272,6 +282,11 @@ namespace Projet_A6_V1
                         nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, km, v_t, date, camionBenne);
                         break;
                 }
+                
+                clients.Remove(ceclient);
+                ceclient.num_commande.Add(nv_commande.idcommande);
+                clients.Add(ceclient);
+                Client.UpdateCSV(clients);
                 nv_commande.Ecrire_commande_excel();
             }
             else

@@ -11,10 +11,6 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            //Commande.Modifier_commande(2);
-            List<int> list = new List<int>();
-            
-
             bool end = true;
             while (end != false)
             {
@@ -142,21 +138,35 @@ namespace Projet_A6_V1
             Console.WriteLine("Bonjour " + connecte.Prenom + " ! Que voulez-vous faire ?" +
                 "\n\t1.Voir mes infos" +
                 "\n\t2.Modifier mon compte" +
-                "\n\t3.Voir mes commandes" +
-                "\n\t4.Passer une commande" +
+                "\n\t3.Passer une commande" +
+                "\n\t4.Voir mes commandes" +
                 "\n\t5.Retour");
             int rep_client = Convert.ToInt32(Console.ReadLine());
             switch (rep_client)
             {
                 case 1:
+                    Console.Clear();
                     Client.Affiche_Client(connecte);
                     break;
                 case 2:
+                    Console.Clear();
                     Client.Modifier_client(connecte.num_ss);
                     break;
                 case 3:
+                    Console.Clear();
+                    Commande.Nouvelle_commande();
                     break;
                 case 4:
+                    Console.Clear();
+                    if (connecte.num_commande.Count != 0)
+                    {
+                        List<Commande> Commandes = Commande.Lire_excel();
+                        Commande.AfficherCommandesClient(connecte.num_ss, Commandes);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Vous n'avez pas effectué de commande");
+                    }
                     break;
                 case 5:
                     return true;
@@ -175,11 +185,13 @@ namespace Projet_A6_V1
         static bool ModuleAcceuil()
         {
             Console.Clear();
-            Console.WriteLine("Bienvenue chez Trans-Connect !");
-            Console.WriteLine("Qui êtes vous ?" +
+            Console.WriteLine("Bienvenue chez Trans-Connect !\n");
+            Console.WriteLine("Qui êtes-vous ?\n" +
                 "\n\t1.Administrateur" +
-                "\n\t2.Client");
+                "\n\t2.Client\n");
+            
             int rep_acceuil = Convert.ToInt32(Console.ReadLine());
+
             bool end = false;
             switch (rep_acceuil)
             {
@@ -226,12 +238,12 @@ namespace Projet_A6_V1
         static bool ModulePatron()
         {
             Console.Clear();
-            Console.WriteLine("Voulez-vous accéder : " +
+            Console.WriteLine("Voulez-vous accéder : \n" +
                 "\n\t1.Aux clients " +
                 "\n\t2.Aux salariés " +
                 "\n\t3.Aux commandes " +
                 "\n\t4.Aux statistiques" +
-                "\n\t5.Retour");
+                "\n\t5.Retour\n");
             string reponse = Console.ReadLine();
             bool end = false;  
             if(reponse == "1")
@@ -265,12 +277,19 @@ namespace Projet_A6_V1
         /// </summary>
         static void ModuleStatistiques()
         {
-            Console.WriteLine("\nStatistique\n\t1. Afficher par chauffeur le nombre de livraisons effectuées\n\t2. Afficher les commandes selon une période de temps\n\t3. Afficher la moyenne des prix des commandes\n\t4. Afficher la moyenne des comptes clients\n\t5. Afficher la liste des commandes pour un client");
+            Console.Clear();
+            Console.WriteLine("Que souhiatez-vous savoir : \n" +
+                "\n\t1.Afficher par chauffeur le nombre de livraisons effectuées" +
+                "\n\t2.Afficher les commandes selon une période de temps" +
+                "\n\t3.Afficher la moyenne des prix des commandes" +
+                "\n\t4.Afficher la moyenne des comptes clients" +
+                "\n\t5.Afficher la liste des commandes pour un client\n");
             int rep_stats = Convert.ToInt32(Console.ReadLine());
             List<Commande> listeCommandes = Commande.Lire_excel();
             switch (rep_stats)
             {
                 case 1:
+                    Console.Clear();
                     int[] nombreLivraisonsParChauffeur = Commande.GetNombreLivraisonsParChauffeur(listeCommandes);
 
                     for (int i = 0; i < nombreLivraisonsParChauffeur.Length; i++)
@@ -280,17 +299,47 @@ namespace Projet_A6_V1
                     }
                     break;
                 case 2:
-
+                    Console.Clear();
+                    List<Commande> Command = Commande.Lire_excel();
+                    Dictionary<int,int> countByYear = Command.GroupBy(obj => obj.date.Year).ToDictionary(group => group.Key, group => group.Count());
+                    foreach (var i in countByYear)
+                    {
+                        Console.WriteLine($"Année: {i.Key}, Nombre de dates: {i.Value}");
+                    }
                     break;
                 case 3:
-                     
+                    Console.Clear();
                     double moyennePrix = Commande.MoyennePrixCommandes(listeCommandes);
                     Console.WriteLine($"La moyenne des prix des commandes est : {moyennePrix}€");
                     break;
                 case 4:
+                    Console.Clear();
+                    List<Client> Clients = Client.Lire_excel();
+                    List<Commande> Commandes = Commande.Lire_excel();
+                    for(int i = 0; i < Clients.Count;i++)
+                    {
+                        Client client = Clients[i];
+                        if(client.num_commande.Count != 0)
+                        {
+                            float moy = 0;
+                            Commande mem = new Commande();
+                            for(int j = 0; j < client.num_commande.Count;j++)
+                            {
+                                mem = Commandes.Find(c => c.idcommande == client.num_commande[j]);
+                                moy += (float)mem.prix;
 
+                            }
+                            moy = moy / client.num_commande.Count;
+                            Console.WriteLine($"{client.Nom} {client.Prenom} a commandé pour {moy}euros en moyenne par commande");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{client.Nom} {client.Prenom} n'a pas effectué de commande");
+                        }
+                    }
                     break;
                 case 5:
+                    Console.Clear();
                     Console.Write("Statistique pour quel numéro SS : ");
                     int numeroSSClient = Convert.ToInt32(Console.ReadLine()); 
                     Commande.AfficherCommandesClient(numeroSSClient, listeCommandes);
@@ -304,7 +353,11 @@ namespace Projet_A6_V1
         static void ModuleCommandes()
         {
             Console.Clear();
-            Console.WriteLine("Voulez-vous :\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes\n\t4. Afficher le plan de route ");
+            Console.WriteLine("Voulez-vous :\n" +
+                "\n\t1.Ajouter une commande" +
+                "\n\t2.Modifier une commande" +
+                "\n\t3.Afficher les commandes" +
+                "\n\t4.Afficher le plan de route \n");
             int rep_commande = Convert.ToInt32(Console.ReadLine());
             switch (rep_commande)
             {
@@ -336,13 +389,13 @@ namespace Projet_A6_V1
         static void ModuleSalarie()
         {
             Console.Clear();
-            Console.WriteLine("Voulez-vous : " +
+            Console.WriteLine("Voulez-vous : \n" +
                 "\n\t1.Afficher l'organigramme " +
                 "\n\t2.Ajouter un salarié " +
                 "\n\t3.Licencier" +
                 "\n\t4.Modifier les infos d'un salarié" +
                 "\n\t5.Afficher la liste des salariés" +
-                "\n\t6.Retour");
+                "\n\t6.Retour\n");
             int reponse = Convert.ToInt32(Console.ReadLine());
             switch(reponse)
             {
@@ -424,11 +477,9 @@ namespace Projet_A6_V1
         {
             organigramme = Salarie.TrieNiveau(organigramme);
             
-            // Création du nœud racine
             Noeud<Salarie> racine = new Noeud<Salarie>(organigramme[0]);
             Noeud<Salarie> dernierParent = racine;
 
-            // Parcours des salariés pour les ajouter à l'arbre
             for (int i = 1; i < organigramme.Count; i++)
             {
                 
