@@ -15,6 +15,7 @@ namespace Projet_A6_V1
         public int kilometrage;
         public string duree;
 
+        #region Constructeur
         public Livraison(Adresse départ, Adresse arrivee, int kilometrage, string duree)
         {
             this.départ=départ;
@@ -32,15 +33,22 @@ namespace Projet_A6_V1
         }
 
         public Livraison() { }
-
+        #endregion
         public override string ToString()
         {
             return this.départ.ToString() + "," + this.arrivee.ToString();
         }
 
+        /// <summary>
+        /// Calcul le prix en fonction des différents paramètres.
+        /// Initialise des tarifs de prix que nous avons décidé et calcul le montant total
+        /// </summary>
+        /// <param name="vehicule"></param>
+        /// <param name="idchauffeur"></param>
+        /// <param name="km"></param>
+        /// <returns></returns>
         public double Calcul_prix(string vehicule, int idchauffeur, int km)
         {
-            //string path = "Distances.csv";
             double montant_total = 0;
             double tarif_kilometre = 1;
             double tarif_vehicule = 0;
@@ -81,6 +89,10 @@ namespace Projet_A6_V1
             return montant_total;
         }
 
+        /// <summary>
+        /// Lis le fichier distance
+        /// </summary>
+        /// <returns>return une liste de liste comprenant la ville1, la ville2, le km et la durée</returns>
         public List<List<string>> Fichier_distance()
         {
             List<List<string>> distances = new List<List<string>>();
@@ -99,6 +111,10 @@ namespace Projet_A6_V1
             return distances;
         }
 
+        /// <summary>
+        /// Créer une liste des villes unique présent dans le csv
+        /// </summary>
+        /// <returns></returns>
         public List<string> Liste_ville()
         {
             List<List<string>> list = Fichier_distance();
@@ -121,7 +137,10 @@ namespace Projet_A6_V1
             return villes;
         }
 
-
+        /// <summary>
+        /// Transforme les données de distance en une matrice représentant les distances entre les villes.
+        /// </summary>
+        /// <returns>Une matrice d'entiers représentant les distances entre les villes. La valeur à l'indice [i, j] représente la distance entre la ville i et la ville j.</returns>
         public int[,] Transformation_matrice()
         {
             List<List<string>> list = Fichier_distance();
@@ -152,6 +171,13 @@ namespace Projet_A6_V1
             return distances;
         }
 
+        /// <summary>
+        /// Implémente l'algorithme de Dijkstra pour trouver le chemin le plus court entre deux villes dans un graphe pondéré.
+        /// </summary>
+        /// <param name="graph">La matrice d'adjacence représentant le graphe pondéré. Chaque valeur [i, j] représente la distance entre les villes i et j.</param>
+        /// <param name="startVertex">L'indice de la ville de départ dans le graphe.</param>
+        /// <param name="endVertex">L'indice de la ville d'arrivée dans le graphe.</param>
+        /// <returns>Une liste contenant le chemin le plus court entre la ville de départ et la ville d'arrivée.</returns>
         public List<string> Dijkstra2(int[,] graph, int startVertex, int endVertex)
         {
             List<string> liste_ville = Liste_ville();
@@ -212,20 +238,24 @@ namespace Projet_A6_V1
             }
             path.Reverse();
 
-            //Console.WriteLine("Chemin le plus court\nVilles traversées : ");
             int compteur = 0;
             do
             {
-                //Console.Write(liste_ville[path[compteur]] + " ");
                 path_villes.Add(liste_ville[path[compteur]]);
                 compteur++;
             } while (compteur < path.Count);
-            //Console.Write("\n");
 
             return path_villes;
 
         }
 
+        /// <summary>
+        /// Implémente l'algorithme de Dijkstra pour calculer les distances les plus courtes entre une ville de départ et toutes les autres villes dans un graphe pondéré.
+        /// </summary>
+        /// <param name="graph">La matrice d'adjacence représentant le graphe pondéré. Chaque valeur [i, j] représente la distance entre les villes i et j.</param>
+        /// <param name="startVertex">L'indice de la ville de départ dans le graphe.</param>
+        /// <param name="endVertex">L'indice de la ville d'arrivée dans le graphe.</param>
+        /// <returns>Une liste contenant les distances les plus courtes entre la ville de départ et toutes les autres villes.</returns>
         public List<int> Dijkstra1(int[,] graph, int startVertex, int endVertex)
         {
             List<string> liste_ville = Liste_ville();
@@ -283,7 +313,11 @@ namespace Projet_A6_V1
            
         }
 
-
+        /// <summary>
+        /// Convertit le nom d'une ville en un entier correspondant à son index dans une liste prédéfinie.
+        /// </summary>
+        /// <param name="ville">Le nom de la ville à convertir en entier.</param>
+        /// <returns>L'index de la ville dans la liste préétablie. Si la ville n'est pas trouvée dans la liste, retourne -1.</returns>
         public static int Convert_toint(string ville)
         {
             List<string> list = new List<string> { "Paris", "Rouen", "Lyon", "Angers", "La Rochelle", "Bordeaux", "Biarritz", "Toulouse", "Pau", "Nimes", "Montpellier", "Marseilles", "Monaco", "Toulon", "Avignon"};
@@ -295,34 +329,12 @@ namespace Projet_A6_V1
             return index;
         }
 
-        public void Distancepluscourte(string ville_depart, string ville_arrivee)
-        {
-            
-            List<string> liste_ville = Liste_ville();
-            int[,] mat = Transformation_matrice();
-            int startVertex = Convert_toint(ville_depart);
-            int endVertex = Convert_toint(ville_arrivee);
-            
-
-            for (int i = 0; i < liste_ville.Count; i++)
-            {
-                if (ville_depart == liste_ville[i])
-                    startVertex = i;
-
-            }
-            for (int j = 0; j < liste_ville.Count; j++)
-            {
-                if (ville_arrivee == liste_ville[j])
-                    endVertex = j;
-
-            }
-            List<int> distances = Dijkstra1(mat, startVertex, endVertex);
-            List<string> distances2 = Dijkstra2(mat, startVertex, endVertex);
-
-            Console.WriteLine($"La distance la plus courte entre {ville_depart} et {ville_arrivee} est de {distances[endVertex]}km");
-
-        }
-
+        /// <summary>
+        /// Calcule et retourne la liste des villes traversées pour se rendre de la ville de départ à la ville d'arrivée.
+        /// </summary>
+        /// <param name="ville_depart">Le nom de la ville de départ.</param>
+        /// <param name="ville_arrivee">Le nom de la ville d'arrivée.</param>
+        /// <returns>Une liste des noms des villes traversées.</returns>
         public List<string> Demander_ville_traverse(string ville_depart, string ville_arrivee)
         {
             List<string> liste_ville = Liste_ville();
@@ -346,6 +358,12 @@ namespace Projet_A6_V1
             return Dijkstra2(mat, startVertex, endVertex);
         }
 
+        /// <summary>
+        /// Calcule et retourne la distance en kilomètres entre la ville de départ et la ville d'arrivée.
+        /// </summary>
+        /// <param name="ville_depart">Le nom de la ville de départ.</param>
+        /// <param name="ville_arrivee">Le nom de la ville d'arrivée.</param>
+        /// <returns>La distance en kilomètres entre les deux villes.</returns>
         public int Demander_kilometrage(string ville_depart, string ville_arrivee)
         {
             List<string> liste_ville = Liste_ville();
@@ -371,7 +389,10 @@ namespace Projet_A6_V1
 
         }
 
-
+        /// <summary>
+        /// Appelle les fonctions demander adresse 
+        /// </summary>
+        /// <returns>Retourne une livraison</returns>
         public Livraison Demander_Livraison()
         {
             Adresse départ = new Adresse(0, "", "");

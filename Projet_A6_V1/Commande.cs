@@ -23,6 +23,7 @@ namespace Projet_A6_V1
         public DateTime date;
         public Vehicule vehicule;
 
+        #region Constructeurs
         public Commande(int idcommande, int num_ss, Livraison livraison, double prix, int chauffeur, int kilometrage, List<string> ville_traverse, DateTime date, Vehicule vehicule)
         {
             this.idcommande = idcommande;
@@ -35,7 +36,6 @@ namespace Projet_A6_V1
             this.kilometrage=kilometrage;
             this.ville_traverse=ville_traverse;
         }
-
         public Commande(int num_ss, Livraison livraison, double prix, int chauffeur, int kilometrage, List<string> ville_traverse, DateTime date, Vehicule vehicule)
         {
             this.idcommande = ++derniernumcom;
@@ -60,10 +60,14 @@ namespace Projet_A6_V1
             this.kilometrage=kilometrage;
             this.ville_traverse=ville_traverse;
         }
-
         public Commande() { }
-        
+        #endregion
 
+        /// <summary>
+        /// Lis le csv Commande lis par ligne séparée par une virgule
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public static List<Commande> Lire_excel()
         {
             string path = "Commande_Transconnect.csv";
@@ -167,6 +171,11 @@ namespace Projet_A6_V1
             }
             return lecture_commandes;
         }
+
+        /// <summary>
+        /// Ecris dans le csv en fonction du type de voiture
+        /// </summary>
+        /// <exception cref="ApplicationException"></exception>
         public void Ecrire_commande_excel()
         {
             string path = "Commande_Transconnect.csv";
@@ -219,6 +228,11 @@ namespace Projet_A6_V1
             }
 
         }
+
+        /// <summary>
+        /// Demande de rentrer manuelleùment une nouvelle commande qui l'écrirera dans le csv grace à la fonction ci-dessus
+        /// </summary>
+        /// <returns>retourne une commande complète</returns>
         public static Commande Nouvelle_commande()
         {
             Commande nv_commande = new Commande();
@@ -297,6 +311,10 @@ namespace Projet_A6_V1
 
         }
 
+        /// <summary>
+        /// Affiche une seule commande en fonction des ses attributs
+        /// </summary>
+        /// <param name="commande"></param>
         public static void Affiche_commande(Commande commande)
         {
             Console.WriteLine($"ID commande : {commande.idcommande}");
@@ -343,6 +361,10 @@ namespace Projet_A6_V1
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Affiche toutes les commandes en appelant la fonction Affiche_commande
+        /// </summary>
+        /// <param name="lecture_commandes"></param>
         public static void Affiche_List_Commande(List<Commande> lecture_commandes)
         {
             foreach (Commande commande in lecture_commandes)
@@ -351,144 +373,11 @@ namespace Projet_A6_V1
             }
         }
 
-        /*public static void Modifier_commande(int idcommande)
-        {
-            string path = "Commande_Transconnect.csv";
-            try
-            {
-                List<Commande> commandes = Lire_excel();
-
-                Commande commandeAModifier = commandes.Find(c => c.idcommande == idcommande);
-
-                if (commandeAModifier != null)
-                {
-                    Console.WriteLine("Informations actuelles de la commande :");
-                    Affiche_commande(commandeAModifier);
-
-                    Console.WriteLine("Saisissez les nouvelles informations :");
-                    Console.Write("Voulez-vous modifier la livraison (y/n) : ");
-                    char a1 = Console.ReadKey().KeyChar;
-                    if (a1 == 'y')
-                    {
-                        Console.Write("\nNouvelle livraison : ");
-                        Livraison nouvelleLivraison = new Livraison(null, null);
-                        nouvelleLivraison = nouvelleLivraison.Demander_Livraison();
-                        commandeAModifier.livraison = nouvelleLivraison;
-                        Console.Write("\nNouveau véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
-                        string veh = Console.ReadLine();
-                        //demander vehicule modifier appeler demandeer attributs 
-                        commandeAModifier.prix = commandeAModifier.livraison.Calcul_prix(veh);
-                    }
-                    Console.Write("\nVoulez-vous modifier l'id chauffeur (y/n) : ");
-                    char a2 = Console.ReadKey().KeyChar;
-                    if (a2 == 'y')
-                    {
-                        Console.Write("\nNouvel id chauffeur : ");
-                        commandeAModifier.idchauffeur = Convert.ToInt32(Console.ReadLine());
-                    }
-                    Console.Write("\nVoulez-vous modifier la date (y/n) : ");
-                    char a3 = Console.ReadKey().KeyChar;
-                    if (a3 == 'y')
-                    {
-                        Console.Write("\nNouvelle date (AAAA-MM-JJ) : ");
-                        commandeAModifier.date = DateTime.Parse(Console.ReadLine());
-                    }
-                    
-                    Console.WriteLine("\n");
-                    using (StreamWriter writer = new StreamWriter(path))
-                    {
-                        foreach (Commande commande in commandes)
-                        {
-                            string text = $"{commande.idcommande},{commande.num_ss},{commande.livraison.départ.Numero},{commande.livraison.départ.Rue},{commande.livraison.départ.Ville},{commande.livraison.arrivee.Numero},{commande.livraison.arrivee.Rue},{commande.livraison.arrivee.Ville},{commande.prix},{commande.idchauffeur},{commande.date}";
-                            writer.WriteLine(text);
-                        }
-                    }
-
-                    Console.WriteLine($"La commande avec le numéro de sécurité sociale {idcommande} a été modifiée avec succès.");
-                }
-                else
-                {
-                    Console.WriteLine($"Aucune commande trouvée avec le numéro de sécurité sociale {idcommande}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Erreur dans le programme :", ex);
-            }
-        }*/
-
-        /*public static void Modifier_commande(int idcommande)
-        {
-            string path = "Commande_Transconnect.csv";
-            try
-            {
-                List<Commande> commandes = Lire_excel();
-
-                Commande commandeAModifier = commandes.Find(c => c.idcommande == idcommande);
-
-                if (commandeAModifier != null)
-                {
-                    Console.WriteLine("Informations actuelles de la commande :");
-                    Affiche_commande(commandeAModifier);
-
-                    Console.WriteLine("Saisissez les nouvelles informations :");
-                    Console.Write("Voulez-vous modifier la livraison (y/n) : ");
-                    char a1 = Console.ReadKey().KeyChar;
-                    if (a1 == 'y')
-                    {
-                        Console.Write("\nNouvelle livraison : ");
-                        Livraison nouvelleLivraison = new Livraison(null, null);
-                        nouvelleLivraison = nouvelleLivraison.Demander_Livraison();
-                        commandeAModifier.livraison = nouvelleLivraison;
-                    }
-                    Console.Write("\nVoulez-vous modifier l'id chauffeur (y/n) : ");
-                    char a2 = Console.ReadKey().KeyChar;
-                    if (a2 == 'y')
-                    {
-                        Console.Write("\nNouvel id chauffeur : ");
-                        commandeAModifier.idchauffeur = Convert.ToInt32(Console.ReadLine());
-                    }
-                    Console.Write("\nVoulez-vous modifier la date (y/n) : ");
-                    char a3 = Console.ReadKey().KeyChar;
-                    if (a3 == 'y')
-                    {
-                        Console.Write("\nNouvelle date (AAAA-MM-JJ) : ");
-                        commandeAModifier.date = DateTime.Parse(Console.ReadLine());
-                    }
-
-                    // Ajouter la possibilité de modifier les attributs spécifiques au type de véhicule
-                    Console.Write("\nVoulez-vous modifier les attributs du véhicule (y/n) : ");
-                    char a4 = Console.ReadKey().KeyChar;
-                    if (a4 == 'y')
-                    {
-                        Console.Write("\nNouveau véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
-                        string veh = Console.ReadLine();
-                        commandeAModifier.vehicule = Demander_vehicule(veh);
-                    }
-
-                    Console.WriteLine("\n");
-                    using (StreamWriter writer = new StreamWriter(path))
-                    {
-                        foreach (Commande commande in commandes)
-                        {
-                            string text = $"{commande.idcommande},{commande.num_ss},{commande.livraison.départ.Numero},{commande.livraison.départ.Rue},{commande.livraison.départ.Ville},{commande.livraison.arrivee.Numero},{commande.livraison.arrivee.Rue},{commande.livraison.arrivee.Ville},{commande.prix},{commande.idchauffeur},{commande.date}";
-                            writer.WriteLine(text);
-                        }
-                    }
-
-                    Console.WriteLine($"La commande avec le numéro de commande {idcommande} a été modifiée avec succès.");
-                }
-                else
-                {
-                    Console.WriteLine($"Aucune commande trouvée avec le numéro de commande {idcommande}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Erreur dans le programme :", ex);
-            }
-        }*/
-
+        /// <summary>
+        /// Permets de supprmier une commande en écransant le csv et le réecrire sans la commande en paramètre
+        /// </summary>
+        /// <param name="idcommande"></param>
+        /// <exception cref="ApplicationException"></exception>
         public static void Supprimer_commande(int idcommande)
         {
             try
@@ -524,6 +413,11 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// Modification des attributs Livraison, Vehucule et date en demandant à l'utilsateur et le réecris dans le csv
+        /// </summary>
+        /// <param name="idcommande"></param>
+        /// <exception cref="ApplicationException"></exception>
         public static void Modifier_commande(int idcommande)
         {
             string path = "Commande_Transconnect.csv";
@@ -591,8 +485,6 @@ namespace Projet_A6_V1
                     }
 
                     Console.WriteLine("\n");
-                    //Supprimer_commande(idcommande);
-                    //commandeAModifier.Ecrire_commande_excel();
                     using (StreamWriter writer = new StreamWriter(path))
                     {
                         foreach (Commande commande in commandes)
@@ -646,7 +538,12 @@ namespace Projet_A6_V1
             }
         }
 
-
+        /// <summary>
+        /// Appelle les méthodes demander_attribut pour les différents véhicules
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>return un Vehicule avec les paramètres que l'utilisateur entrera</returns>
+        /// <exception cref="ArgumentException"></exception>
         private static Vehicule Demander_vehicule(string type)
         {
             switch (type)

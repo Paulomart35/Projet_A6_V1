@@ -17,6 +17,10 @@ namespace Projet_A6_V1
 
         public CamionCiterne() : base() { }
 
+        /// <summary>
+        /// Demande à l'utilisateur de saisir les attributs d'un camion citerne et crée un nouvel objet CamionCiterne avec ces attributs.
+        /// </summary>
+        /// <returns>Un nouvel objet de type CamionCiterne avec les attributs saisis par l'utilisateur.</returns>
         public CamionCiterne demander_attribut()
         {
             Console.Write("Volume en L : ");
@@ -36,6 +40,10 @@ namespace Projet_A6_V1
             return new CamionCiterne(vol, list, type);
         }
 
+        /// <summary>
+        /// Convertit les attributs de l'objet CamionCiterne en une chaîne de caractères.
+        /// </summary>
+        /// <returns>Une chaîne de caractères représentant les attributs de l'objet CamionCiterne.</returns>
         public string ecriture_attributs()
         {
             string str = Convert.ToString(volume) + ",";

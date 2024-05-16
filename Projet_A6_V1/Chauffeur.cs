@@ -31,6 +31,11 @@ namespace Projet_A6_V1
 
         public Chauffeur() : base() { }
 
+        /// <summary>
+        /// Fonction qui ne lit les information importantes pour créer le csv cahuffeur et l'affiche
+        /// </summary>
+        /// <param name="idchauffeur"></param>
+        /// <exception cref="ApplicationException"></exception>
         public static void plan_route(int idchauffeur)
         {
             string path = "Commande_Transconnect.csv";
@@ -68,6 +73,11 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// Fonction qui lit l'id du denier chauffeur pour l'incrementer automatiquement au fichier csv
+        /// </summary>
+        /// <returns>retourne dernier id</returns>
+        /// <exception cref="ApplicationException"></exception>
         public int lire_idchauffeur()
         {
             List<int> list_id = new List<int>();
@@ -93,6 +103,11 @@ namespace Projet_A6_V1
             return list_id.Last();
         }
 
+        /// <summary>
+        /// Récupérer les num_ss des chauffeurs pour par ecrire deux fois le même
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public List<int> lire_num_ss()
         {
             List<int> list_num_ss = new List<int>();
@@ -117,6 +132,12 @@ namespace Projet_A6_V1
             return list_num_ss;
         }
 
+        /// <summary>
+        /// Lire l'ancienneté du chauffeur pour calculer le prix de la livraison
+        /// </summary>
+        /// <param name="idchauffeur"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public static int Lire_anciennete(int idchauffeur)
         {
             int anciennete = 0;
@@ -144,6 +165,10 @@ namespace Projet_A6_V1
             return anciennete;
         }
 
+        /// <summary>
+        /// Ajout des Salarié ayant le poste 'Chauffeur' au csv chauffeur
+        /// </summary>
+        /// <exception cref="ApplicationException"></exception>
         public void Ajout()
         {
             string path = "Salarie_Transconnect.csv";
@@ -192,6 +217,10 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// Ecriture du csv chauffeur
+        /// </summary>
+        /// <exception cref="ApplicationException"></exception>
         public void Ecrire_chauffeur_excel()
         {
             string path2 = "Chauffeur_Transconnect.csv";
@@ -211,6 +240,11 @@ namespace Projet_A6_V1
 
         }
 
+        /// <summary>
+        /// Choisi un chauffeur dispo en fontion de s'il ne livre pas déjà le jour J et s'il est dispo en général
+        /// </summary>
+        /// <returns>return l'id random d'un chauffeur dispo</returns>
+        /// <exception cref="ApplicationException"></exception>
         public static int choisir_chauffeur()
         {
             string pathCommande = "Commande_Transconnect.csv";

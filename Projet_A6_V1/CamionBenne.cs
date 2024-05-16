@@ -24,6 +24,10 @@ namespace Projet_A6_V1
 
         public CamionBenne() : base() { }
 
+        /// <summary>
+        /// Demande à l'utilisateur de saisir les attributs d'un camion benne et crée un nouvel objet CamionBenne avec ces attributs.
+        /// </summary>
+        /// <returns>Un nouvel objet de type CamionBenne avec les attributs saisis par l'utilisateur.</returns>
         public CamionBenne demander_attribut()
         {
             Console.Write("Volume en L : ");
@@ -60,6 +64,10 @@ namespace Projet_A6_V1
             return new CamionBenne(vol, list, type, list2, nb_ben, b);
         }
 
+        /// <summary>
+        /// Convertit les attributs de l'objet CamionBenne en une chaîne de caractères.
+        /// </summary>
+        /// <returns>Une chaîne de caractères représentant les attributs de l'objet CamionBenne.</returns>
         public string ecriture_attributs()
         {
             string str = Convert.ToString(volume) + ",";

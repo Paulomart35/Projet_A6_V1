@@ -37,6 +37,11 @@ namespace Projet_A6_V1
             set { ville = value; }
         }
 
+
+        /// <summary>
+        /// Fonction qui demande d'écrire l'adresse
+        /// </summary>
+        /// <returns></returns>
         public Adresse Demander_adresse()
         {
             Console.WriteLine("Saisir l'adresse :");
