@@ -413,6 +413,11 @@ namespace Projet_A6_V1
             });
             Console.WriteLine("\n");
         }
-
+        public static void UpdateCSV(List<Client> clients)
+        {
+            string path = "Client_Transconnect.csv";
+            File.WriteAllText(path, string.Empty);
+            clients.ForEach(c => c.Ecrire_client_excel());
+        }
     }
 }
