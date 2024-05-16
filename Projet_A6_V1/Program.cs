@@ -11,19 +11,17 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
-            Commande.Modifier_commande(2);
-
-            /*bool end = true;
+            bool end = true;
             while (end != false)
             {
                 end = ModuleAcceuil();
             }
             Console.Clear();
-            Console.WriteLine("En revoir");*/
+            Console.WriteLine("En revoir");
             Console.ReadKey();
         }
 
-        
+
         static void ModuleClient_patron()
         {
             Console.WriteLine("\nClient\n\t1. Ajouter un client\n\t2. Supprimer un client\n\t3. Modifier un client\n\t4. Afficher les clients triés");
@@ -277,7 +275,7 @@ namespace Projet_A6_V1
         static void ModuleCommandes()
         {
             Console.Clear();
-            Console.Write("Voulez-vous :\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes\n\t4. Afficher le plan de route : ");
+            Console.WriteLine("Voulez-vous :\n\t1. Ajouter une commande\n\t2. Modifier une commande\n\t3. Afficher les commandes\n\t4. Afficher le plan de route ");
             int rep_commande = Convert.ToInt32(Console.ReadLine());
             switch (rep_commande)
             {

@@ -42,6 +42,7 @@ namespace Projet_A6_V1
             Console.WriteLine("Saisir l'adresse :");
 
             Console.Write("Numéro : ");
+            
             int numero = Convert.ToInt32(Console.ReadLine());
 
             Console.Write("Rue : ");

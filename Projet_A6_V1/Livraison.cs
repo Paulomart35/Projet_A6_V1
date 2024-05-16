@@ -38,9 +38,9 @@ namespace Projet_A6_V1
             return this.départ.ToString() + "," + this.arrivee.ToString();
         }
 
-        public double Calcul_prix(string vehicule, int idchauffeur)
+        public double Calcul_prix(string vehicule, int idchauffeur, int km)
         {
-            string path = "Distances.csv";
+            //string path = "Distances.csv";
             double montant_total = 0;
             double tarif_kilometre = 1;
             double tarif_vehicule = 0;
@@ -77,25 +77,7 @@ namespace Projet_A6_V1
                     cout_anciennete = 60;
                     break;
             }
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] values = line.Split(';');
-                    Adresse adresse_départ = new Adresse(0, null, null);
-                    adresse_départ.Ville = values[0];
-                    Adresse adresse_arrivee = new Adresse(0, null, null);
-                    adresse_arrivee.Ville = values[1];
-                    int kilometrage = int.Parse(values[2]);
-                    string duree = values[3];
-
-                    if (adresse_départ.Ville == this.départ.Ville && adresse_arrivee.Ville == this.arrivee.Ville || adresse_arrivee.Ville == this.départ.Ville && adresse_départ.Ville == this.arrivee.Ville)
-                    {
-                        montant_total = kilometrage * tarif_kilometre + tarif_vehicule + cout_anciennete;
-                    }
-                }
-            }
+            montant_total = km * tarif_kilometre + tarif_vehicule + cout_anciennete;
             return montant_total;
         }
 
@@ -138,6 +120,7 @@ namespace Projet_A6_V1
             }
             return villes;
         }
+
 
         public int[,] Transformation_matrice()
         {
@@ -300,89 +283,16 @@ namespace Projet_A6_V1
            
         }
 
-        /* 
-        0 - Paris
-        1 - Rouen
-        2 - Lyon
-        3 - Angers
-        4 - La Rochelle
-        5 - Bordeaux
-        6 - Biarritz
-        7 - Toulouse
-        8 - Pau
-        9 - Nimes
-        10 - Montpellier
-        11 - Marseilles
-        12 - Marseille
-        13 - Avignon
-        14 - Monaco
-        15 - Marseille
-        16 - Toulon
-         */
 
-        public static List<string> Liste__des_ville()
+        public static int Convert_toint(string ville)
         {
-            return new List<string> { "Paris", "Rouen", "Lyon", "Angers", "La Rochelle", "Bordeaux", "Biarritz", "Toulouse", "Pau", "Nimes", "Montpellier", "Marseilles", "Marseille", "Avignon", "Monaco", "Marseille", "Toulon" };
-        }
-
-        public int Convert_toint(string ville)
-        {
-            int num = 0;
-            switch (ville)
+            List<string> list = new List<string> { "Paris", "Rouen", "Lyon", "Angers", "La Rochelle", "Bordeaux", "Biarritz", "Toulouse", "Pau", "Nimes", "Montpellier", "Marseilles", "Monaco", "Toulon", "Avignon"};
+            int index = list.IndexOf(ville);
+            if (index == -1)
             {
-                case "Paris":
-                    num = 0;
-                    break;
-                case "Rouen":
-                    num = 1;
-                    break;
-                case "Lyon":
-                    num = 2;
-                    break;
-                case "Angers":
-                    num = 3;
-                    break;
-                case "La Rochelle":
-                    num = 4;
-                    break;
-                case "Bordeaux":
-                    num = 5;
-                    break;
-                case "Biarritz":
-                    num = 6;
-                    break;
-                case "Toulouse":
-                    num = 7;
-                    break;
-                case "Pau":
-                    num = 8;
-                    break;
-                case "Nimes":
-                    num = 9;
-                    break;
-                case "Montpellier":
-                    num = 10;
-                    break;
-                case "Marseilles":
-                    num = 11;
-                    break;
-                case "Marseille":
-                    num = 12;
-                    break;
-                case "Avignon":
-                    num = 13;
-                    break;
-                case "Monaco":
-                    num = 14;
-                    break;
-                case "Toulon":
-                    num = 16;
-                    break;
-                default:
-                    Console.WriteLine("City not found");
-                    break;
+                Console.WriteLine("City not found");
             }
-            return num;
+            return index;
         }
 
         public void Distancepluscourte(string ville_depart, string ville_arrivee)

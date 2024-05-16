@@ -241,9 +241,9 @@ namespace Projet_A6_V1
 
                 Console.Write("Type de véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
                 string rep = Console.ReadLine();
-                double prix = livraison.Calcul_prix(rep, id_chauffeur);
                 List<string> v_t = livraison.Demander_ville_traverse(livraison.départ.ville, livraison.arrivee.ville);
                 int km = livraison.Demander_kilometrage(livraison.départ.ville, livraison.arrivee.ville);
+                double prix = livraison.Calcul_prix(rep, id_chauffeur, km);
                 switch (rep)
                 {
                     case "Voiture":
@@ -534,8 +534,8 @@ namespace Projet_A6_V1
                         commandeAModifier.livraison = nouvelleLivraison;
                         Console.Write("\nNouveau véhicule (Voiture, Camionnette, CamionFrigorifique, CamionCiterne, CamionBenne) : ");
                         string veh = Console.ReadLine();
-                        commandeAModifier.prix = nouvelleLivraison.Calcul_prix(veh, commandeAModifier.idchauffeur);
                         commandeAModifier.kilometrage = nouvelleLivraison.Demander_kilometrage(nouvelleLivraison.départ.ville, nouvelleLivraison.arrivee.ville);
+                        commandeAModifier.prix = nouvelleLivraison.Calcul_prix(veh, commandeAModifier.idchauffeur, commandeAModifier.kilometrage);
                         commandeAModifier.ville_traverse = nouvelleLivraison.Demander_ville_traverse(nouvelleLivraison.départ.ville, nouvelleLivraison.arrivee.ville);
                         switch (veh)
                         {
