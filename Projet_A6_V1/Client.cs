@@ -20,6 +20,10 @@ namespace Projet_A6_V1
             this.num_commande = num_commande;
         }
 
+        /// <summary>
+        /// Ajoute au CSV "Client-TransConnect" un Client créé par l'utilisateur
+        /// </summary>
+        /// <returns></returns>
         public static Client Ajoute()
         {
             Console.WriteLine($"Saisir les informations pour le client:");
@@ -58,6 +62,10 @@ namespace Projet_A6_V1
 
         }
 
+        /// <summary>
+        /// Ajoute au CSV "Client-TransConnect" un Client créé par l'utilisateur qui est client de TransConnect (Personnalisé)
+        /// </summary>
+        /// <returns></returns>
         public static Client AjouteUtilisateur()
         {
             Console.WriteLine($"Veuillez entrer vos informations :");
@@ -96,6 +104,10 @@ namespace Projet_A6_V1
 
         }
 
+        /// <summary>
+        /// écris le client dans le fichier CSV "Client_TransConnect"
+        /// </summary>
+        /// <exception cref="ApplicationException"></exception>
         public void Ecrire_client_excel()
         {
             string path = "Client_Transconnect.csv";
@@ -121,6 +133,10 @@ namespace Projet_A6_V1
 
         }
 
+        /// <summary>
+        /// Renvoie une liste de Client récupérée sur le CSV "Client_TransConnect", qui est triée selon un paramètre choisi par l'utilisateur
+        /// </summary>
+        /// <returns></returns>
         public static List<Client> Lire_excel_trier()
         {
             List<Client> lecture_clients = Lire_excel();
@@ -160,6 +176,12 @@ namespace Projet_A6_V1
             return montantTotal;
         }
 
+        /// <summary>
+        /// Vérfie si le client portant le numéro SS mit en paramètre existe dans le CSV
+        /// </summary>
+        /// <param name="num_ss_a_verif"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public static bool Lire_si_client_existe(int num_ss_a_verif)
         {
             string path = "Client_Transconnect.csv";
@@ -190,6 +212,11 @@ namespace Projet_A6_V1
             return client_existe;
         }
 
+        /// <summary>
+        /// Renvoie une Liste de Client à partir d'un CSV "Client_TransConnect" présent dans le debug du projet
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public static List<Client> Lire_excel()
         {
             string path = "Client_Transconnect.csv";
@@ -229,6 +256,11 @@ namespace Projet_A6_V1
             return lecture_clients;
         }
 
+        /// <summary>
+        /// Permet de supprimer un Client du CSV "Client_TransConnect" dont le numéro SS est passé en paramètre
+        /// </summary>
+        /// <param name="num_ss"></param>
+        /// <exception cref="ApplicationException"></exception>
         public static void Supprimer_client(int num_ss)
         {
             string path = "Client_Transconnect.csv";
@@ -268,6 +300,10 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lecture_clients"></param>
         public static void Affiche_List(List<Client> lecture_clients)
         {
             foreach (Client client in lecture_clients)
@@ -276,6 +312,11 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// Permet à l'utilisateur de mofidier le Client dont le numéro SS est passé en paramètre
+        /// </summary>
+        /// <param name="num_ss"></param>
+        /// <exception cref="ApplicationException"></exception>
         public static void Modifier_client(int num_ss)
         {
             string path = "Client_Transconnect.csv";
@@ -361,6 +402,10 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// Affiche les infos du Client dans la console
+        /// </summary>
+        /// <param name="client"></param>
         public static void Affiche_Client(Client client)
         {
             Console.Write($"Numéro SS : {client.Num_ss}\n\tNom : {client.nom}\n\tPrénom : {client.Prenom}\n\tDate de naissance : {client.Date_naissance}\n\tAdresse : {client.adresse.ToString()}\n\tEmail : {client.mail}\n\tTéléphone : {client.telephone}\n\tNuméro(s) de commande : ");
@@ -371,10 +416,6 @@ namespace Projet_A6_V1
             });
             Console.WriteLine("\n");
         }
-
-
-
-
 
     }
 }

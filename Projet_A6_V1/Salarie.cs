@@ -31,7 +31,11 @@ namespace Projet_A6_V1
 
         public Salarie() :base() { }
 
-        public static Salarie Création()
+       /// <summary>
+       /// Renvoie un Salarié créé par l'utilisateur
+       /// </summary>
+       /// <returns></returns>
+       public static Salarie Création()
         {
             Console.WriteLine("Entrez le numéro de sécurité sociale : ");
             int num_ss = Convert.ToInt32(Console.ReadLine());
@@ -70,7 +74,11 @@ namespace Projet_A6_V1
         }
 
 
-        public void Ecrire_salarie_csv()
+       /// <summary>
+       /// écris le salarié dans le fichier CSV "Salarie_Transconnect"
+       /// </summary>
+       /// <exception cref="ApplicationException"></exception>
+       public void Ecrire_salarie_csv()
         {
             string path = "Salarie_Transconnect.csv";
             try
@@ -89,6 +97,11 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// Renvoie une Liste de salarié à partir d'un CSV "Salarie_Transconnect" présent dans le debug du projet
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public static List<Salarie> Lire_csv()
         {
             string path = "Salarie_Transconnect.csv";
@@ -126,11 +139,21 @@ namespace Projet_A6_V1
             return lecture_salaries;
         }
 
+        /// <summary>
+        /// Renvoie la liste de salariés mise en paramètre trier par le niveau de ces derniers
+        /// </summary>
+        /// <param name="orga"></param>
+        /// <returns></returns>
         public static List<Salarie> TrieNiveau(List<Salarie> orga)
         {
             return orga.OrderBy(o => o.niveau).ToList();
         }
 
+        /// <summary>
+        /// Permet à l'utilisateur de mofidier dont le numéro ss est mis en paramètre
+        /// </summary>
+        /// <param name="num_ss"></param>
+        /// <exception cref="ApplicationException"></exception>
         public static void Modifier_Salarie(int num_ss)
         {
             string path = "Salarie_Transconnect.csv";
@@ -205,6 +228,13 @@ namespace Projet_A6_V1
             }
         }
 
+        /// <summary>
+        /// Permet de déterminer le niveau "aba..." du nouveau salarié en fonction de celui de son supérieur "ab..."
+        /// </summary>
+        /// <param name="salaries"></param>
+        /// <param name="nouveau"></param>
+        /// <param name="sup"></param>
+        /// <returns></returns>
         public static List<Salarie> AjouterNouveauSalarie(List<Salarie> salaries, Salarie nouveau,Salarie sup)
         {
             List<Salarie> memniveau = salaries.FindAll(c => (c.niveau.Length == (sup.niveau.Length +1) && c.niveau.StartsWith(sup.niveau)));
@@ -228,6 +258,10 @@ namespace Projet_A6_V1
             return salaries;
         }
 
+        /// <summary>
+        /// Ecris la liste de Salarié passé en paramètre dans le CSV "Salarie_Transconnect"
+        /// </summary>
+        /// <param name="salaries"></param>
         public static void Updatecsv(List<Salarie> salaries)
         {
             string path = "Salarie_Transconnect.csv";
