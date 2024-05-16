@@ -445,6 +445,18 @@ namespace Projet_A6_V1
                         string veh = Console.ReadLine();
                         commandeAModifier.kilometrage = nouvelleLivraison.Demander_kilometrage(nouvelleLivraison.départ.ville, nouvelleLivraison.arrivee.ville);
                         commandeAModifier.prix = nouvelleLivraison.Calcul_prix(veh, commandeAModifier.idchauffeur, commandeAModifier.kilometrage);
+
+                        List<Client> clients = Client.Lire_excel();
+                        Client ceclient = clients.Find(c => c.num_ss == commandeAModifier.num_ss);
+                        int nbCommande = ceclient.num_commande.Count();
+
+                        if (nbCommande != 0)
+                        {
+                            if (nbCommande < 2) { commandeAModifier.prix = commandeAModifier.prix * 0.97; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 3%"); }
+                            else if (nbCommande < 3) { commandeAModifier.prix *= 0.95; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 5%"); }
+                            else { commandeAModifier.prix *= 0.9; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 10%"); }
+                        }
+
                         commandeAModifier.ville_traverse = nouvelleLivraison.Demander_ville_traverse(nouvelleLivraison.départ.ville, nouvelleLivraison.arrivee.ville);
                         switch (veh)
                         {
