@@ -178,76 +178,103 @@ namespace Projet_A6_V1
         /// <param name="startVertex">L'indice de la ville de départ dans le graphe.</param>
         /// <param name="endVertex">L'indice de la ville d'arrivée dans le graphe.</param>
         /// <returns>Une liste contenant le chemin le plus court entre la ville de départ et la ville d'arrivée.</returns>
-        public List<string> Dijkstra2(int[,] graph, int startVertex, int endVertex)
+        public List<string> Dijkstra2(int[,] graph, int ville_de_depart, int villearrive)
         {
+            // Récupère la liste des villes. Supposons que chaque indice de sommet correspond à une ville dans cette liste.
             List<string> liste_ville = Liste_ville();
+            // Liste pour stocker les noms des villes traversées par l'algorithme.
             var traversedCities = new List<string>();
-            int verticesCount = graph.GetLength(0);
-            var distances = new int[verticesCount];
-            var visited = new bool[verticesCount];
-            var previous = new int[verticesCount];
+            // Nombre total de sommets dans le graphe (nombre de villes).
+            int nbsommet = graph.GetLength(0);
+            // Tableau pour stocker les distances minimales depuis ville_de_depart à chaque sommet.
+            var distances = new int[nbsommet];
+            // Tableau pour marquer les sommets visités.
+            var visited = new bool[nbsommet];
+            // Tableau pour stocker le sommet précédent sur le chemin optimal pour atteindre chaque sommet.
+            var previous = new int[nbsommet];
+            // Liste pour stocker le chemin optimal en termes d'indices de sommets.
             var path = new List<int>();
+            // Liste pour stocker le chemin optimal en termes de noms de villes.
             List<string> path_villes = new List<string>();
 
-            for (int i = 0; i < verticesCount; i++)
+            // Initialisation des distances à l'infini, des sommets comme non visités et des précédents à -1.
+            for (int i = 0; i < nbsommet; i++)
             {
-                distances[i] = int.MaxValue;
-                visited[i] = false;
-                previous[i] = -1;
+                distances[i] = int.MaxValue;  // Distance initiale infinie pour représenter l'inaccessible.
+                visited[i] = false;           // Aucun sommet n'est visité au début.
+                previous[i] = -1;             // Aucun sommet précédent au début.
             }
 
-            distances[startVertex] = 0;
+            // La distance du sommet de départ à lui-même est de 0.
+            distances[ville_de_depart] = 0;
 
-            for (int count = 0; count < verticesCount - 1; count++)
+            // Boucle principale de l'algorithme de Dijkstra pour trouver le plus court chemin vers tous les sommets.
+            for (int count = 0; count < nbsommet - 1; count++)
             {
-                int minDistance = int.MaxValue;
-                int minIndex = -1;
+                int minDistance = int.MaxValue;  // Distance minimale initialement infinie.
+                int minIndex = -1;  // Indice du sommet avec la distance minimale.
 
-                for (int v = 0; v < verticesCount; v++)
-                {
-                    if (!visited[v] && distances[v] <= minDistance)
-                    {
-                        minDistance = distances[v];
-                        minIndex = v;
-                    }
+                // Boucle pour trouver le sommet avec la distance minimale parmi les sommets non visités.
+                // Cette partie de l'algorithme sélectionne le prochain sommet à explorer en Dijkstra.
+
+                for (int v = 0; v < nbsommet; v++) // Parcours de tous les sommets du graphe.
+{
+                // Si le sommet v n'a pas encore été visité et que la distance actuelle à ce sommet
+                // est inférieure ou égale à la distance minimale trouvée jusqu'à présent,
+                // alors ce sommet devient le candidat pour le prochain sommet à explorer.
+                if (!visited[v] && distances[v] <= minDistance)
+    {
+                    minDistance = distances[v]; // Met à jour la distance minimale trouvée.
+                    minIndex = v; // Met à jour l'indice du sommet avec cette distance minimale.
                 }
+            }
 
-                int u = minIndex;
-                visited[u] = true;
+            int u = minIndex;  // Sommet avec la distance minimale.
+                visited[u] = true; // Marquer ce sommet comme visité.
+                // Ajouter la ville correspondante au sommet visité à la liste des villes traversées.
                 traversedCities.Add(liste_ville[u]);
 
-                for (int v = 0; v < verticesCount; v++)
+                // Mettre à jour les distances des sommets adjacents.
+                for (int v = 0; v < nbsommet; v++)
                 {
+                    // Conditions :
+                    // 1. Le sommet v n'est pas visité.
+                    // 2. Il y a une arête entre u et v (graph[u, v] != 0).
+                    // 3. La distance du sommet de départ à u n'est pas infinie.
+                    // 4. Le nouveau chemin proposé (distances[u] + graph[u, v]) est plus court que la distance actuelle à v.
                     if (!visited[v] && graph[u, v] != 0 &&
                         distances[u] != int.MaxValue &&
                         distances[u] + graph[u, v] < distances[v])
                     {
-                        distances[v] = distances[u] + graph[u, v];
-                        previous[v] = u;
+                        distances[v] = distances[u] + graph[u, v];  // Mettre à jour la distance.
+                        previous[v] = u; // Mettre à jour le sommet précédent pour atteindre v.
                     }
                 }
             }
 
 
-            // Reconstruire le chemin
-            int current = endVertex;
+            // Reconstruire le chemin optimal en partant de villearrive et en remontant jusqu'à ville_de_depart.
+            int current = villearrive;
             while (current != -1)
             {
-                path.Add(current);
-                current = previous[current];
+                path.Add(current); // Ajouter le sommet actuel au chemin.
+                current = previous[current]; // Passer au sommet précédent sur le chemin.
             }
-            path.Reverse();
+            path.Reverse(); // Inverser le chemin pour qu'il aille de startVertex à villearrive.
 
+            // Convertir le chemin des indices de sommets en noms de villes.
             int compteur = 0;
             do
             {
-                path_villes.Add(liste_ville[path[compteur]]);
+                path_villes.Add(liste_ville[path[compteur]]); // Ajouter le nom de la ville correspondant à l'indice du sommet.
                 compteur++;
             } while (compteur < path.Count);
 
+            // Retourner le chemin sous forme de liste de noms de villes.
             return path_villes;
 
         }
+
 
         /// <summary>
         /// Implémente l'algorithme de Dijkstra pour calculer les distances les plus courtes entre une ville de départ et toutes les autres villes dans un graphe pondéré.
@@ -256,30 +283,30 @@ namespace Projet_A6_V1
         /// <param name="startVertex">L'indice de la ville de départ dans le graphe.</param>
         /// <param name="endVertex">L'indice de la ville d'arrivée dans le graphe.</param>
         /// <returns>Une liste contenant les distances les plus courtes entre la ville de départ et toutes les autres villes.</returns>
-        public List<int> Dijkstra1(int[,] graph, int startVertex, int endVertex)
+        public List<int> Dijkstra1(int[,] graph, int ville_de_depart, int villearrive)
         {
             List<string> liste_ville = Liste_ville();
             var traversedCities = new List<string>();
-            int verticesCount = graph.GetLength(0);
-            var distances = new int[verticesCount];
-            var visited = new bool[verticesCount];
+            int nbsommets = graph.GetLength(0);
+            var distances = new int[nbsommets];
+            var visited = new bool[nbsommets];
             var path = new List<int>();
             
 
-            for (int i = 0; i < verticesCount; i++)
+            for (int i = 0; i < nbsommets; i++)
             {
                 distances[i] = int.MaxValue;
                 visited[i] = false;
             }
 
-            distances[startVertex] = 0;
+            distances[ville_de_depart] = 0;
 
-            for (int count = 0; count < verticesCount - 1; count++)
+            for (int count = 0; count < nbsommets - 1; count++)
             {
                 int minDistance = int.MaxValue;
                 int minIndex = -1;
 
-                for (int v = 0; v < verticesCount; v++)
+                for (int v = 0; v < nbsommets; v++)
                 {
                     if (!visited[v] && distances[v] <= minDistance)
                     {
@@ -292,7 +319,7 @@ namespace Projet_A6_V1
                 visited[u] = true;
                 traversedCities.Add(liste_ville[u]);
 
-                for (int v = 0; v < verticesCount; v++)
+                for (int v = 0; v < nbsommets; v++)
                 {
                     if (!visited[v] && graph[u, v] != 0 &&
                         distances[u] != int.MaxValue &&
@@ -304,7 +331,7 @@ namespace Projet_A6_V1
             }
 
 
-            for (int i = 0; i < verticesCount; i++)
+            for (int i = 0; i < nbsommets; i++)
             {
                 path.Add(distances[i]);
             }

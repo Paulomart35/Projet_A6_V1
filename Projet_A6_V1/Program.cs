@@ -11,6 +11,11 @@ namespace Projet_A6_V1
     {
         static void Main(string[] args)
         {
+            /*List<Client> clients = Client.Lire_excel();
+            Client ceclient = clients.Find(c => c.num_ss == 123456789);
+            int nbCommande = ceclient.num_commande.Count();
+            Console.WriteLine(nbCommande);*/
+            
             bool end = true;
             while (end != false)
             {

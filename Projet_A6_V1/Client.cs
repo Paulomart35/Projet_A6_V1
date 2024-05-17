@@ -14,6 +14,7 @@ namespace Projet_A6_V1
        
         public List<int> num_commande;
 
+        //Constructeur
         public Client(int num_ss, string nom, string prenom, DateTime date_naissance, Adresse adresse, string mail, string telephone, List<int> num_commande) 
             : base(num_ss, nom, prenom, date_naissance, adresse, mail, telephone)
         {

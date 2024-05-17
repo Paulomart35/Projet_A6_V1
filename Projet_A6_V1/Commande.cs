@@ -264,9 +264,9 @@ namespace Projet_A6_V1
                 double prix = livraison.Calcul_prix(rep, id_chauffeur, km);
                 if(nbCommande != 0)
                 {
-                    if(nbCommande < 2) { prix = prix * 0.97;Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 3%");}
-                    else if (nbCommande < 3) { prix *= 0.95; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 5%"); }
-                    else { prix *= 0.9; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 10%"); }
+                    if(nbCommande <= 2) { prix = prix - 10;Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 10€");}
+                    else if (nbCommande <= 3) { prix -= 20; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 20€"); }
+                    else { prix -= 30; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 30€"); }
                 }
                 switch (rep)
                 {
@@ -296,10 +296,7 @@ namespace Projet_A6_V1
                         nv_commande = new Commande(num_ss, livraison, prix, id_chauffeur, km, v_t, date, camionBenne);
                         break;
                 }
-                
-                clients.Remove(ceclient);
-                ceclient.num_commande.Add(nv_commande.idcommande);
-                clients.Add(ceclient);
+                ceclient.num_commande.Add(lire_deernier_num_com() + 1);
                 Client.UpdateCSV(clients);
                 nv_commande.Ecrire_commande_excel();
             }
@@ -310,6 +307,32 @@ namespace Projet_A6_V1
             return nv_commande;
 
         }
+
+        public static int lire_deernier_num_com()
+        {
+            List<int> dernier_num = new List<int>();
+            try
+            {
+                using (StreamReader reader = new StreamReader("Commande_Transconnect.csv"))
+                {
+                    string line;
+                    int num = 0;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] values = line.Split(',');
+                        num = int.Parse(values[0]);
+                        dernier_num.Add(num);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Erreur dans le programme :", ex);
+            }
+            return dernier_num.Last();
+        }
+
+
 
         /// <summary>
         /// Affiche une seule commande en fonction des ses attributs
@@ -452,9 +475,9 @@ namespace Projet_A6_V1
 
                         if (nbCommande != 0)
                         {
-                            if (nbCommande < 2) { commandeAModifier.prix = commandeAModifier.prix * 0.97; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 3%"); }
-                            else if (nbCommande < 3) { commandeAModifier.prix *= 0.95; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 5%"); }
-                            else { commandeAModifier.prix *= 0.9; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 10%"); }
+                            if (nbCommande <= 2) { commandeAModifier.prix = commandeAModifier.prix - 10; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 10€"); }
+                            else if (nbCommande <= 3) { commandeAModifier.prix -= 20; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 20€"); }
+                            else { commandeAModifier.prix -= 30; Console.WriteLine($"Le client a déjà commandé {nbCommande} fois, il se verra attribué une réduction de 30€"); }
                         }
 
                         commandeAModifier.ville_traverse = nouvelleLivraison.Demander_ville_traverse(nouvelleLivraison.départ.ville, nouvelleLivraison.arrivee.ville);
